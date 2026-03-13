@@ -8,7 +8,7 @@ tags:
 - AI
 - Deep Learning
 created: '2024-01-15'
-modified: '2024-01-15'
+modified: '2026-03-04'
 url: https://github.com/triton-inference-server/server
 specificationVersion: '0.18'
 apis:
@@ -29,6 +29,8 @@ apis:
     url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/rest_api.yaml
   - type: Postman Collection
     url: https://www.postman.com/nvidia-triton
+  - type: OpenAPI
+    url: openapi/triton-http-rest-openapi.yml
   contact:
   - FN: NVIDIA Triton Team
     email: triton@nvidia.com
@@ -67,6 +69,8 @@ apis:
     url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
   - type: Metrics Format
     url: https://prometheus.io/docs/instrumenting/exposition_formats/
+  - type: OpenAPI
+    url: openapi/triton-metrics-openapi.yml
   contact:
   - FN: NVIDIA Triton Team
     email: triton@nvidia.com
@@ -89,7 +93,14 @@ common:
   url: https://github.com/triton-inference-server/server/discussions
 - type: Release Notes
   url: https://github.com/triton-inference-server/server/releases
+- type: JSON-LD
+  url: json-ld/triton-context.jsonld
+- type: JSONSchema
+  url: json-schema/triton-model-schema.json
+- type: JSONSchema
+  url: json-schema/triton-inference-request-schema.json
+- type: JSONSchema
+  url: json-schema/triton-inference-response-schema.json
 maintainers:
-- FN: NVIDIA Corporation
-  email: triton@nvidia.com
-  url: https://www.nvidia.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

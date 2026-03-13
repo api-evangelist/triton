@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.nvidia.com/schemas/triton/inference-request.json",
+  "title": "Triton Inference Request",
+  "description": "An inference request submitted to NVIDIA Triton Inference Server following the KServe V2 inference protocol. Contains input tensors, optional output specifications, and inference parameters for sequence handling, priority, and timeout control.",
+  "type": "object",
+  "required": ["inputs"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the inference request. If not provided, the server generates one."
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Optional request-level inference parameters for controlling execution behavior",
+      "properties": {
+        "sequence_id": {
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string" }
+          ],
+          "description": "Identifier for the sequence this request belongs to, used with stateful models"
+        },
+        "sequence_start": {
+          "type": "boolean",
+          "description": "Indicates this request is the first in a sequence",
+          "default": false
+        },
+        "sequence_end": {
+          "type": "boolean",
+          "description": "Indicates this request is the last in a sequence",
+          "default": false
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Priority level of the request. Higher values indicate higher priority."
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Timeout in microseconds for the inference request"
+        },
+        "binary_data_output": {
+          "type": "boolean",
+          "description": "If true, outputs will be returned as binary data appended to the response body"
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "boolean" },
+          { "type": "integer" }
+        ]
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input tensors for the inference request",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/InputTensor"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Requested output tensors. If omitted, all model outputs are returned.",
+      "items": {
+        "$ref": "#/$defs/RequestedOutput"
+      }
+    }
+  },
+  "$defs": {
+    "InputTensor": {
+      "type": "object",
+      "description": "An input tensor for inference containing the tensor name, shape, data type, and data values",
+      "required": ["name", "shape", "datatype", "data"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the input tensor matching the model's expected input name"
+        },
+        "shape": {
+          "type": "array",
+          "description": "Shape of the input tensor as an array of dimension sizes",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1
+        },
+        "datatype": {
+          "type": "string",
+          "description": "Data type of the tensor elements",
+          "enum": [
+            "BOOL",
+            "UINT8",
+            "UINT16",
+            "UINT32",
+            "UINT64",
+            "INT8",
+            "INT16",
+            "INT32",
+            "INT64",
+            "FP16",
+            "FP32",
+            "FP64",
+            "BYTES",
+            "BF16"
+          ]
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Optional per-tensor parameters",
+          "properties": {
+            "binary_data_size": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size in bytes of binary tensor data appended after the JSON body"
+            },
+            "shared_memory_region": {
+              "type": "string",
+              "description": "Name of the shared memory region containing tensor data"
+            },
+            "shared_memory_offset": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Byte offset within the shared memory region"
+            },
+            "shared_memory_byte_size": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size of the tensor data in shared memory in bytes"
+            },
+            "classification": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of top classification results to return"
+            }
+          },
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "boolean" },
+              { "type": "integer" }
+            ]
+          }
+        },
+        "data": {
+          "type": "array",
+          "description": "Tensor data as a flattened row-major array of values"
+        }
+      }
+    },
+    "RequestedOutput": {
+      "type": "object",
+      "description": "Specification for a requested output tensor",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the output tensor to return"
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Optional per-output parameters",
+          "properties": {
+            "binary_data": {
+              "type": "boolean",
+              "description": "If true, return this output as binary data"
+            },
+            "shared_memory_region": {
+              "type": "string",
+              "description": "Name of the shared memory region for output storage"
+            },
+            "shared_memory_offset": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Byte offset within the shared memory region"
+            },
+            "shared_memory_byte_size": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size of the output in shared memory in bytes"
+            },
+            "classification": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of top classification results to return"
+            }
+          },
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "boolean" },
+              { "type": "integer" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

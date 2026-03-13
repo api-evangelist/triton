@@ -1,0 +1,525 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.nvidia.com/schemas/triton/model.json",
+  "title": "Triton Inference Server Model",
+  "description": "A machine learning model managed by NVIDIA Triton Inference Server, including its configuration, input/output tensor definitions, batching strategy, and deployment settings.",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique name of the model within the model repository",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "description": "Framework platform of the model",
+      "enum": [
+        "tensorrt_plan",
+        "tensorflow_graphdef",
+        "tensorflow_savedmodel",
+        "onnxruntime_onnx",
+        "pytorch_libtorch",
+        "python",
+        "ensemble"
+      ]
+    },
+    "backend": {
+      "type": "string",
+      "description": "Backend used by the model for inference execution",
+      "examples": ["tensorrt", "tensorflow", "onnxruntime", "pytorch", "python", "openvino", "fil"]
+    },
+    "version_policy": {
+      "$ref": "#/$defs/VersionPolicy"
+    },
+    "max_batch_size": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum batch size supported by the model. A value of 0 means batching is disabled."
+    },
+    "input": {
+      "type": "array",
+      "description": "Input tensor definitions for the model",
+      "items": {
+        "$ref": "#/$defs/TensorConfig"
+      }
+    },
+    "output": {
+      "type": "array",
+      "description": "Output tensor definitions for the model",
+      "items": {
+        "$ref": "#/$defs/TensorConfig"
+      }
+    },
+    "instance_group": {
+      "type": "array",
+      "description": "Instance group configurations specifying how model instances are deployed across devices",
+      "items": {
+        "$ref": "#/$defs/InstanceGroup"
+      }
+    },
+    "dynamic_batching": {
+      "$ref": "#/$defs/DynamicBatching"
+    },
+    "sequence_batching": {
+      "$ref": "#/$defs/SequenceBatching"
+    },
+    "ensemble_scheduling": {
+      "$ref": "#/$defs/EnsembleScheduling"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Custom key-value parameters for the model",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "string_value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "model_warmup": {
+      "type": "array",
+      "description": "Warmup configurations to pre-heat the model after loading",
+      "items": {
+        "$ref": "#/$defs/ModelWarmup"
+      }
+    },
+    "optimization": {
+      "$ref": "#/$defs/Optimization"
+    },
+    "response_cache": {
+      "type": "object",
+      "description": "Response cache configuration",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Whether response caching is enabled for this model"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "VersionPolicy": {
+      "type": "object",
+      "description": "Policy for selecting which model versions are available for inference",
+      "properties": {
+        "latest": {
+          "type": "object",
+          "description": "Serve the N most recent versions",
+          "properties": {
+            "num_versions": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of latest versions to serve"
+            }
+          }
+        },
+        "all": {
+          "type": "object",
+          "description": "Serve all available versions"
+        },
+        "specific": {
+          "type": "object",
+          "description": "Serve only the specified versions",
+          "properties": {
+            "versions": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "description": "List of specific version numbers to serve"
+            }
+          }
+        }
+      }
+    },
+    "TensorConfig": {
+      "type": "object",
+      "description": "Configuration for a model input or output tensor",
+      "required": ["name", "data_type", "dims"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the tensor"
+        },
+        "data_type": {
+          "type": "string",
+          "description": "Data type of the tensor elements",
+          "enum": [
+            "TYPE_BOOL",
+            "TYPE_UINT8",
+            "TYPE_UINT16",
+            "TYPE_UINT32",
+            "TYPE_UINT64",
+            "TYPE_INT8",
+            "TYPE_INT16",
+            "TYPE_INT32",
+            "TYPE_INT64",
+            "TYPE_FP16",
+            "TYPE_FP32",
+            "TYPE_FP64",
+            "TYPE_STRING",
+            "TYPE_BF16"
+          ]
+        },
+        "dims": {
+          "type": "array",
+          "description": "Tensor dimensions. Use -1 for variable-length dimensions.",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "reshape": {
+          "type": "object",
+          "description": "Optional reshape configuration for the tensor",
+          "properties": {
+            "shape": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "is_shape_tensor": {
+          "type": "boolean",
+          "description": "Whether this tensor is a shape tensor",
+          "default": false
+        },
+        "allow_ragged_batch": {
+          "type": "boolean",
+          "description": "Whether ragged batching is allowed for this tensor",
+          "default": false
+        }
+      }
+    },
+    "InstanceGroup": {
+      "type": "object",
+      "description": "Defines a group of model instances deployed on specific devices",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the instance group"
+        },
+        "kind": {
+          "type": "string",
+          "description": "Device type for the instance group",
+          "enum": ["KIND_AUTO", "KIND_GPU", "KIND_CPU", "KIND_MODEL"],
+          "default": "KIND_AUTO"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of instances in this group",
+          "default": 1
+        },
+        "gpus": {
+          "type": "array",
+          "description": "GPU device IDs to use for this instance group",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "rate_group": {
+          "type": "integer",
+          "description": "Rate limiter group assignment"
+        },
+        "rate_limit": {
+          "type": "object",
+          "description": "Rate limiting configuration for the instance group",
+          "properties": {
+            "resources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "global": {
+                    "type": "boolean"
+                  },
+                  "count": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DynamicBatching": {
+      "type": "object",
+      "description": "Dynamic batching configuration for combining multiple inference requests into a single batch",
+      "properties": {
+        "preferred_batch_size": {
+          "type": "array",
+          "description": "Preferred batch sizes for dynamic batching",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "max_queue_delay_microseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum delay in microseconds to wait for forming a preferred batch"
+        },
+        "preserve_ordering": {
+          "type": "boolean",
+          "description": "Whether to preserve the ordering of responses",
+          "default": false
+        },
+        "priority_levels": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of priority levels for request scheduling"
+        },
+        "default_priority_level": {
+          "type": "integer",
+          "description": "Default priority level for requests"
+        },
+        "default_queue_policy": {
+          "$ref": "#/$defs/QueuePolicy"
+        },
+        "priority_queue_policy": {
+          "type": "object",
+          "description": "Per-priority-level queue policies",
+          "additionalProperties": {
+            "$ref": "#/$defs/QueuePolicy"
+          }
+        }
+      }
+    },
+    "QueuePolicy": {
+      "type": "object",
+      "description": "Queue management policy for inference requests",
+      "properties": {
+        "timeout_action": {
+          "type": "string",
+          "enum": ["REJECT", "DELAY"],
+          "description": "Action to take when a request times out in the queue"
+        },
+        "default_timeout_microseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Default timeout in microseconds for queued requests"
+        },
+        "allow_timeout_override": {
+          "type": "boolean",
+          "description": "Whether requests can override the default timeout"
+        },
+        "max_queue_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum number of requests in the queue"
+        }
+      }
+    },
+    "SequenceBatching": {
+      "type": "object",
+      "description": "Sequence batching configuration for stateful models that process ordered sequences of requests",
+      "properties": {
+        "max_sequence_idle_microseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum idle time for a sequence before it is automatically ended"
+        },
+        "control_input": {
+          "type": "array",
+          "description": "Control inputs for sequence management",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "control": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "CONTROL_SEQUENCE_START",
+                        "CONTROL_SEQUENCE_READY",
+                        "CONTROL_SEQUENCE_END",
+                        "CONTROL_SEQUENCE_CORRID"
+                      ]
+                    },
+                    "int32_false_true": {
+                      "type": "array",
+                      "items": { "type": "integer" }
+                    },
+                    "fp32_false_true": {
+                      "type": "array",
+                      "items": { "type": "number" }
+                    },
+                    "bool_false_true": {
+                      "type": "array",
+                      "items": { "type": "boolean" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "state": {
+          "type": "array",
+          "description": "Implicit state configurations for the sequence",
+          "items": {
+            "type": "object",
+            "properties": {
+              "input_name": { "type": "string" },
+              "output_name": { "type": "string" },
+              "data_type": { "type": "string" },
+              "dims": {
+                "type": "array",
+                "items": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "EnsembleScheduling": {
+      "type": "object",
+      "description": "Ensemble model scheduling configuration defining a pipeline of models",
+      "properties": {
+        "step": {
+          "type": "array",
+          "description": "Steps in the ensemble pipeline",
+          "items": {
+            "type": "object",
+            "required": ["model_name"],
+            "properties": {
+              "model_name": {
+                "type": "string",
+                "description": "Name of the model in this step"
+              },
+              "model_version": {
+                "type": "integer",
+                "description": "Version of the model to use (-1 for latest)"
+              },
+              "input_map": {
+                "type": "object",
+                "description": "Mapping from ensemble tensor names to step model input names",
+                "additionalProperties": { "type": "string" }
+              },
+              "output_map": {
+                "type": "object",
+                "description": "Mapping from step model output names to ensemble tensor names",
+                "additionalProperties": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ModelWarmup": {
+      "type": "object",
+      "description": "Model warmup configuration for pre-heating the model",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the warmup configuration"
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Batch size to use for warmup"
+        },
+        "inputs": {
+          "type": "object",
+          "description": "Input data specifications for warmup",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "data_type": { "type": "string" },
+              "dims": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "zero_data": { "type": "boolean" },
+              "random_data": { "type": "boolean" }
+            }
+          }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of warmup iterations"
+        }
+      }
+    },
+    "Optimization": {
+      "type": "object",
+      "description": "Model optimization settings",
+      "properties": {
+        "priority": {
+          "type": "string",
+          "enum": ["PRIORITY_DEFAULT", "PRIORITY_MIN", "PRIORITY_MAX"],
+          "description": "Optimization priority"
+        },
+        "execution_accelerators": {
+          "type": "object",
+          "description": "Execution accelerator configurations",
+          "properties": {
+            "gpu_execution_accelerator": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "parameters": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "cpu_execution_accelerator": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "parameters": {
+                    "type": "object",
+                    "additionalProperties": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "input_pinned_memory": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          }
+        },
+        "output_pinned_memory": {
+          "type": "object",
+          "properties": {
+            "enable": { "type": "boolean" }
+          }
+        },
+        "gather_kernel_buffer_threshold": {
+          "type": "integer",
+          "description": "Threshold for using gather kernel for input tensor copy"
+        },
+        "eager_batching": {
+          "type": "boolean",
+          "description": "Whether to use eager batching"
+        }
+      }
+    }
+  }
+}

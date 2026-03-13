@@ -1,0 +1,143 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "triton": "https://developer.nvidia.com/schemas/triton/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "ml": "http://www.w3.org/ns/mls#",
+
+    "Model": {
+      "@id": "triton:Model",
+      "@context": {
+        "name": "schema:name",
+        "platform": "triton:platform",
+        "backend": "triton:backend",
+        "maxBatchSize": {
+          "@id": "triton:maxBatchSize",
+          "@type": "xsd:integer"
+        },
+        "versions": "triton:versions",
+        "inputs": "triton:inputs",
+        "outputs": "triton:outputs",
+        "instanceGroup": "triton:instanceGroup",
+        "dynamicBatching": "triton:dynamicBatching",
+        "sequenceBatching": "triton:sequenceBatching"
+      }
+    },
+
+    "Tensor": {
+      "@id": "triton:Tensor",
+      "@context": {
+        "name": "schema:name",
+        "datatype": "triton:datatype",
+        "shape": "triton:shape",
+        "data": "triton:data"
+      }
+    },
+
+    "InferenceRequest": {
+      "@id": "triton:InferenceRequest",
+      "@context": {
+        "requestId": "schema:identifier",
+        "inputs": "triton:inputs",
+        "outputs": "triton:outputs",
+        "sequenceId": "triton:sequenceId",
+        "sequenceStart": {
+          "@id": "triton:sequenceStart",
+          "@type": "xsd:boolean"
+        },
+        "sequenceEnd": {
+          "@id": "triton:sequenceEnd",
+          "@type": "xsd:boolean"
+        },
+        "priority": {
+          "@id": "triton:priority",
+          "@type": "xsd:integer"
+        },
+        "timeout": {
+          "@id": "triton:timeout",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "InferenceResponse": {
+      "@id": "triton:InferenceResponse",
+      "@context": {
+        "responseId": "schema:identifier",
+        "modelName": "triton:modelName",
+        "modelVersion": "triton:modelVersion",
+        "outputs": "triton:outputs"
+      }
+    },
+
+    "ModelStatistics": {
+      "@id": "triton:ModelStatistics",
+      "@context": {
+        "name": "schema:name",
+        "version": "schema:version",
+        "lastInference": {
+          "@id": "triton:lastInference",
+          "@type": "xsd:dateTime"
+        },
+        "inferenceCount": {
+          "@id": "triton:inferenceCount",
+          "@type": "xsd:integer"
+        },
+        "executionCount": {
+          "@id": "triton:executionCount",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "ServerMetadata": {
+      "@id": "triton:ServerMetadata",
+      "@context": {
+        "name": "schema:name",
+        "version": "schema:softwareVersion",
+        "extensions": "triton:extensions"
+      }
+    },
+
+    "InstanceGroup": {
+      "@id": "triton:InstanceGroup",
+      "@context": {
+        "name": "schema:name",
+        "kind": "triton:deviceKind",
+        "count": {
+          "@id": "triton:instanceCount",
+          "@type": "xsd:integer"
+        },
+        "gpus": "triton:gpuDevices"
+      }
+    },
+
+    "SharedMemoryRegion": {
+      "@id": "triton:SharedMemoryRegion",
+      "@context": {
+        "name": "schema:name",
+        "key": "triton:sharedMemoryKey",
+        "offset": {
+          "@id": "triton:offset",
+          "@type": "xsd:integer"
+        },
+        "byteSize": {
+          "@id": "triton:byteSize",
+          "@type": "xsd:integer"
+        }
+      }
+    },
+
+    "RepositoryEntry": {
+      "@id": "triton:RepositoryEntry",
+      "@context": {
+        "name": "schema:name",
+        "version": "schema:version",
+        "state": "triton:modelState",
+        "reason": "triton:stateReason"
+      }
+    }
+  }
+}

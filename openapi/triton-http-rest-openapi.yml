@@ -1,0 +1,1681 @@
+openapi: 3.1.0
+info:
+  title: NVIDIA Triton Inference Server HTTP/REST API
+  description: >-
+    RESTful API for the NVIDIA Triton Inference Server, implementing the KServe
+    V2 inference protocol with Triton-specific extensions. Provides endpoints
+    for model inference, health checks, server and model metadata, model
+    repository management, statistics, tracing, logging, and system shared
+    memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
+servers:
+  - url: http://localhost:8000
+    description: Triton HTTP endpoint (default)
+  - url: http://{host}:{port}
+    description: Custom Triton HTTP endpoint
+    variables:
+      host:
+        default: localhost
+        description: Triton server hostname or IP
+      port:
+        default: '8000'
+        description: Triton HTTP port
+tags:
+  - name: Health
+    description: Server and model health and readiness checks
+  - name: Server Metadata
+    description: Server-level metadata and information
+  - name: Model Metadata
+    description: Model-level metadata, configuration, and statistics
+  - name: Inference
+    description: Model inference requests
+  - name: Model Repository
+    description: Model repository management operations
+  - name: System Shared Memory
+    description: System shared memory region management
+  - name: CUDA Shared Memory
+    description: CUDA shared memory region management
+  - name: Statistics
+    description: Server and model inference statistics
+  - name: Trace
+    description: Request tracing configuration
+  - name: Logging
+    description: Server logging configuration
+paths:
+  /v2/health/live:
+    get:
+      operationId: serverLive
+      summary: Server liveness check
+      description: >-
+        Check if the Triton server is alive and able to receive requests. This
+        is the KServe V2 standard liveness probe endpoint.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is live
+        '400':
+          description: Server is not live
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/health/ready:
+    get:
+      operationId: serverReady
+      summary: Server readiness check
+      description: >-
+        Check if the Triton server is ready to accept inference requests. The
+        server is ready when all models that are loaded at startup are ready.
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is ready
+        '400':
+          description: Server is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/ready:
+    get:
+      operationId: modelVersionReady
+      summary: Model version readiness check
+      description: >-
+        Check if a specific version of a model is ready to accept inference
+        requests.
+      tags:
+        - Health
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+        - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version is ready
+        '400':
+          description: Model version is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/ready:
+    get:
+      operationId: modelReady
+      summary: Model readiness check
+      description: >-
+        Check if a model is ready to accept inference requests. Checks the
+        default/latest version of the model.
+      tags:
+        - Health
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model is ready
+        '400':
+          description: Model is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2:
+    get:
+      operationId: serverMetadata
+      summary: Get server metadata
+      description: >-
+        Retrieve metadata about the Triton server including name, version, and
+        supported extensions.
+      tags:
+        - Server Metadata
+      responses:
+        '200':
+          description: Server metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerMetadataResponse'
+        '400':
+          description: Error retrieving server metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}:
+    get:
+      operationId: modelMetadata
+      summary: Get model metadata
+      description: >-
+        Retrieve metadata about a specific model including its name, versions,
+        platform, and input/output tensor information.
+      tags:
+        - Model Metadata
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '400':
+          description: Error retrieving model metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}:
+    get:
+      operationId: modelVersionMetadata
+      summary: Get model version metadata
+      description: >-
+        Retrieve metadata about a specific version of a model.
+      tags:
+        - Model Metadata
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+        - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '400':
+          description: Error retrieving model version metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/config:
+    get:
+      operationId: modelConfig
+      summary: Get model configuration
+      description: >-
+        Retrieve the configuration of a specific model as defined in the model
+        repository. This is a Triton extension to the KServe protocol.
+      tags:
+        - Model Metadata
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model configuration returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelConfigResponse'
+        '400':
+          description: Error retrieving model configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/config:
+    get:
+      operationId: modelVersionConfig
+      summary: Get model version configuration
+      description: >-
+        Retrieve the configuration of a specific version of a model.
+      tags:
+        - Model Metadata
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+        - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version configuration returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelConfigResponse'
+        '400':
+          description: Error retrieving model version configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/infer:
+    post:
+      operationId: modelInfer
+      summary: Run inference on a model
+      description: >-
+        Submit an inference request to a model. The request specifies input
+        tensors and requested output tensors. Supports optional parameters
+        for sequence handling, priority, timeout, and binary data.
+      tags:
+        - Inference
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: Inference completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '400':
+          description: Inference request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/infer:
+    post:
+      operationId: modelVersionInfer
+      summary: Run inference on a specific model version
+      description: >-
+        Submit an inference request to a specific version of a model.
+      tags:
+        - Inference
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+        - $ref: '#/components/parameters/modelVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: Inference completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '400':
+          description: Inference request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/repository/index:
+    post:
+      operationId: repositoryIndex
+      summary: List models in the repository
+      description: >-
+        Retrieve the index of all models available in the model repository. Can
+        optionally filter to show only models that are ready. This is a Triton
+        extension to the KServe protocol.
+      tags:
+        - Model Repository
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ready:
+                  type: boolean
+                  description: If true, only return models that are ready for inference
+      responses:
+        '200':
+          description: Repository index returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepositoryIndexEntry'
+        '400':
+          description: Error retrieving repository index
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/repository/models/{model_name}/load:
+    post:
+      operationId: modelLoad
+      summary: Load or reload a model
+      description: >-
+        Request that a model be loaded into Triton, or reloaded if it is already
+        loaded. Optionally provide model configuration overrides as parameters.
+        This is a Triton extension to the KServe protocol.
+      tags:
+        - Model Repository
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  description: >-
+                    Optional parameters for model loading, including config
+                    overrides and file content overrides.
+                  additionalProperties:
+                    oneOf:
+                      - type: string
+                      - type: boolean
+                      - type: integer
+      responses:
+        '200':
+          description: Model loaded successfully
+        '400':
+          description: Error loading model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/repository/models/{model_name}/unload:
+    post:
+      operationId: modelUnload
+      summary: Unload a model
+      description: >-
+        Request that a model be unloaded from Triton. Once unloaded the model
+        will no longer be available for inference. This is a Triton extension
+        to the KServe protocol.
+      tags:
+        - Model Repository
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  description: Optional parameters for model unloading
+                  additionalProperties:
+                    oneOf:
+                      - type: string
+                      - type: boolean
+                      - type: integer
+      responses:
+        '200':
+          description: Model unloaded successfully
+        '400':
+          description: Error unloading model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/stats:
+    get:
+      operationId: modelStatistics
+      summary: Get model inference statistics
+      description: >-
+        Retrieve inference statistics for a specific model including request
+        count, execution count, and cumulative timing information. This is a
+        Triton extension to the KServe protocol.
+      tags:
+        - Statistics
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model statistics returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving model statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/stats:
+    get:
+      operationId: modelVersionStatistics
+      summary: Get model version inference statistics
+      description: >-
+        Retrieve inference statistics for a specific version of a model.
+      tags:
+        - Statistics
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+        - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version statistics returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving model version statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/stats:
+    get:
+      operationId: allModelStatistics
+      summary: Get statistics for all models
+      description: >-
+        Retrieve inference statistics for all loaded models.
+      tags:
+        - Statistics
+      responses:
+        '200':
+          description: Statistics for all models returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/trace/setting:
+    get:
+      operationId: getTraceSetting
+      summary: Get trace settings
+      description: >-
+        Retrieve the current global trace settings. This is a Triton extension
+        to the KServe protocol.
+      tags:
+        - Trace
+      responses:
+        '200':
+          description: Trace settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error retrieving trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateTraceSetting
+      summary: Update trace settings
+      description: >-
+        Update the global trace settings for request tracing.
+      tags:
+        - Trace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TraceSettingRequest'
+      responses:
+        '200':
+          description: Trace settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error updating trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/trace/setting:
+    get:
+      operationId: getModelTraceSetting
+      summary: Get model-specific trace settings
+      description: >-
+        Retrieve the trace settings for a specific model.
+      tags:
+        - Trace
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model trace settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error retrieving model trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateModelTraceSetting
+      summary: Update model-specific trace settings
+      description: >-
+        Update the trace settings for a specific model.
+      tags:
+        - Trace
+      parameters:
+        - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TraceSettingRequest'
+      responses:
+        '200':
+          description: Model trace settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error updating model trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/logging:
+    get:
+      operationId: getLogSettings
+      summary: Get logging settings
+      description: >-
+        Retrieve the current logging settings. This is a Triton extension to
+        the KServe protocol.
+      tags:
+        - Logging
+      responses:
+        '200':
+          description: Logging settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSettingsResponse'
+        '400':
+          description: Error retrieving logging settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateLogSettings
+      summary: Update logging settings
+      description: >-
+        Update the server logging settings.
+      tags:
+        - Logging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogSettingsRequest'
+      responses:
+        '200':
+          description: Logging settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSettingsResponse'
+        '400':
+          description: Error updating logging settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/status:
+    get:
+      operationId: systemSharedMemoryStatus
+      summary: Get system shared memory status
+      description: >-
+        Retrieve the status of all registered system shared memory regions.
+        This is a Triton extension to the KServe protocol.
+      tags:
+        - System Shared Memory
+      responses:
+        '200':
+          description: System shared memory status returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedMemoryRegion'
+        '400':
+          description: Error retrieving status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/region/{region_name}/register:
+    post:
+      operationId: systemSharedMemoryRegister
+      summary: Register a system shared memory region
+      description: >-
+        Register a system shared memory region for use with inference requests.
+      tags:
+        - System Shared Memory
+      parameters:
+        - $ref: '#/components/parameters/regionName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+                - offset
+                - byte_size
+              properties:
+                key:
+                  type: string
+                  description: Shared memory key
+                offset:
+                  type: integer
+                  description: Offset within the shared memory region in bytes
+                byte_size:
+                  type: integer
+                  description: Size of the shared memory region in bytes
+      responses:
+        '200':
+          description: Region registered successfully
+        '400':
+          description: Error registering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/region/{region_name}/unregister:
+    post:
+      operationId: systemSharedMemoryUnregister
+      summary: Unregister a system shared memory region
+      description: >-
+        Unregister a previously registered system shared memory region.
+      tags:
+        - System Shared Memory
+      parameters:
+        - $ref: '#/components/parameters/regionName'
+      responses:
+        '200':
+          description: Region unregistered successfully
+        '400':
+          description: Error unregistering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/unregister:
+    post:
+      operationId: systemSharedMemoryUnregisterAll
+      summary: Unregister all system shared memory regions
+      description: >-
+        Unregister all registered system shared memory regions.
+      tags:
+        - System Shared Memory
+      responses:
+        '200':
+          description: All regions unregistered successfully
+        '400':
+          description: Error unregistering regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/status:
+    get:
+      operationId: cudaSharedMemoryStatus
+      summary: Get CUDA shared memory status
+      description: >-
+        Retrieve the status of all registered CUDA shared memory regions.
+        This is a Triton extension to the KServe protocol.
+      tags:
+        - CUDA Shared Memory
+      responses:
+        '200':
+          description: CUDA shared memory status returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CudaSharedMemoryRegion'
+        '400':
+          description: Error retrieving status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/region/{region_name}/register:
+    post:
+      operationId: cudaSharedMemoryRegister
+      summary: Register a CUDA shared memory region
+      description: >-
+        Register a CUDA shared memory region for use with inference requests.
+      tags:
+        - CUDA Shared Memory
+      parameters:
+        - $ref: '#/components/parameters/regionName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - raw_handle
+                - device_id
+                - byte_size
+              properties:
+                raw_handle:
+                  type: object
+                  description: CUDA IPC memory handle serialized as a base64-encoded object
+                  properties:
+                    b64:
+                      type: string
+                      format: byte
+                      description: Base64-encoded CUDA IPC memory handle
+                device_id:
+                  type: integer
+                  description: GPU device ID where the memory is allocated
+                byte_size:
+                  type: integer
+                  description: Size of the CUDA shared memory region in bytes
+      responses:
+        '200':
+          description: Region registered successfully
+        '400':
+          description: Error registering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/region/{region_name}/unregister:
+    post:
+      operationId: cudaSharedMemoryUnregister
+      summary: Unregister a CUDA shared memory region
+      description: >-
+        Unregister a previously registered CUDA shared memory region.
+      tags:
+        - CUDA Shared Memory
+      parameters:
+        - $ref: '#/components/parameters/regionName'
+      responses:
+        '200':
+          description: Region unregistered successfully
+        '400':
+          description: Error unregistering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/unregister:
+    post:
+      operationId: cudaSharedMemoryUnregisterAll
+      summary: Unregister all CUDA shared memory regions
+      description: >-
+        Unregister all registered CUDA shared memory regions.
+      tags:
+        - CUDA Shared Memory
+      responses:
+        '200':
+          description: All regions unregistered successfully
+        '400':
+          description: Error unregistering regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+    regionName:
+      name: region_name
+      in: path
+      required: true
+      description: Name of the shared memory region
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    ServerMetadataResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the inference server
+          examples:
+            - triton
+        version:
+          type: string
+          description: Version of the inference server
+          examples:
+            - '2.42.0'
+        extensions:
+          type: array
+          description: List of extensions supported by the server
+          items:
+            type: string
+          examples:
+            - - classification
+              - sequence
+              - model_repository
+              - model_configuration
+              - schedule_policy
+              - server_metadata
+              - statistics
+              - trace
+              - logging
+    ModelMetadataResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the model
+        versions:
+          type: array
+          description: Available versions of the model
+          items:
+            type: string
+        platform:
+          type: string
+          description: Framework platform of the model
+          examples:
+            - tensorrt_plan
+            - tensorflow_graphdef
+            - tensorflow_savedmodel
+            - onnxruntime_onnx
+            - pytorch_libtorch
+            - python
+        inputs:
+          type: array
+          description: Input tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+        outputs:
+          type: array
+          description: Output tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+    TensorMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the tensor
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+            - BOOL
+            - UINT8
+            - UINT16
+            - UINT32
+            - UINT64
+            - INT8
+            - INT16
+            - INT32
+            - INT64
+            - FP16
+            - FP32
+            - FP64
+            - BYTES
+            - BF16
+        shape:
+          type: array
+          description: Shape of the tensor with -1 indicating variable-length dimensions
+          items:
+            type: integer
+    ModelConfigResponse:
+      type: object
+      description: >-
+        Full model configuration as defined in the model repository config.pbtxt
+        file, returned as a JSON representation.
+      properties:
+        name:
+          type: string
+          description: Name of the model
+        platform:
+          type: string
+          description: Framework platform
+        backend:
+          type: string
+          description: Backend used by the model
+        version_policy:
+          type: object
+          description: Version selection policy
+          properties:
+            latest:
+              type: object
+              properties:
+                num_versions:
+                  type: integer
+            all:
+              type: object
+            specific:
+              type: object
+              properties:
+                versions:
+                  type: array
+                  items:
+                    type: integer
+        max_batch_size:
+          type: integer
+          description: Maximum batch size supported (0 means batching disabled)
+        input:
+          type: array
+          description: Input tensor configurations
+          items:
+            $ref: '#/components/schemas/ModelTensorConfig'
+        output:
+          type: array
+          description: Output tensor configurations
+          items:
+            $ref: '#/components/schemas/ModelTensorConfig'
+        instance_group:
+          type: array
+          description: Instance group configurations
+          items:
+            $ref: '#/components/schemas/InstanceGroup'
+        dynamic_batching:
+          $ref: '#/components/schemas/DynamicBatching'
+        sequence_batching:
+          $ref: '#/components/schemas/SequenceBatching'
+        ensemble_scheduling:
+          $ref: '#/components/schemas/EnsembleScheduling'
+        parameters:
+          type: object
+          description: Custom model parameters
+          additionalProperties:
+            type: object
+            properties:
+              string_value:
+                type: string
+        model_warmup:
+          type: array
+          description: Model warmup configurations
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              batch_size:
+                type: integer
+              inputs:
+                type: object
+                additionalProperties:
+                  type: object
+    ModelTensorConfig:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Tensor name
+        data_type:
+          type: string
+          description: Data type of the tensor
+          enum:
+            - TYPE_BOOL
+            - TYPE_UINT8
+            - TYPE_UINT16
+            - TYPE_UINT32
+            - TYPE_UINT64
+            - TYPE_INT8
+            - TYPE_INT16
+            - TYPE_INT32
+            - TYPE_INT64
+            - TYPE_FP16
+            - TYPE_FP32
+            - TYPE_FP64
+            - TYPE_STRING
+            - TYPE_BF16
+        dims:
+          type: array
+          description: Tensor dimensions
+          items:
+            type: integer
+        reshape:
+          type: object
+          description: Reshape configuration
+          properties:
+            shape:
+              type: array
+              items:
+                type: integer
+        is_shape_tensor:
+          type: boolean
+          description: Whether this tensor is a shape tensor
+        allow_ragged_batch:
+          type: boolean
+          description: Whether ragged batching is allowed
+    InstanceGroup:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Instance group name
+        kind:
+          type: string
+          description: Device kind for the instance group
+          enum:
+            - KIND_AUTO
+            - KIND_GPU
+            - KIND_CPU
+            - KIND_MODEL
+        count:
+          type: integer
+          description: Number of instances in the group
+        gpus:
+          type: array
+          description: GPU device IDs assigned to this group
+          items:
+            type: integer
+        rate_group:
+          type: integer
+          description: Rate limiter group
+        rate_limit:
+          type: object
+          description: Rate limiting configuration
+          properties:
+            resources:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  global:
+                    type: boolean
+                  count:
+                    type: integer
+    DynamicBatching:
+      type: object
+      description: Dynamic batching configuration
+      properties:
+        preferred_batch_size:
+          type: array
+          description: Preferred batch sizes
+          items:
+            type: integer
+        max_queue_delay_microseconds:
+          type: integer
+          description: Maximum delay in microseconds for forming a batch
+        preserve_ordering:
+          type: boolean
+          description: Whether to preserve ordering of responses
+        priority_levels:
+          type: integer
+          description: Number of priority levels
+        default_priority_level:
+          type: integer
+          description: Default priority level
+        default_queue_policy:
+          $ref: '#/components/schemas/QueuePolicy'
+        priority_queue_policy:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/QueuePolicy'
+    QueuePolicy:
+      type: object
+      properties:
+        timeout_action:
+          type: string
+          enum:
+            - REJECT
+            - DELAY
+        default_timeout_microseconds:
+          type: integer
+        allow_timeout_override:
+          type: boolean
+        max_queue_size:
+          type: integer
+    SequenceBatching:
+      type: object
+      description: Sequence batching configuration
+      properties:
+        max_sequence_idle_microseconds:
+          type: integer
+          description: Maximum idle time for a sequence before it is timed out
+        control_input:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              control:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    kind:
+                      type: string
+                      enum:
+                        - CONTROL_SEQUENCE_START
+                        - CONTROL_SEQUENCE_READY
+                        - CONTROL_SEQUENCE_END
+                        - CONTROL_SEQUENCE_CORRID
+                    int32_false_true:
+                      type: array
+                      items:
+                        type: integer
+                    fp32_false_true:
+                      type: array
+                      items:
+                        type: number
+                    bool_false_true:
+                      type: array
+                      items:
+                        type: boolean
+        state:
+          type: array
+          description: Implicit state configurations
+          items:
+            type: object
+            properties:
+              input_name:
+                type: string
+              output_name:
+                type: string
+              data_type:
+                type: string
+              dims:
+                type: array
+                items:
+                  type: integer
+    EnsembleScheduling:
+      type: object
+      description: Ensemble model scheduling configuration
+      properties:
+        step:
+          type: array
+          items:
+            type: object
+            properties:
+              model_name:
+                type: string
+                description: Name of the model in the ensemble step
+              model_version:
+                type: integer
+                description: Version of the model to use
+              input_map:
+                type: object
+                description: Mapping of ensemble tensor names to step model input names
+                additionalProperties:
+                  type: string
+              output_map:
+                type: object
+                description: Mapping of step model output names to ensemble tensor names
+                additionalProperties:
+                  type: string
+    InferenceRequest:
+      type: object
+      required:
+        - inputs
+      properties:
+        id:
+          type: string
+          description: >-
+            Unique identifier for the request. If not provided, the server will
+            generate one.
+        parameters:
+          type: object
+          description: >-
+            Optional inference parameters including sequence_id, sequence_start,
+            sequence_end, priority, and timeout.
+          properties:
+            sequence_id:
+              oneOf:
+                - type: integer
+                - type: string
+              description: Sequence identifier for stateful models
+            sequence_start:
+              type: boolean
+              description: Indicates the start of a sequence
+            sequence_end:
+              type: boolean
+              description: Indicates the end of a sequence
+            priority:
+              type: integer
+              description: Priority of the request (higher values mean higher priority)
+            timeout:
+              type: integer
+              description: Timeout in microseconds for the request
+            binary_data_output:
+              type: boolean
+              description: If true, request binary data in response outputs
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
+              - type: integer
+        inputs:
+          type: array
+          description: Input tensors for inference
+          items:
+            $ref: '#/components/schemas/InferenceTensor'
+        outputs:
+          type: array
+          description: >-
+            Requested output tensors. If not specified, all outputs defined
+            by the model will be returned.
+          items:
+            $ref: '#/components/schemas/RequestedOutputTensor'
+    InferenceTensor:
+      type: object
+      required:
+        - name
+        - shape
+        - datatype
+        - data
+      properties:
+        name:
+          type: string
+          description: Name of the input tensor
+        shape:
+          type: array
+          description: Shape of the input tensor
+          items:
+            type: integer
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+            - BOOL
+            - UINT8
+            - UINT16
+            - UINT32
+            - UINT64
+            - INT8
+            - INT16
+            - INT32
+            - INT64
+            - FP16
+            - FP32
+            - FP64
+            - BYTES
+            - BF16
+        parameters:
+          type: object
+          description: Optional parameters for the tensor
+          properties:
+            binary_data_size:
+              type: integer
+              description: Size of binary tensor data appended to the request body
+            shared_memory_region:
+              type: string
+              description: Name of the shared memory region containing tensor data
+            shared_memory_offset:
+              type: integer
+              description: Offset within the shared memory region
+            shared_memory_byte_size:
+              type: integer
+              description: Size of the tensor data in shared memory
+            classification:
+              type: integer
+              description: Number of top classifications to return
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
+              - type: integer
+        data:
+          type: array
+          description: Tensor data as a flattened array
+          items: {}
+    RequestedOutputTensor:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the requested output tensor
+        parameters:
+          type: object
+          description: Optional parameters for the output tensor
+          properties:
+            binary_data:
+              type: boolean
+              description: If true, return output as binary data
+            shared_memory_region:
+              type: string
+              description: Name of the shared memory region for output
+            shared_memory_offset:
+              type: integer
+              description: Offset within the shared memory region
+            shared_memory_byte_size:
+              type: integer
+              description: Size of the output in shared memory
+            classification:
+              type: integer
+              description: Number of top classifications to return
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
+              - type: integer
+    InferenceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the response matching the request ID
+        model_name:
+          type: string
+          description: Name of the model that processed the request
+        model_version:
+          type: string
+          description: Version of the model that processed the request
+        parameters:
+          type: object
+          description: Response-level parameters
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
+              - type: integer
+        outputs:
+          type: array
+          description: Output tensors from inference
+          items:
+            $ref: '#/components/schemas/OutputTensor'
+    OutputTensor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the output tensor
+        shape:
+          type: array
+          description: Shape of the output tensor
+          items:
+            type: integer
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+            - BOOL
+            - UINT8
+            - UINT16
+            - UINT32
+            - UINT64
+            - INT8
+            - INT16
+            - INT32
+            - INT64
+            - FP16
+            - FP32
+            - FP64
+            - BYTES
+            - BF16
+        parameters:
+          type: object
+          description: Output tensor parameters
+          properties:
+            binary_data_size:
+              type: integer
+              description: Size of binary data appended to response body
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: boolean
+              - type: integer
+        data:
+          type: array
+          description: Tensor data as a flattened array
+          items: {}
+    RepositoryIndexEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Model name
+        version:
+          type: string
+          description: Model version
+        state:
+          type: string
+          description: Current state of the model
+          enum:
+            - READY
+            - UNAVAILABLE
+            - LOADING
+            - UNLOADING
+        reason:
+          type: string
+          description: Reason for the current state if not READY
+    StatisticsResponse:
+      type: object
+      properties:
+        model_stats:
+          type: array
+          description: Statistics for each model
+          items:
+            $ref: '#/components/schemas/ModelStatistics'
+    ModelStatistics:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Model name
+        version:
+          type: string
+          description: Model version
+        last_inference:
+          type: integer
+          description: Timestamp of the last inference (milliseconds since epoch)
+        inference_count:
+          type: integer
+          description: Total number of inferences performed
+        execution_count:
+          type: integer
+          description: Total number of executions (batch-level)
+        inference_stats:
+          $ref: '#/components/schemas/InferenceStatistics'
+        batch_stats:
+          type: array
+          description: Statistics broken down by batch size
+          items:
+            type: object
+            properties:
+              batch_size:
+                type: integer
+              compute_input:
+                $ref: '#/components/schemas/StatisticsDuration'
+              compute_infer:
+                $ref: '#/components/schemas/StatisticsDuration'
+              compute_output:
+                $ref: '#/components/schemas/StatisticsDuration'
+        memory_usage:
+          type: array
+          description: Memory usage details
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              id:
+                type: integer
+              byte_size:
+                type: integer
+    InferenceStatistics:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/StatisticsDuration'
+        fail:
+          $ref: '#/components/schemas/StatisticsDuration'
+        queue:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_input:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_infer:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_output:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_hit:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_miss:
+          $ref: '#/components/schemas/StatisticsDuration'
+    StatisticsDuration:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of occurrences
+        ns:
+          type: integer
+          description: Cumulative duration in nanoseconds
+    SharedMemoryRegion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the shared memory region
+        key:
+          type: string
+          description: Shared memory key
+        offset:
+          type: integer
+          description: Offset in the shared memory region
+        byte_size:
+          type: integer
+          description: Size of the region in bytes
+    CudaSharedMemoryRegion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the CUDA shared memory region
+        device_id:
+          type: integer
+          description: GPU device ID
+        byte_size:
+          type: integer
+          description: Size of the region in bytes
+    TraceSettingResponse:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Current trace levels
+          items:
+            type: string
+            enum:
+              - 'OFF'
+              - TIMESTAMPS
+              - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
+    TraceSettingRequest:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Trace levels to set
+          items:
+            type: string
+            enum:
+              - 'OFF'
+              - TIMESTAMPS
+              - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect (-1 for unlimited)
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
+    LogSettingsResponse:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Current log file path
+        log_info:
+          type: boolean
+          description: Whether info-level logging is enabled
+        log_warning:
+          type: boolean
+          description: Whether warning-level logging is enabled
+        log_error:
+          type: boolean
+          description: Whether error-level logging is enabled
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level (0 = off)
+        log_format:
+          type: string
+          description: Log format
+          enum:
+            - default
+            - ISO8601
+    LogSettingsRequest:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Log file path to set
+        log_info:
+          type: boolean
+          description: Enable or disable info-level logging
+        log_warning:
+          type: boolean
+          description: Enable or disable warning-level logging
+        log_error:
+          type: boolean
+          description: Enable or disable error-level logging
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level to set
+        log_format:
+          type: string
+          description: Log format to use
+          enum:
+            - default
+            - ISO8601

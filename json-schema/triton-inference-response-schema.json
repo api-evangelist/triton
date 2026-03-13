@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://developer.nvidia.com/schemas/triton/inference-response.json",
+  "title": "Triton Inference Response",
+  "description": "An inference response returned by NVIDIA Triton Inference Server following the KServe V2 inference protocol. Contains the model identification, request correlation ID, and output tensors with their data.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the response, matching the corresponding request ID"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "Name of the model that produced the inference results"
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Version of the model that produced the inference results"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Response-level parameters returned by the server",
+      "properties": {
+        "sequence_id": {
+          "oneOf": [
+            { "type": "integer" },
+            { "type": "string" }
+          ],
+          "description": "Sequence identifier if this response is part of a sequence"
+        },
+        "sequence_start": {
+          "type": "boolean",
+          "description": "Indicates this is the first response in a sequence"
+        },
+        "sequence_end": {
+          "type": "boolean",
+          "description": "Indicates this is the last response in a sequence"
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "boolean" },
+          { "type": "integer" }
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Output tensors produced by the inference",
+      "items": {
+        "$ref": "#/$defs/OutputTensor"
+      }
+    }
+  },
+  "$defs": {
+    "OutputTensor": {
+      "type": "object",
+      "description": "An output tensor returned by the model after inference",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the output tensor"
+        },
+        "shape": {
+          "type": "array",
+          "description": "Shape of the output tensor",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "datatype": {
+          "type": "string",
+          "description": "Data type of the tensor elements",
+          "enum": [
+            "BOOL",
+            "UINT8",
+            "UINT16",
+            "UINT32",
+            "UINT64",
+            "INT8",
+            "INT16",
+            "INT32",
+            "INT64",
+            "FP16",
+            "FP32",
+            "FP64",
+            "BYTES",
+            "BF16"
+          ]
+        },
+        "parameters": {
+          "type": "object",
+          "description": "Per-output parameters",
+          "properties": {
+            "binary_data_size": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size in bytes of binary data appended after the JSON response body"
+            }
+          },
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "boolean" },
+              { "type": "integer" }
+            ]
+          }
+        },
+        "data": {
+          "type": "array",
+          "description": "Tensor data as a flattened row-major array of values"
+        }
+      }
+    }
+  }
+}
