@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: NVIDIA Triton Inference Server Metrics API
+  title: Triton Inference Server NVIDIA Triton Inference Server Metrics API
   description: >-
     Prometheus-compatible metrics API for monitoring NVIDIA Triton Inference
     Server performance. Exposes server-level and per-model metrics including
@@ -36,7 +36,7 @@ paths:
   /metrics:
     get:
       operationId: getMetrics
-      summary: Get Prometheus metrics
+      summary: Triton Inference Server Get Prometheus metrics
       description: >-
         Retrieve all available metrics in Prometheus text exposition format.
         Includes server-level metrics (request counts, latencies, GPU

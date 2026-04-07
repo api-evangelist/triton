@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: NVIDIA Triton Inference Server HTTP/REST API
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API
   description: >-
     RESTful API for the NVIDIA Triton Inference Server, implementing the KServe
     V2 inference protocol with Triton-specific extensions. Provides endpoints
@@ -55,7 +55,7 @@ paths:
   /v2/health/live:
     get:
       operationId: serverLive
-      summary: Server liveness check
+      summary: Triton Inference Server Server liveness check
       description: >-
         Check if the Triton server is alive and able to receive requests. This
         is the KServe V2 standard liveness probe endpoint.
@@ -73,7 +73,7 @@ paths:
   /v2/health/ready:
     get:
       operationId: serverReady
-      summary: Server readiness check
+      summary: Triton Inference Server Server readiness check
       description: >-
         Check if the Triton server is ready to accept inference requests. The
         server is ready when all models that are loaded at startup are ready.
@@ -91,7 +91,7 @@ paths:
   /v2/models/{model_name}/versions/{model_version}/ready:
     get:
       operationId: modelVersionReady
-      summary: Model version readiness check
+      summary: Triton Inference Server Model version readiness check
       description: >-
         Check if a specific version of a model is ready to accept inference
         requests.
@@ -112,7 +112,7 @@ paths:
   /v2/models/{model_name}/ready:
     get:
       operationId: modelReady
-      summary: Model readiness check
+      summary: Triton Inference Server Model readiness check
       description: >-
         Check if a model is ready to accept inference requests. Checks the
         default/latest version of the model.
@@ -132,7 +132,7 @@ paths:
   /v2:
     get:
       operationId: serverMetadata
-      summary: Get server metadata
+      summary: Triton Inference Server Get server metadata
       description: >-
         Retrieve metadata about the Triton server including name, version, and
         supported extensions.
@@ -154,7 +154,7 @@ paths:
   /v2/models/{model_name}:
     get:
       operationId: modelMetadata
-      summary: Get model metadata
+      summary: Triton Inference Server Get model metadata
       description: >-
         Retrieve metadata about a specific model including its name, versions,
         platform, and input/output tensor information.
@@ -178,7 +178,7 @@ paths:
   /v2/models/{model_name}/versions/{model_version}:
     get:
       operationId: modelVersionMetadata
-      summary: Get model version metadata
+      summary: Triton Inference Server Get model version metadata
       description: >-
         Retrieve metadata about a specific version of a model.
       tags:
@@ -202,7 +202,7 @@ paths:
   /v2/models/{model_name}/config:
     get:
       operationId: modelConfig
-      summary: Get model configuration
+      summary: Triton Inference Server Get model configuration
       description: >-
         Retrieve the configuration of a specific model as defined in the model
         repository. This is a Triton extension to the KServe protocol.
@@ -226,7 +226,7 @@ paths:
   /v2/models/{model_name}/versions/{model_version}/config:
     get:
       operationId: modelVersionConfig
-      summary: Get model version configuration
+      summary: Triton Inference Server Get model version configuration
       description: >-
         Retrieve the configuration of a specific version of a model.
       tags:
@@ -250,7 +250,7 @@ paths:
   /v2/models/{model_name}/infer:
     post:
       operationId: modelInfer
-      summary: Run inference on a model
+      summary: Triton Inference Server Run inference on a model
       description: >-
         Submit an inference request to a model. The request specifies input
         tensors and requested output tensors. Supports optional parameters
@@ -281,7 +281,7 @@ paths:
   /v2/models/{model_name}/versions/{model_version}/infer:
     post:
       operationId: modelVersionInfer
-      summary: Run inference on a specific model version
+      summary: Triton Inference Server Run inference on a specific model version
       description: >-
         Submit an inference request to a specific version of a model.
       tags:
@@ -311,7 +311,7 @@ paths:
   /v2/repository/index:
     post:
       operationId: repositoryIndex
-      summary: List models in the repository
+      summary: Triton Inference Server List models in the repository
       description: >-
         Retrieve the index of all models available in the model repository. Can
         optionally filter to show only models that are ready. This is a Triton
@@ -346,7 +346,7 @@ paths:
   /v2/repository/models/{model_name}/load:
     post:
       operationId: modelLoad
-      summary: Load or reload a model
+      summary: Triton Inference Server Load or reload a model
       description: >-
         Request that a model be loaded into Triton, or reloaded if it is already
         loaded. Optionally provide model configuration overrides as parameters.
@@ -384,7 +384,7 @@ paths:
   /v2/repository/models/{model_name}/unload:
     post:
       operationId: modelUnload
-      summary: Unload a model
+      summary: Triton Inference Server Unload a model
       description: >-
         Request that a model be unloaded from Triton. Once unloaded the model
         will no longer be available for inference. This is a Triton extension
@@ -420,7 +420,7 @@ paths:
   /v2/models/{model_name}/stats:
     get:
       operationId: modelStatistics
-      summary: Get model inference statistics
+      summary: Triton Inference Server Get model inference statistics
       description: >-
         Retrieve inference statistics for a specific model including request
         count, execution count, and cumulative timing information. This is a
@@ -445,7 +445,7 @@ paths:
   /v2/models/{model_name}/versions/{model_version}/stats:
     get:
       operationId: modelVersionStatistics
-      summary: Get model version inference statistics
+      summary: Triton Inference Server Get model version inference statistics
       description: >-
         Retrieve inference statistics for a specific version of a model.
       tags:
@@ -469,7 +469,7 @@ paths:
   /v2/models/stats:
     get:
       operationId: allModelStatistics
-      summary: Get statistics for all models
+      summary: Triton Inference Server Get statistics for all models
       description: >-
         Retrieve inference statistics for all loaded models.
       tags:
@@ -490,7 +490,7 @@ paths:
   /v2/trace/setting:
     get:
       operationId: getTraceSetting
-      summary: Get trace settings
+      summary: Triton Inference Server Get trace settings
       description: >-
         Retrieve the current global trace settings. This is a Triton extension
         to the KServe protocol.
@@ -511,7 +511,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: updateTraceSetting
-      summary: Update trace settings
+      summary: Triton Inference Server Update trace settings
       description: >-
         Update the global trace settings for request tracing.
       tags:
@@ -538,7 +538,7 @@ paths:
   /v2/models/{model_name}/trace/setting:
     get:
       operationId: getModelTraceSetting
-      summary: Get model-specific trace settings
+      summary: Triton Inference Server Get model-specific trace settings
       description: >-
         Retrieve the trace settings for a specific model.
       tags:
@@ -560,7 +560,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: updateModelTraceSetting
-      summary: Update model-specific trace settings
+      summary: Triton Inference Server Update model-specific trace settings
       description: >-
         Update the trace settings for a specific model.
       tags:
@@ -589,7 +589,7 @@ paths:
   /v2/logging:
     get:
       operationId: getLogSettings
-      summary: Get logging settings
+      summary: Triton Inference Server Get logging settings
       description: >-
         Retrieve the current logging settings. This is a Triton extension to
         the KServe protocol.
@@ -610,7 +610,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: updateLogSettings
-      summary: Update logging settings
+      summary: Triton Inference Server Update logging settings
       description: >-
         Update the server logging settings.
       tags:
@@ -637,7 +637,7 @@ paths:
   /v2/systemsharedmemory/status:
     get:
       operationId: systemSharedMemoryStatus
-      summary: Get system shared memory status
+      summary: Triton Inference Server Get system shared memory status
       description: >-
         Retrieve the status of all registered system shared memory regions.
         This is a Triton extension to the KServe protocol.
@@ -661,7 +661,7 @@ paths:
   /v2/systemsharedmemory/region/{region_name}/register:
     post:
       operationId: systemSharedMemoryRegister
-      summary: Register a system shared memory region
+      summary: Triton Inference Server Register a system shared memory region
       description: >-
         Register a system shared memory region for use with inference requests.
       tags:
@@ -700,7 +700,7 @@ paths:
   /v2/systemsharedmemory/region/{region_name}/unregister:
     post:
       operationId: systemSharedMemoryUnregister
-      summary: Unregister a system shared memory region
+      summary: Triton Inference Server Unregister a system shared memory region
       description: >-
         Unregister a previously registered system shared memory region.
       tags:
@@ -719,7 +719,7 @@ paths:
   /v2/systemsharedmemory/unregister:
     post:
       operationId: systemSharedMemoryUnregisterAll
-      summary: Unregister all system shared memory regions
+      summary: Triton Inference Server Unregister all system shared memory regions
       description: >-
         Unregister all registered system shared memory regions.
       tags:
@@ -736,7 +736,7 @@ paths:
   /v2/cudasharedmemory/status:
     get:
       operationId: cudaSharedMemoryStatus
-      summary: Get CUDA shared memory status
+      summary: Triton Inference Server Get CUDA shared memory status
       description: >-
         Retrieve the status of all registered CUDA shared memory regions.
         This is a Triton extension to the KServe protocol.
@@ -760,7 +760,7 @@ paths:
   /v2/cudasharedmemory/region/{region_name}/register:
     post:
       operationId: cudaSharedMemoryRegister
-      summary: Register a CUDA shared memory region
+      summary: Triton Inference Server Register a CUDA shared memory region
       description: >-
         Register a CUDA shared memory region for use with inference requests.
       tags:
@@ -804,7 +804,7 @@ paths:
   /v2/cudasharedmemory/region/{region_name}/unregister:
     post:
       operationId: cudaSharedMemoryUnregister
-      summary: Unregister a CUDA shared memory region
+      summary: Triton Inference Server Unregister a CUDA shared memory region
       description: >-
         Unregister a previously registered CUDA shared memory region.
       tags:
@@ -823,7 +823,7 @@ paths:
   /v2/cudasharedmemory/unregister:
     post:
       operationId: cudaSharedMemoryUnregisterAll
-      summary: Unregister all CUDA shared memory regions
+      summary: Triton Inference Server Unregister all CUDA shared memory regions
       description: >-
         Unregister all registered CUDA shared memory regions.
       tags:
@@ -886,15 +886,15 @@ components:
           items:
             type: string
           examples:
-            - - classification
-              - sequence
-              - model_repository
-              - model_configuration
-              - schedule_policy
-              - server_metadata
-              - statistics
-              - trace
-              - logging
+            -   - classification
+                - sequence
+                - model_repository
+                - model_configuration
+                - schedule_policy
+                - server_metadata
+                - statistics
+                - trace
+                - logging
     ModelMetadataResponse:
       type: object
       properties:
