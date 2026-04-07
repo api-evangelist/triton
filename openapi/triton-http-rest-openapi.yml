@@ -31,26 +31,26 @@ servers:
         default: '8000'
         description: Triton HTTP port
 tags:
-  - name: Health
-    description: Server and model health and readiness checks
-  - name: Server Metadata
-    description: Server-level metadata and information
-  - name: Model Metadata
-    description: Model-level metadata, configuration, and statistics
-  - name: Inference
-    description: Model inference requests
-  - name: Model Repository
-    description: Model repository management operations
-  - name: System Shared Memory
-    description: System shared memory region management
   - name: CUDA Shared Memory
     description: CUDA shared memory region management
-  - name: Statistics
-    description: Server and model inference statistics
-  - name: Trace
-    description: Request tracing configuration
+  - name: Health
+    description: Server and model health and readiness checks
+  - name: Inference
+    description: Model inference requests
   - name: Logging
     description: Server logging configuration
+  - name: Model Metadata
+    description: Model-level metadata, configuration, and statistics
+  - name: Model Repository
+    description: Model repository management operations
+  - name: Server Metadata
+    description: Server-level metadata and information
+  - name: Statistics
+    description: Server and model inference statistics
+  - name: System Shared Memory
+    description: System shared memory region management
+  - name: Trace
+    description: Request tracing configuration
 paths:
   /v2/health/live:
     get:
