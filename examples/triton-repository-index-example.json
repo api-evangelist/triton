@@ -1,0 +1,34 @@
+{
+  "operation": "repositoryIndex",
+  "description": "List all models in the Triton repository",
+  "request": {
+    "method": "POST",
+    "url": "http://localhost:8000/v2/repository/index",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "ready": false
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": [
+      {
+        "name": "resnet50",
+        "version": "1",
+        "state": "READY"
+      },
+      {
+        "name": "bert-large-uncased",
+        "version": "1",
+        "state": "READY"
+      },
+      {
+        "name": "yolov8",
+        "version": "1",
+        "state": "LOADING"
+      }
+    ]
+  }
+}

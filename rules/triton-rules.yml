@@ -1,0 +1,78 @@
+extends: spectral:oas
+rules:
+  # Triton Inference Server API Convention Rules
+
+  triton-operation-id-camel-case:
+    description: Operation IDs must use camelCase
+    message: "Operation ID '{{value}}' must use camelCase (e.g. modelInfer, repositoryIndex)"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  triton-require-tags:
+    description: All operations must have at least one tag
+    message: Operations must be tagged (Health, Inference, Model Metadata, Model Repository, Statistics, etc.)
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  triton-require-description:
+    description: All operations must have a description
+    message: Operations must have a description
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy
+
+  triton-path-v2-prefix:
+    description: All paths must begin with /v2 (KServe V2 protocol)
+    message: "Path '{{value}}' must start with /v2"
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v2"
+
+  triton-path-snake-case:
+    description: Path segments (excluding path parameters) should use snake_case or be known keywords
+    message: "Path segments should use snake_case"
+    severity: info
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/v2)(/[a-z0-9_{}]+)*$"
+
+  triton-error-response-has-schema:
+    description: Error responses should define a schema
+    message: Error responses must define content schema
+    severity: warn
+    given: "$.paths[*][*].responses['400']"
+    then:
+      field: content
+      function: truthy
+
+  triton-summary-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' must use Title Case"
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  triton-no-auth-required:
+    description: Triton server endpoints are typically deployed without authentication (auth handled at network layer)
+    message: Triton HTTP API has no authentication by default; document network-level security instead
+    severity: info
+    given: "$.paths[*][*].security"
+    then:
+      function: falsy

@@ -1,0 +1,146 @@
+vocabulary:
+  name: Triton Inference Server Vocabulary
+  description: >-
+    Domain vocabulary for NVIDIA Triton Inference Server covering model serving,
+    inference protocols, batching strategies, and performance monitoring concepts.
+  version: 1.0.0
+  created: '2026-05-03'
+  modified: '2026-05-03'
+  tags:
+    - AI
+    - Deep Learning
+    - Inference
+    - Machine Learning
+
+terms:
+  - term: Triton Inference Server
+    definition: >-
+      NVIDIA's open-source inference serving software optimized for both cloud and edge
+      deployment, supporting multiple ML frameworks including TensorRT, TensorFlow,
+      PyTorch, ONNX Runtime, and Python.
+    category: Core Concept
+    tags:
+      - NVIDIA
+      - Inference
+
+  - term: KServe V2 Protocol
+    definition: >-
+      The standardized inference protocol (formerly known as V2 Inference Protocol)
+      implemented by Triton for HTTP/REST and gRPC interfaces, enabling interoperability
+      with other KServe-compatible inference servers.
+    category: Standard
+    tags:
+      - Protocol
+      - KServe
+
+  - term: Model Repository
+    definition: >-
+      A file system directory structure where Triton stores model artifacts, configuration
+      files (config.pbtxt), and version subdirectories. Can be on local disk, Google Cloud
+      Storage, Amazon S3, or Azure Blob Storage.
+    category: Infrastructure
+    tags:
+      - Models
+      - Storage
+
+  - term: Backend
+    definition: >-
+      A library implementing the Triton backend API that handles inference for a specific
+      ML framework (e.g., tensorrt, onnxruntime, pytorch, python, tensorflow).
+    category: Architecture
+    tags:
+      - Models
+      - Frameworks
+
+  - term: Dynamic Batching
+    definition: >-
+      A Triton feature that automatically combines multiple inference requests into a
+      single batch to improve throughput and GPU utilization, with configurable preferred
+      batch sizes and queue delay.
+    category: Performance
+    tags:
+      - Performance
+      - Batching
+
+  - term: Sequence Batching
+    definition: >-
+      A batching strategy for stateful models that process ordered sequences of requests,
+      where Triton maintains state across a sequence of correlated inference requests.
+    category: Performance
+    tags:
+      - Performance
+      - Batching
+      - Stateful
+
+  - term: Ensemble Model
+    definition: >-
+      A Triton model type that defines a pipeline of models where outputs from one model
+      are connected as inputs to another, enabling complex multi-model workflows.
+    category: Model Type
+    tags:
+      - Models
+      - Pipeline
+
+  - term: Instance Group
+    definition: >-
+      A configuration setting specifying how many instances of a model to load and on
+      which devices (GPU, CPU), enabling concurrent model execution.
+    category: Configuration
+    tags:
+      - Configuration
+      - Performance
+
+  - term: Tensor
+    definition: >-
+      A multi-dimensional array of data with a specified shape and data type (FP32, INT64,
+      BYTES, etc.) used as input or output for model inference.
+    category: Data
+    tags:
+      - Data
+      - ML
+
+  - term: Model Version
+    definition: >-
+      A numbered directory within a model's repository folder containing a specific
+      version of model artifacts. Triton supports version policies (latest, all, specific)
+      to control which versions are served.
+    category: Model Management
+    tags:
+      - Models
+      - Versioning
+
+  - term: Response Cache
+    definition: >-
+      A Triton feature that caches inference results for identical requests, reducing
+      compute for repeated identical inputs. Configurable per-model.
+    category: Performance
+    tags:
+      - Performance
+      - Caching
+
+  - term: PyTriton
+    definition: >-
+      A Flask/FastAPI-like Python interface that simplifies deploying Python-based
+      models on Triton Inference Server without requiring model repository structure.
+    category: SDK
+    tags:
+      - Python
+      - SDK
+
+  - term: Model Analyzer
+    definition: >-
+      A CLI tool that profiles model performance on Triton to recommend optimal instance
+      group configurations, dynamic batching parameters, and concurrency settings.
+    category: Tool
+    tags:
+      - Optimization
+      - Tools
+
+  - term: Triton CLI
+    definition: >-
+      Command-line interface for creating, deploying, and profiling models served by
+      Triton Inference Server, simplifying model management workflows.
+    category: Tool
+    tags:
+      - CLI
+      - Tools

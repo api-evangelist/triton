@@ -1,0 +1,332 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Triton Inference Server HTTP/REST API"
+  description: >-
+    Shared capability definition for the NVIDIA Triton Inference Server HTTP/REST API
+    implementing the KServe V2 inference protocol. Covers model inference, health checks,
+    model repository management, statistics, tracing, and logging.
+  tags:
+    - AI
+    - Deep Learning
+    - Inference
+    - Model Serving
+    - Machine Learning
+    - NVIDIA
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+capability:
+  consumes:
+    - type: http
+      namespace: triton
+      baseUri: http://localhost:8000
+      description: "NVIDIA Triton Inference Server HTTP/REST API (KServe V2 protocol)"
+      resources:
+        - name: health
+          path: /v2/health
+          description: "Server and model health checks"
+          operations:
+            - name: server-live
+              method: GET
+              description: "Check if the Triton server is alive"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: server-ready
+              method: GET
+              description: "Check if the Triton server is ready to accept inference requests"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: server-metadata
+          path: /v2
+          description: "Server metadata"
+          operations:
+            - name: server-metadata
+              method: GET
+              description: "Retrieve server name, version, and supported extensions"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: model-health
+          path: /v2/models/{model_name}/ready
+          description: "Model readiness check"
+          operations:
+            - name: model-ready
+              method: GET
+              description: "Check if a model is ready for inference"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: model-metadata
+          path: /v2/models/{model_name}
+          description: "Model metadata and configuration"
+          operations:
+            - name: model-metadata
+              method: GET
+              description: "Retrieve model name, versions, platform, and tensor metadata"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: model-config
+          path: /v2/models/{model_name}/config
+          description: "Model configuration"
+          operations:
+            - name: model-config
+              method: GET
+              description: "Retrieve full model configuration from config.pbtxt"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: inference
+          path: /v2/models/{model_name}/infer
+          description: "Model inference endpoint"
+          operations:
+            - name: model-infer
+              method: POST
+              description: "Submit an inference request to a model"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  id: "{{tools.request_id}}"
+                  inputs: "{{tools.inputs}}"
+                  outputs: "{{tools.outputs}}"
+
+        - name: repository-index
+          path: /v2/repository/index
+          description: "Model repository index"
+          operations:
+            - name: repository-index
+              method: POST
+              description: "List all models in the repository"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  ready: "{{tools.ready_only}}"
+
+        - name: model-load
+          path: /v2/repository/models/{model_name}/load
+          description: "Load a model into Triton"
+          operations:
+            - name: model-load
+              method: POST
+              description: "Load or reload a model from the repository"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model to load"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: model-unload
+          path: /v2/repository/models/{model_name}/unload
+          description: "Unload a model from Triton"
+          operations:
+            - name: model-unload
+              method: POST
+              description: "Unload a model from Triton, making it unavailable for inference"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model to unload"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: model-statistics
+          path: /v2/models/{model_name}/stats
+          description: "Model inference statistics"
+          operations:
+            - name: model-statistics
+              method: GET
+              description: "Retrieve inference statistics for a specific model"
+              inputParameters:
+                - name: model_name
+                  in: path
+                  type: string
+                  required: true
+                  description: "Name of the model"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: all-model-statistics
+          path: /v2/models/stats
+          description: "All model statistics"
+          operations:
+            - name: all-model-statistics
+              method: GET
+              description: "Retrieve inference statistics for all loaded models"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: trace-settings
+          path: /v2/trace/setting
+          description: "Trace configuration"
+          operations:
+            - name: get-trace-setting
+              method: GET
+              description: "Get current global trace settings"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-trace-setting
+              method: POST
+              description: "Update global trace settings"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  trace_level: "{{tools.trace_level}}"
+                  trace_rate: "{{tools.trace_rate}}"
+
+        - name: logging
+          path: /v2/logging
+          description: "Logging configuration"
+          operations:
+            - name: get-log-settings
+              method: GET
+              description: "Get current logging settings"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-log-settings
+              method: POST
+              description: "Update server logging settings"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  log_info: "{{tools.log_info}}"
+                  log_verbose_level: "{{tools.log_verbose_level}}"
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: triton-rest
+      resources:
+        - path: /v1/models
+          name: models
+          description: "List and manage Triton models"
+          operations:
+            - method: GET
+              name: list-models
+              description: "List all models in the repository"
+              call: "triton.repository-index"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: triton-mcp
+      transport: http
+      tools:
+        - name: server-ready
+          description: "Check if Triton server is alive and ready"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.server-ready"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-models
+          description: "List all models available in the Triton repository"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "triton.repository-index"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: model-infer
+          description: "Run inference against a loaded model"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "triton.model-infer"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."

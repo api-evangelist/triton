@@ -1,0 +1,64 @@
+{
+  "title": "Triton Inference Server Model Structure",
+  "description": "JSON structure documentation for Triton model configuration and inference objects",
+  "version": "2.0.0",
+  "structures": [
+    {
+      "name": "Model",
+      "description": "A machine learning model managed by NVIDIA Triton Inference Server",
+      "fields": [
+        { "name": "name", "type": "string", "required": true, "description": "Unique model name" },
+        { "name": "platform", "type": "string", "required": false, "description": "Framework platform (tensorrt_plan, onnxruntime_onnx, pytorch_libtorch, etc.)" },
+        { "name": "backend", "type": "string", "required": false, "description": "Inference backend" },
+        { "name": "version_policy", "type": "object", "required": false, "description": "Version selection policy (latest, all, specific)" },
+        { "name": "max_batch_size", "type": "integer", "required": false, "description": "Max batch size (0 = disabled)" },
+        { "name": "input", "type": "array[TensorConfig]", "required": false, "description": "Input tensor definitions" },
+        { "name": "output", "type": "array[TensorConfig]", "required": false, "description": "Output tensor definitions" },
+        { "name": "instance_group", "type": "array[InstanceGroup]", "required": false, "description": "Device deployment groups" },
+        { "name": "dynamic_batching", "type": "object", "required": false, "description": "Dynamic batching config" },
+        { "name": "sequence_batching", "type": "object", "required": false, "description": "Sequence batching config for stateful models" },
+        { "name": "ensemble_scheduling", "type": "object", "required": false, "description": "Ensemble pipeline config" }
+      ]
+    },
+    {
+      "name": "InferenceRequest",
+      "description": "Request payload for model inference",
+      "fields": [
+        { "name": "id", "type": "string", "required": false, "description": "Request identifier" },
+        { "name": "inputs", "type": "array[InferenceTensor]", "required": true, "description": "Input tensors" },
+        { "name": "outputs", "type": "array[RequestedOutputTensor]", "required": false, "description": "Requested output tensors" },
+        { "name": "parameters", "type": "object", "required": false, "description": "Request parameters (sequence_id, priority, timeout)" }
+      ]
+    },
+    {
+      "name": "InferenceTensor",
+      "description": "Input tensor for an inference request",
+      "fields": [
+        { "name": "name", "type": "string", "required": true, "description": "Tensor name" },
+        { "name": "shape", "type": "array[integer]", "required": true, "description": "Tensor shape" },
+        { "name": "datatype", "type": "string", "required": true, "description": "Data type (FP32, INT64, BYTES, etc.)" },
+        { "name": "data", "type": "array", "required": true, "description": "Flattened tensor data" },
+        { "name": "parameters", "type": "object", "required": false, "description": "Tensor-level parameters" }
+      ]
+    },
+    {
+      "name": "TensorConfig",
+      "description": "Model tensor configuration from config.pbtxt",
+      "fields": [
+        { "name": "name", "type": "string", "required": true, "description": "Tensor name" },
+        { "name": "data_type", "type": "string", "required": true, "description": "Data type (TYPE_FP32, TYPE_INT64, etc.)" },
+        { "name": "dims", "type": "array[integer]", "required": true, "description": "Tensor dimensions (-1 for variable)" }
+      ]
+    },
+    {
+      "name": "RepositoryIndexEntry",
+      "description": "Model entry in the repository index",
+      "fields": [
+        { "name": "name", "type": "string", "required": true, "description": "Model name" },
+        { "name": "version", "type": "string", "required": false, "description": "Model version" },
+        { "name": "state", "type": "string", "required": false, "description": "State: READY, UNAVAILABLE, LOADING, UNLOADING" },
+        { "name": "reason", "type": "string", "required": false, "description": "Reason for non-READY state" }
+      ]
+    }
+  ]
+}

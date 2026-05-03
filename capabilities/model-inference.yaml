@@ -1,0 +1,395 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Triton Model Inference and Management"
+  description: >-
+    Workflow capability for deploying, managing, and running inference against machine
+    learning models on NVIDIA Triton Inference Server. Enables model lifecycle management
+    including loading, health checks, inference execution, statistics monitoring, and
+    observability configuration.
+  tags:
+    - AI
+    - Deep Learning
+    - Inference
+    - Model Serving
+    - Machine Learning
+    - NVIDIA
+    - KServe
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+capability:
+  consumes:
+    - import: triton
+      location: ./shared/triton-http-rest.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: triton-inference-api
+      description: "Unified REST API for Triton model lifecycle management and inference."
+      resources:
+        - path: /v1/health
+          name: health
+          description: "Server and model health status"
+          operations:
+            - method: GET
+              name: server-live
+              description: "Check if Triton server is alive"
+              call: "triton.server-live"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/server
+          name: server
+          description: "Server metadata and information"
+          operations:
+            - method: GET
+              name: server-metadata
+              description: "Get Triton server name, version, and extensions"
+              call: "triton.server-metadata"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models
+          name: models
+          description: "Model repository and management"
+          operations:
+            - method: GET
+              name: list-models
+              description: "List all models available in the repository"
+              call: "triton.repository-index"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}
+          name: model
+          description: "Individual model operations"
+          operations:
+            - method: GET
+              name: model-metadata
+              description: "Get model metadata including tensor definitions"
+              call: "triton.model-metadata"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}/config
+          name: model-config
+          description: "Model configuration"
+          operations:
+            - method: GET
+              name: model-config
+              description: "Get full model configuration"
+              call: "triton.model-config"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}/infer
+          name: model-inference
+          description: "Run model inference"
+          operations:
+            - method: POST
+              name: model-infer
+              description: "Submit an inference request to a model"
+              call: "triton.model-infer"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}/load
+          name: model-load
+          description: "Load model into server"
+          operations:
+            - method: POST
+              name: model-load
+              description: "Load or reload a model from the repository"
+              call: "triton.model-load"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}/unload
+          name: model-unload
+          description: "Unload model from server"
+          operations:
+            - method: POST
+              name: model-unload
+              description: "Unload a model from Triton"
+              call: "triton.model-unload"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/models/{model_name}/stats
+          name: model-stats
+          description: "Model inference statistics"
+          operations:
+            - method: GET
+              name: model-statistics
+              description: "Get inference statistics for a specific model"
+              call: "triton.model-statistics"
+              with:
+                model_name: "rest.model_name"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/stats
+          name: all-stats
+          description: "Statistics for all models"
+          operations:
+            - method: GET
+              name: all-model-statistics
+              description: "Get inference statistics for all loaded models"
+              call: "triton.all-model-statistics"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/trace
+          name: trace
+          description: "Trace configuration"
+          operations:
+            - method: GET
+              name: get-trace-settings
+              description: "Get current global trace settings"
+              call: "triton.get-trace-setting"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: update-trace-settings
+              description: "Update request tracing configuration"
+              call: "triton.update-trace-setting"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/logging
+          name: logging
+          description: "Logging configuration"
+          operations:
+            - method: GET
+              name: get-log-settings
+              description: "Get current logging settings"
+              call: "triton.get-log-settings"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: update-log-settings
+              description: "Update server logging configuration"
+              call: "triton.update-log-settings"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: triton-inference-mcp
+      transport: http
+      description: "MCP server for AI-assisted model deployment and inference management on Triton."
+      tools:
+        - name: server-live
+          description: "Check if Triton inference server is alive"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.server-live"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: server-ready
+          description: "Check if Triton server is ready to accept inference requests"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.server-ready"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: server-metadata
+          description: "Get Triton server name, version, and supported extensions"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.server-metadata"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: list-models
+          description: "List all models available in the Triton model repository"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "triton.repository-index"
+          with:
+            ready_only: "tools.ready_only"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-metadata
+          description: "Get metadata for a specific model including input/output tensor shapes"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.model-metadata"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-config
+          description: "Get the full configuration for a specific model"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.model-config"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-ready
+          description: "Check if a specific model is ready to accept inference requests"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.model-ready"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-infer
+          description: "Run inference against a loaded model with input tensors"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "triton.model-infer"
+          with:
+            model_name: "tools.model_name"
+            inputs: "tools.inputs"
+            outputs: "tools.outputs"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-load
+          description: "Load or reload a model from the repository into Triton"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "triton.model-load"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-unload
+          description: "Unload a model from Triton to free resources"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "triton.model-unload"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: model-statistics
+          description: "Get inference statistics for a specific model"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.model-statistics"
+          with:
+            model_name: "tools.model_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: all-model-statistics
+          description: "Get inference statistics for all loaded models"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "triton.all-model-statistics"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-trace-settings
+          description: "Get current global request tracing configuration"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.get-trace-setting"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: update-trace-settings
+          description: "Update request tracing levels and sampling rate"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "triton.update-trace-setting"
+          with:
+            trace_level: "tools.trace_level"
+            trace_rate: "tools.trace_rate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-log-settings
+          description: "Get current server logging configuration"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "triton.get-log-settings"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: update-log-settings
+          description: "Update server logging level and format"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "triton.update-log-settings"
+          with:
+            log_info: "tools.log_info"
+            log_verbose_level: "tools.log_verbose_level"
+          outputParameters:
+            - type: object
+              mapping: "$."
