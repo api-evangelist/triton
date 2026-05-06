@@ -4,98 +4,43 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Triton Inference Server
 providerId: triton
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - AI
-  - Deep Learning
   - Inference
-  - Machine Learning
-  - Model Serving
-  - NVIDIA
   - Open Source
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Triton Inference Server API surface. Captures
-  per-tier quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values
-  to be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: NVIDIA Triton Inference Server is self-hosted; there is no NVIDIA-imposed per-tenant
+  rate limit. Throughput and concurrency are governed by the deployed hardware, configured model
+  instance counts, dynamic batching, and rate-limiter / queue-policy settings the operator
+  configures inside Triton.
+sources:
+  - https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/index.html
+  - https://github.com/triton-inference-server/server
+notes: Triton ships with operator-configurable rate-limiting and scheduling policies (priority
+  queues, dynamic batching, model instance groups, sequence batcher). There are no provider-imposed
+  rate-limit numbers — limits are whatever the operator configures.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Triton HTTP/REST API
-      - Triton GRPC API
-      - Triton Metrics API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Triton HTTP/REST API
-      - Triton GRPC API
-      - Triton Metrics API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Triton HTTP/REST API
-      - Triton GRPC API
-      - Triton Metrics API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Triton HTTP/REST API
-      - Triton GRPC API
-      - Triton Metrics API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Triton HTTP/REST API
-      - Triton GRPC API
-      - Triton Metrics API
+  - name: Hardware-Bounded Throughput
+    scope: deployment
+    metric: varies
+    limit: bounded by deployed CPU / GPU and configured model instances
+  - name: Operator-Configured Rate Limiter
+    scope: deployment
+    metric: varies
+    limit: configured per model via Triton's rate-limiter / scheduler settings
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Self-Hosted Operation
+    description: Triton runs in the customer's environment; no provider quota or throttling exists.
+      Capacity is sized by the operator.
+  - name: Built-in Scheduling
+    description: Triton offers dynamic batching, model instance groups, sequence batching, priority
+      queues, and an explicit rate limiter that operators tune to enforce per-model concurrency
+      ceilings.
+  - name: Backoff
+    description: Clients should treat HTTP 503 from Triton as a transient signal that the model's
+      queue is full and back off; standard exponential-backoff with jitter applies.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
