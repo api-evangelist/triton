@@ -92,11 +92,11 @@ apis:
         email: triton@nvidia.com
 
 common:
-  - type: GitHub Repository
+  - type: GitHubRepository
     url: https://github.com/triton-inference-server/server
   - type: Documentation
     url: https://docs.nvidia.com/deeplearning/triton-inference-server/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://github.com/triton-inference-server/server/blob/main/docs/getting_started/quickstart.md
   - type: Client Libraries
     url: https://github.com/triton-inference-server/client
@@ -108,7 +108,7 @@ common:
     url: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tritonserver
   - type: Community Forum
     url: https://github.com/triton-inference-server/server/discussions
-  - type: Release Notes
+  - type: ReleaseNotes
     url: https://github.com/triton-inference-server/server/releases
   - type: PyTriton
     url: https://github.com/triton-inference-server/pytriton
@@ -120,7 +120,7 @@ common:
     url: openapi/triton-http-rest-openapi.yml
   - type: OpenAPI
     url: openapi/triton-metrics-openapi.yml
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/triton-context.jsonld
   - type: JSONSchema
     url: json-schema/triton-model-schema.json
