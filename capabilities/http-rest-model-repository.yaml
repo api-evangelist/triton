@@ -1,0 +1,163 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Model Repository
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Model Repository. 3 operations. Lead
+    operation: Triton Inference Server List Models in the Repository. Self-contained Naftiko capability covering one Triton
+    business surface.'
+  tags:
+  - Triton
+  - Model Repository
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-model-repository
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Model Repository business capability.
+      Self-contained, no shared references.
+    resources:
+    - name: v2-repository-index
+      path: /v2/repository/index
+      operations:
+      - name: repositoryindex
+        method: POST
+        description: Triton Inference Server List Models in the Repository
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v2-repository-models-model_name-load
+      path: /v2/repository/models/{model_name}/load
+      operations:
+      - name: modelload
+        method: POST
+        description: Triton Inference Server Load or Reload a Model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v2-repository-models-model_name-unload
+      path: /v2/repository/models/{model_name}/unload
+      operations:
+      - name: modelunload
+        method: POST
+        description: Triton Inference Server Unload a Model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+  exposes:
+  - type: rest
+    namespace: http-rest-model-repository-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Model Repository.
+      One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/repository/index
+      name: v2-repository-index
+      description: REST surface for v2-repository-index.
+      operations:
+      - method: POST
+        name: repositoryindex
+        description: Triton Inference Server List Models in the Repository
+        call: http-rest-model-repository.repositoryindex
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/repository/models/{model-name}/load
+      name: v2-repository-models-model-name-load
+      description: REST surface for v2-repository-models-model_name-load.
+      operations:
+      - method: POST
+        name: modelload
+        description: Triton Inference Server Load or Reload a Model
+        call: http-rest-model-repository.modelload
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/repository/models/{model-name}/unload
+      name: v2-repository-models-model-name-unload
+      description: REST surface for v2-repository-models-model_name-unload.
+      operations:
+      - method: POST
+        name: modelunload
+        description: Triton Inference Server Unload a Model
+        call: http-rest-model-repository.modelunload
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-model-repository-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Model Repository.
+      One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-list-models
+      description: Triton Inference Server List Models in the Repository
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: http-rest-model-repository.repositoryindex
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-load-reload
+      description: Triton Inference Server Load or Reload a Model
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-model-repository.modelload
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-unload-model
+      description: Triton Inference Server Unload a Model
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-model-repository.modelunload
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

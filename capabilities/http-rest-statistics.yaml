@@ -1,0 +1,133 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Statistics
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Statistics. 3 operations. Lead operation:
+    Triton Inference Server Get Statistics for All Models. Self-contained Naftiko capability covering one Triton business
+    surface.'
+  tags:
+  - Triton
+  - Statistics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-statistics
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Statistics business capability. Self-contained,
+      no shared references.
+    resources:
+    - name: v2-models-stats
+      path: /v2/models/stats
+      operations:
+      - name: allmodelstatistics
+        method: GET
+        description: Triton Inference Server Get Statistics for All Models
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-models-model_name-stats
+      path: /v2/models/{model_name}/stats
+      operations:
+      - name: modelstatistics
+        method: GET
+        description: Triton Inference Server Get Model Inference Statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-models-model_name-versions-model_version-stats
+      path: /v2/models/{model_name}/versions/{model_version}/stats
+      operations:
+      - name: modelversionstatistics
+        method: GET
+        description: Triton Inference Server Get Model Version Inference Statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: http-rest-statistics-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Statistics. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/models/stats
+      name: v2-models-stats
+      description: REST surface for v2-models-stats.
+      operations:
+      - method: GET
+        name: allmodelstatistics
+        description: Triton Inference Server Get Statistics for All Models
+        call: http-rest-statistics.allmodelstatistics
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/models/{model-name}/stats
+      name: v2-models-model-name-stats
+      description: REST surface for v2-models-model_name-stats.
+      operations:
+      - method: GET
+        name: modelstatistics
+        description: Triton Inference Server Get Model Inference Statistics
+        call: http-rest-statistics.modelstatistics
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/models/{model-name}/versions/{model-version}/stats
+      name: v2-models-model-name-versions-model-version-stats
+      description: REST surface for v2-models-model_name-versions-model_version-stats.
+      operations:
+      - method: GET
+        name: modelversionstatistics
+        description: Triton Inference Server Get Model Version Inference Statistics
+        call: http-rest-statistics.modelversionstatistics
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-statistics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Statistics. One tool
+      per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-get-statistics
+      description: Triton Inference Server Get Statistics for All Models
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-statistics.allmodelstatistics
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-get-model
+      description: Triton Inference Server Get Model Inference Statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-statistics.modelstatistics
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-get-model-2
+      description: Triton Inference Server Get Model Version Inference Statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-statistics.modelversionstatistics
+      outputParameters:
+      - type: object
+        mapping: $.

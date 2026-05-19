@@ -1,0 +1,120 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Inference
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Inference. 2 operations. Lead operation:
+    Triton Inference Server Run Inference on a Model. Self-contained Naftiko capability covering one Triton business surface.'
+  tags:
+  - Triton
+  - Inference
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-inference
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Inference business capability. Self-contained,
+      no shared references.
+    resources:
+    - name: v2-models-model_name-infer
+      path: /v2/models/{model_name}/infer
+      operations:
+      - name: modelinfer
+        method: POST
+        description: Triton Inference Server Run Inference on a Model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-models-model_name-versions-model_version-infer
+      path: /v2/models/{model_name}/versions/{model_version}/infer
+      operations:
+      - name: modelversioninfer
+        method: POST
+        description: Triton Inference Server Run Inference on a Specific Model Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: http-rest-inference-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Inference. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/models/{model-name}/infer
+      name: v2-models-model-name-infer
+      description: REST surface for v2-models-model_name-infer.
+      operations:
+      - method: POST
+        name: modelinfer
+        description: Triton Inference Server Run Inference on a Model
+        call: http-rest-inference.modelinfer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/models/{model-name}/versions/{model-version}/infer
+      name: v2-models-model-name-versions-model-version-infer
+      description: REST surface for v2-models-model_name-versions-model_version-infer.
+      operations:
+      - method: POST
+        name: modelversioninfer
+        description: Triton Inference Server Run Inference on a Specific Model Version
+        call: http-rest-inference.modelversioninfer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-inference-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Inference. One tool
+      per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-run-inference
+      description: Triton Inference Server Run Inference on a Model
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-inference.modelinfer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-run-inference-2
+      description: Triton Inference Server Run Inference on a Specific Model Version
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-inference.modelversioninfer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

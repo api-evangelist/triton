@@ -1,0 +1,175 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — CUDA Shared Memory
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — CUDA Shared Memory. 4 operations. Lead
+    operation: Triton Inference Server Register a CUDA Shared Memory Region. Self-contained Naftiko capability covering one
+    Triton business surface.'
+  tags:
+  - Triton
+  - CUDA Shared Memory
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-cuda-shared-memory
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — CUDA Shared Memory business capability.
+      Self-contained, no shared references.
+    resources:
+    - name: v2-cudasharedmemory-region-region_name-register
+      path: /v2/cudasharedmemory/region/{region_name}/register
+      operations:
+      - name: cudasharedmemoryregister
+        method: POST
+        description: Triton Inference Server Register a CUDA Shared Memory Region
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-cudasharedmemory-region-region_name-unregister
+      path: /v2/cudasharedmemory/region/{region_name}/unregister
+      operations:
+      - name: cudasharedmemoryunregister
+        method: POST
+        description: Triton Inference Server Unregister a CUDA Shared Memory Region
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-cudasharedmemory-status
+      path: /v2/cudasharedmemory/status
+      operations:
+      - name: cudasharedmemorystatus
+        method: GET
+        description: Triton Inference Server Get CUDA Shared Memory Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-cudasharedmemory-unregister
+      path: /v2/cudasharedmemory/unregister
+      operations:
+      - name: cudasharedmemoryunregisterall
+        method: POST
+        description: Triton Inference Server Unregister All CUDA Shared Memory Regions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: http-rest-cuda-shared-memory-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — CUDA Shared Memory.
+      One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/cudasharedmemory/region/{region-name}/register
+      name: v2-cudasharedmemory-region-region-name-register
+      description: REST surface for v2-cudasharedmemory-region-region_name-register.
+      operations:
+      - method: POST
+        name: cudasharedmemoryregister
+        description: Triton Inference Server Register a CUDA Shared Memory Region
+        call: http-rest-cuda-shared-memory.cudasharedmemoryregister
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/cudasharedmemory/region/{region-name}/unregister
+      name: v2-cudasharedmemory-region-region-name-unregister
+      description: REST surface for v2-cudasharedmemory-region-region_name-unregister.
+      operations:
+      - method: POST
+        name: cudasharedmemoryunregister
+        description: Triton Inference Server Unregister a CUDA Shared Memory Region
+        call: http-rest-cuda-shared-memory.cudasharedmemoryunregister
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/cudasharedmemory/status
+      name: v2-cudasharedmemory-status
+      description: REST surface for v2-cudasharedmemory-status.
+      operations:
+      - method: GET
+        name: cudasharedmemorystatus
+        description: Triton Inference Server Get CUDA Shared Memory Status
+        call: http-rest-cuda-shared-memory.cudasharedmemorystatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/cudasharedmemory/unregister
+      name: v2-cudasharedmemory-unregister
+      description: REST surface for v2-cudasharedmemory-unregister.
+      operations:
+      - method: POST
+        name: cudasharedmemoryunregisterall
+        description: Triton Inference Server Unregister All CUDA Shared Memory Regions
+        call: http-rest-cuda-shared-memory.cudasharedmemoryunregisterall
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-cuda-shared-memory-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — CUDA Shared Memory.
+      One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-register-cuda
+      description: Triton Inference Server Register a CUDA Shared Memory Region
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-cuda-shared-memory.cudasharedmemoryregister
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-unregister-cuda
+      description: Triton Inference Server Unregister a CUDA Shared Memory Region
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-cuda-shared-memory.cudasharedmemoryunregister
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-get-cuda
+      description: Triton Inference Server Get CUDA Shared Memory Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-cuda-shared-memory.cudasharedmemorystatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-unregister-all
+      description: Triton Inference Server Unregister All CUDA Shared Memory Regions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-cuda-shared-memory.cudasharedmemoryunregisterall
+      outputParameters:
+      - type: object
+        mapping: $.

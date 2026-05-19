@@ -1,0 +1,69 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Server Metadata
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Server Metadata. 1 operations. Lead
+    operation: Triton Inference Server Get Server Metadata. Self-contained Naftiko capability covering one Triton business
+    surface.'
+  tags:
+  - Triton
+  - Server Metadata
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-server-metadata
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Server Metadata business capability.
+      Self-contained, no shared references.
+    resources:
+    - name: v2
+      path: /v2
+      operations:
+      - name: servermetadata
+        method: GET
+        description: Triton Inference Server Get Server Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: http-rest-server-metadata-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Server Metadata.
+      One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2
+      name: v2
+      description: REST surface for v2.
+      operations:
+      - method: GET
+        name: servermetadata
+        description: Triton Inference Server Get Server Metadata
+        call: http-rest-server-metadata.servermetadata
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-server-metadata-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Server Metadata. One
+      tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-get-server
+      description: Triton Inference Server Get Server Metadata
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-server-metadata.servermetadata
+      outputParameters:
+      - type: object
+        mapping: $.

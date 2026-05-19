@@ -1,0 +1,103 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Logging
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Logging. 2 operations. Lead operation:
+    Triton Inference Server Get Logging Settings. Self-contained Naftiko capability covering one Triton business surface.'
+  tags:
+  - Triton
+  - Logging
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-logging
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Logging business capability. Self-contained,
+      no shared references.
+    resources:
+    - name: v2-logging
+      path: /v2/logging
+      operations:
+      - name: getlogsettings
+        method: GET
+        description: Triton Inference Server Get Logging Settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatelogsettings
+        method: POST
+        description: Triton Inference Server Update Logging Settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: http-rest-logging-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Logging. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/logging
+      name: v2-logging
+      description: REST surface for v2-logging.
+      operations:
+      - method: GET
+        name: getlogsettings
+        description: Triton Inference Server Get Logging Settings
+        call: http-rest-logging.getlogsettings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: updatelogsettings
+        description: Triton Inference Server Update Logging Settings
+        call: http-rest-logging.updatelogsettings
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-logging-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Logging. One tool
+      per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-get-logging
+      description: Triton Inference Server Get Logging Settings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-logging.getlogsettings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-update-logging
+      description: Triton Inference Server Update Logging Settings
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-logging.updatelogsettings
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

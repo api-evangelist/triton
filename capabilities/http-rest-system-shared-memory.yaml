@@ -1,0 +1,175 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — System Shared Memory
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — System Shared Memory. 4 operations.
+    Lead operation: Triton Inference Server Register a System Shared Memory Region. Self-contained Naftiko capability covering
+    one Triton business surface.'
+  tags:
+  - Triton
+  - System Shared Memory
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-system-shared-memory
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — System Shared Memory business capability.
+      Self-contained, no shared references.
+    resources:
+    - name: v2-systemsharedmemory-region-region_name-register
+      path: /v2/systemsharedmemory/region/{region_name}/register
+      operations:
+      - name: systemsharedmemoryregister
+        method: POST
+        description: Triton Inference Server Register a System Shared Memory Region
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-systemsharedmemory-region-region_name-unregister
+      path: /v2/systemsharedmemory/region/{region_name}/unregister
+      operations:
+      - name: systemsharedmemoryunregister
+        method: POST
+        description: Triton Inference Server Unregister a System Shared Memory Region
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-systemsharedmemory-status
+      path: /v2/systemsharedmemory/status
+      operations:
+      - name: systemsharedmemorystatus
+        method: GET
+        description: Triton Inference Server Get System Shared Memory Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-systemsharedmemory-unregister
+      path: /v2/systemsharedmemory/unregister
+      operations:
+      - name: systemsharedmemoryunregisterall
+        method: POST
+        description: Triton Inference Server Unregister All System Shared Memory Regions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: http-rest-system-shared-memory-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — System Shared Memory.
+      One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/systemsharedmemory/region/{region-name}/register
+      name: v2-systemsharedmemory-region-region-name-register
+      description: REST surface for v2-systemsharedmemory-region-region_name-register.
+      operations:
+      - method: POST
+        name: systemsharedmemoryregister
+        description: Triton Inference Server Register a System Shared Memory Region
+        call: http-rest-system-shared-memory.systemsharedmemoryregister
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/systemsharedmemory/region/{region-name}/unregister
+      name: v2-systemsharedmemory-region-region-name-unregister
+      description: REST surface for v2-systemsharedmemory-region-region_name-unregister.
+      operations:
+      - method: POST
+        name: systemsharedmemoryunregister
+        description: Triton Inference Server Unregister a System Shared Memory Region
+        call: http-rest-system-shared-memory.systemsharedmemoryunregister
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/systemsharedmemory/status
+      name: v2-systemsharedmemory-status
+      description: REST surface for v2-systemsharedmemory-status.
+      operations:
+      - method: GET
+        name: systemsharedmemorystatus
+        description: Triton Inference Server Get System Shared Memory Status
+        call: http-rest-system-shared-memory.systemsharedmemorystatus
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/systemsharedmemory/unregister
+      name: v2-systemsharedmemory-unregister
+      description: REST surface for v2-systemsharedmemory-unregister.
+      operations:
+      - method: POST
+        name: systemsharedmemoryunregisterall
+        description: Triton Inference Server Unregister All System Shared Memory Regions
+        call: http-rest-system-shared-memory.systemsharedmemoryunregisterall
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-system-shared-memory-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — System Shared Memory.
+      One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-register-system
+      description: Triton Inference Server Register a System Shared Memory Region
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-system-shared-memory.systemsharedmemoryregister
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-unregister-system
+      description: Triton Inference Server Unregister a System Shared Memory Region
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-system-shared-memory.systemsharedmemoryunregister
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-get-system
+      description: Triton Inference Server Get System Shared Memory Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-system-shared-memory.systemsharedmemorystatus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-unregister-all
+      description: Triton Inference Server Unregister All System Shared Memory Regions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: http-rest-system-shared-memory.systemsharedmemoryunregisterall
+      outputParameters:
+      - type: object
+        mapping: $.

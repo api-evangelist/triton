@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Health
+  description: 'Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Health. 4 operations. Lead operation:
+    Triton Inference Server Server Liveness Check. Self-contained Naftiko capability covering one Triton business surface.'
+  tags:
+  - Triton
+  - Health
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TRITON_API_KEY: TRITON_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: http-rest-health
+    baseUri: http://localhost:8000
+    description: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Health business capability. Self-contained,
+      no shared references.
+    resources:
+    - name: v2-health-live
+      path: /v2/health/live
+      operations:
+      - name: serverlive
+        method: GET
+        description: Triton Inference Server Server Liveness Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-health-ready
+      path: /v2/health/ready
+      operations:
+      - name: serverready
+        method: GET
+        description: Triton Inference Server Server Readiness Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-models-model_name-ready
+      path: /v2/models/{model_name}/ready
+      operations:
+      - name: modelready
+        method: GET
+        description: Triton Inference Server Model Readiness Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v2-models-model_name-versions-model_version-ready
+      path: /v2/models/{model_name}/versions/{model_version}/ready
+      operations:
+      - name: modelversionready
+        method: GET
+        description: Triton Inference Server Model Version Readiness Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: http-rest-health-rest
+    port: 8080
+    description: REST adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Health. One Spectral-compliant
+      resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v2/health/live
+      name: v2-health-live
+      description: REST surface for v2-health-live.
+      operations:
+      - method: GET
+        name: serverlive
+        description: Triton Inference Server Server Liveness Check
+        call: http-rest-health.serverlive
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/health/ready
+      name: v2-health-ready
+      description: REST surface for v2-health-ready.
+      operations:
+      - method: GET
+        name: serverready
+        description: Triton Inference Server Server Readiness Check
+        call: http-rest-health.serverready
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/models/{model-name}/ready
+      name: v2-models-model-name-ready
+      description: REST surface for v2-models-model_name-ready.
+      operations:
+      - method: GET
+        name: modelready
+        description: Triton Inference Server Model Readiness Check
+        call: http-rest-health.modelready
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/models/{model-name}/versions/{model-version}/ready
+      name: v2-models-model-name-versions-model-version-ready
+      description: REST surface for v2-models-model_name-versions-model_version-ready.
+      operations:
+      - method: GET
+        name: modelversionready
+        description: Triton Inference Server Model Version Readiness Check
+        call: http-rest-health.modelversionready
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: http-rest-health-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API — Health. One tool per
+      consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: triton-inference-server-server-liveness
+      description: Triton Inference Server Server Liveness Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-health.serverlive
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-server-readiness
+      description: Triton Inference Server Server Readiness Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-health.serverready
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-model-readiness
+      description: Triton Inference Server Model Readiness Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-health.modelready
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: triton-inference-server-model-version
+      description: Triton Inference Server Model Version Readiness Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: http-rest-health.modelversionready
+      outputParameters:
+      - type: object
+        mapping: $.
