@@ -1,0 +1,645 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Server Liveness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/health/live"
+          },
+          "docs": "Check if the Triton server is alive and able to receive requests. This is the KServe V2 standard liveness probe endpoint."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Server Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/health/ready"
+          },
+          "docs": "Check if the Triton server is ready to accept inference requests. The server is ready when all models that are loaded at startup are ready."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Model Version Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Check if a specific version of a model is ready to accept inference requests."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Model Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Check if a model is ready to accept inference requests. Checks the default/latest version of the model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Server Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Server Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2"
+          },
+          "docs": "Retrieve metadata about the Triton server including name, version, and supported extensions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Model Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve metadata about a specific model including its name, versions, platform, and input/output tensor information."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Version Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve metadata about a specific version of a model."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/config",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve the configuration of a specific model as defined in the model repository. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Version Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/config",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve the configuration of a specific version of a model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Run Inference on a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/models/:model_name/infer",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an inference request to a model. The request specifies input tensors and requested output tensors. Supports optional parameters for sequence handling, priority, timeout, and binary data."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Run Inference on a Specific Model Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/infer",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an inference request to a specific version of a model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Model Repository",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server List Models in the Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/index",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the index of all models available in the model repository. Can optionally filter to show only models that are ready. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Load or Reload a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/models/:model_name/load",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request that a model be loaded into Triton, or reloaded if it is already loaded. Optionally provide model configuration overrides as parameters. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unload a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/models/:model_name/unload",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request that a model be unloaded from Triton. Once unloaded the model will no longer be available for inference. This is a Triton extension to the KServe protocol."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Inference Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/stats",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve inference statistics for a specific model including request count, execution count, and cumulative timing information. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Version Inference Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/stats",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve inference statistics for a specific version of a model."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Statistics for All Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/stats"
+          },
+          "docs": "Retrieve inference statistics for all loaded models."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trace",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Trace Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/trace/setting"
+          },
+          "docs": "Retrieve the current global trace settings. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Update Trace Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/trace/setting",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the global trace settings for request tracing."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model-Specific Trace Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/trace/setting",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve the trace settings for a specific model."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Update Model-Specific Trace Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/models/:model_name/trace/setting",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the trace settings for a specific model."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Logging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Logging Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/logging"
+          },
+          "docs": "Retrieve the current logging settings. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Update Logging Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/logging",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the server logging settings."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System Shared Memory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get System Shared Memory Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/systemsharedmemory/status"
+          },
+          "docs": "Retrieve the status of all registered system shared memory regions. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Register a System Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/systemsharedmemory/region/:region_name/register",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a system shared memory region for use with inference requests."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister a System Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/systemsharedmemory/region/:region_name/unregister",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ]
+          },
+          "docs": "Unregister a previously registered system shared memory region."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister All System Shared Memory Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/systemsharedmemory/unregister"
+          },
+          "docs": "Unregister all registered system shared memory regions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "CUDA Shared Memory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get CUDA Shared Memory Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/cudasharedmemory/status"
+          },
+          "docs": "Retrieve the status of all registered CUDA shared memory regions. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/region/:region_name/register",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a CUDA shared memory region for use with inference requests."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/region/:region_name/unregister",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ]
+          },
+          "docs": "Unregister a previously registered CUDA shared memory region."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/unregister"
+          },
+          "docs": "Unregister all registered CUDA shared memory regions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

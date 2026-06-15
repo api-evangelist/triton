@@ -1,0 +1,4417 @@
+{
+  "item": [
+    {
+      "id": "f3b68a78-5a68-4f03-8a19-43452fb87e5e",
+      "name": "CUDA Shared Memory",
+      "description": {
+        "content": "CUDA shared memory region management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83865840-f705-426b-869f-e43285e73d79",
+          "name": "Triton Inference Server Get CUDA Shared Memory Status",
+          "request": {
+            "name": "Triton Inference Server Get CUDA Shared Memory Status",
+            "description": {
+              "content": "Retrieve the status of all registered CUDA shared memory regions. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9a01b7d8-c348-4d33-8b92-d983e2bfd216",
+              "name": "CUDA shared memory status returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"device_id\": 1549,\n    \"byte_size\": 5023\n  },\n  {\n    \"name\": \"string\",\n    \"device_id\": 5116,\n    \"byte_size\": 302\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbc972da-057a-4f87-83f2-099703ccb21c",
+              "name": "Error retrieving status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "017c9354-fe03-44b4-a711-5d9d7872ee15",
+          "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+            "description": {
+              "content": "Register a CUDA shared memory region for use with inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "region",
+                ":region_name",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3458c879-52c4-4784-be42-382a831d8233",
+              "name": "Region registered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "385545d5-c517-4579-b05d-82228221ff46",
+              "name": "Error registering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18e94f07-aafd-4ba9-9b29-43e40fe192d7",
+          "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+            "description": {
+              "content": "Unregister a previously registered CUDA shared memory region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "region",
+                ":region_name",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b8a39fdb-e8d4-400c-a17c-1376697979ba",
+              "name": "Region unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9407a4e6-4a0d-400b-913d-042ae7f89c33",
+              "name": "Error unregistering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fba00624-c59c-43e3-932e-75fdaaccd4c0",
+          "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+          "request": {
+            "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+            "description": {
+              "content": "Unregister all registered CUDA shared memory regions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e9c8f1b-0457-4f26-8a38-195449c8dc3e",
+              "name": "All regions unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be6cd157-4621-4b3c-8b52-b16b50250cfd",
+              "name": "Error unregistering regions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ca9addb3-1872-49e6-99db-14c1d7ee0a40",
+      "name": "Health",
+      "description": {
+        "content": "Server and model health and readiness checks",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "892e0290-a7ce-47a3-a044-5c91d962f1bd",
+          "name": "Triton Inference Server Server Liveness Check",
+          "request": {
+            "name": "Triton Inference Server Server Liveness Check",
+            "description": {
+              "content": "Check if the Triton server is alive and able to receive requests. This is the KServe V2 standard liveness probe endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "health",
+                "live"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94fdf6f0-0d62-4f9e-86b5-b7d07ee1c8e6",
+              "name": "Server is live",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0bfec3c8-b1ce-45f0-a78c-0acacf92cb2b",
+              "name": "Server is not live",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "live"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4af8dc76-1741-4350-b763-0e3ac28ff78e",
+          "name": "Triton Inference Server Server Readiness Check",
+          "request": {
+            "name": "Triton Inference Server Server Readiness Check",
+            "description": {
+              "content": "Check if the Triton server is ready to accept inference requests. The server is ready when all models that are loaded at startup are ready.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "health",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fd8c4a4-7c5e-485d-a17f-0b41510ead73",
+              "name": "Server is ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08bd1da9-bae0-4a42-909b-779f6fb1447c",
+              "name": "Server is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "health",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fa6a0b2f-e973-45c9-a7a9-d15d6b9326db",
+          "name": "Triton Inference Server Model Version Readiness Check",
+          "request": {
+            "name": "Triton Inference Server Model Version Readiness Check",
+            "description": {
+              "content": "Check if a specific version of a model is ready to accept inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5155c40b-37ca-43ae-bcf5-672e6814b4c9",
+              "name": "Model version is ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ced4afd0-36eb-486b-bc36-be12e7029fef",
+              "name": "Model version is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39f630ec-5b47-42f0-958a-0dda3fcf93f5",
+          "name": "Triton Inference Server Model Readiness Check",
+          "request": {
+            "name": "Triton Inference Server Model Readiness Check",
+            "description": {
+              "content": "Check if a model is ready to accept inference requests. Checks the default/latest version of the model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3d4a46f-1f53-47d9-8896-735274722770",
+              "name": "Model is ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa8993fd-4351-4771-9f2a-63078aef5fea",
+              "name": "Model is not ready",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "5697c998-b257-4acf-a226-284e22df22d2",
+      "name": "Inference",
+      "description": {
+        "content": "Model inference requests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c378a97-da97-47dc-8fc4-85b988fc2ce1",
+          "name": "Triton Inference Server Run Inference on a Model",
+          "request": {
+            "name": "Triton Inference Server Run Inference on a Model",
+            "description": {
+              "content": "Submit an inference request to a model. The request specifies input tensors and requested output tensors. Supports optional parameters for sequence handling, priority, timeout, and binary data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "566340e8-1194-4bd9-984a-190808f70e10",
+              "name": "Inference completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1910,\n        6720\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 5605,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 8850,\n        \"shared_memory_byte_size\": 2531,\n        \"classification\": 5561\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3826,\n        5396\n      ],\n      \"datatype\": \"BOOL\",\n      \"parameters\": {\n        \"binary_data_size\": 9431,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9186,\n        \"shared_memory_byte_size\": 9603,\n        \"classification\": 2851,\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 2126,\n        \"shared_memory_byte_size\": 2968,\n        \"classification\": 9095\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9871,\n        \"shared_memory_byte_size\": 3356,\n        \"classification\": 3688\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model_name\": \"string\",\n  \"model_version\": \"string\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        763,\n        6747\n      ],\n      \"datatype\": \"INT32\",\n      \"parameters\": {\n        \"binary_data_size\": 8890,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        8165,\n        5709\n      ],\n      \"datatype\": \"FP16\",\n      \"parameters\": {\n        \"binary_data_size\": 3135,\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21484506-2fb0-430b-ac62-e4b7a0228c53",
+              "name": "Inference request error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1910,\n        6720\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 5605,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 8850,\n        \"shared_memory_byte_size\": 2531,\n        \"classification\": 5561\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3826,\n        5396\n      ],\n      \"datatype\": \"BOOL\",\n      \"parameters\": {\n        \"binary_data_size\": 9431,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9186,\n        \"shared_memory_byte_size\": 9603,\n        \"classification\": 2851,\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 2126,\n        \"shared_memory_byte_size\": 2968,\n        \"classification\": 9095\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9871,\n        \"shared_memory_byte_size\": 3356,\n        \"classification\": 3688\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50f3bca0-f137-41b2-8666-56976ae28825",
+          "name": "Triton Inference Server Run Inference on a Specific Model Version",
+          "request": {
+            "name": "Triton Inference Server Run Inference on a Specific Model Version",
+            "description": {
+              "content": "Submit an inference request to a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "93b0288f-15f9-4d12-a3e2-06659d6404ab",
+              "name": "Inference completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1910,\n        6720\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 5605,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 8850,\n        \"shared_memory_byte_size\": 2531,\n        \"classification\": 5561\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3826,\n        5396\n      ],\n      \"datatype\": \"BOOL\",\n      \"parameters\": {\n        \"binary_data_size\": 9431,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9186,\n        \"shared_memory_byte_size\": 9603,\n        \"classification\": 2851,\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 2126,\n        \"shared_memory_byte_size\": 2968,\n        \"classification\": 9095\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9871,\n        \"shared_memory_byte_size\": 3356,\n        \"classification\": 3688\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model_name\": \"string\",\n  \"model_version\": \"string\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        763,\n        6747\n      ],\n      \"datatype\": \"INT32\",\n      \"parameters\": {\n        \"binary_data_size\": 8890,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        8165,\n        5709\n      ],\n      \"datatype\": \"FP16\",\n      \"parameters\": {\n        \"binary_data_size\": 3135,\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "544244d8-5400-412e-8a4b-b0458706f017",
+              "name": "Inference request error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        1910,\n        6720\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 5605,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 8850,\n        \"shared_memory_byte_size\": 2531,\n        \"classification\": 5561\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3826,\n        5396\n      ],\n      \"datatype\": \"BOOL\",\n      \"parameters\": {\n        \"binary_data_size\": 9431,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9186,\n        \"shared_memory_byte_size\": 9603,\n        \"classification\": 2851,\n        \"key_0\": \"string\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 2126,\n        \"shared_memory_byte_size\": 2968,\n        \"classification\": 9095\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 9871,\n        \"shared_memory_byte_size\": 3356,\n        \"classification\": 3688\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "59e88dfa-c1ca-433a-9a90-7bb3575d51e7",
+      "name": "Logging",
+      "description": {
+        "content": "Server logging configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2ef9acb6-238f-45a2-903a-ce08dd41424b",
+          "name": "Triton Inference Server Get Logging Settings",
+          "request": {
+            "name": "Triton Inference Server Get Logging Settings",
+            "description": {
+              "content": "Retrieve the current logging settings. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "logging"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "deb3b62a-4c1c-4f4b-be4a-765524945188",
+              "name": "Logging settings returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_file\": \"string\",\n  \"log_info\": true,\n  \"log_warning\": true,\n  \"log_error\": false,\n  \"log_verbose_level\": 6309,\n  \"log_format\": \"ISO8601\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c383956a-7c40-478a-a3d6-4c97caa22cf8",
+              "name": "Error retrieving logging settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e07c52d-b7c6-4b11-8021-36bc52fb098f",
+          "name": "Triton Inference Server Update Logging Settings",
+          "request": {
+            "name": "Triton Inference Server Update Logging Settings",
+            "description": {
+              "content": "Update the server logging settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "logging"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "479bcd8c-658e-4967-826c-29ca63eb8cf3",
+              "name": "Logging settings updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_file\": \"string\",\n  \"log_info\": true,\n  \"log_warning\": true,\n  \"log_error\": false,\n  \"log_verbose_level\": 6309,\n  \"log_format\": \"ISO8601\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fac9d54-5fcb-4b08-a659-c1f65cff7a58",
+              "name": "Error updating logging settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "62e52b2f-03f3-4b54-9b71-0e5b25677957",
+      "name": "Model Metadata",
+      "description": {
+        "content": "Model-level metadata, configuration, and statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f79a2cb1-b0cf-405b-9076-03babfb5a0c3",
+          "name": "Triton Inference Server Get Model Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Model Metadata",
+            "description": {
+              "content": "Retrieve metadata about a specific model including its name, versions, platform, and input/output tensor information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e09354f-08dc-4759-b8ca-2dc4c597c34a",
+              "name": "Model metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"platform\": \"tensorrt_plan\",\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"BYTES\",\n      \"shape\": [\n        9319,\n        6201\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT16\",\n      \"shape\": [\n        8400,\n        4894\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT32\",\n      \"shape\": [\n        8171,\n        6313\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT8\",\n      \"shape\": [\n        5450,\n        5900\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e3b3feb-bc15-46a8-9613-120f46df5e2d",
+              "name": "Error retrieving model metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf6f1e4a-0eb2-4f30-a35f-74da181a9073",
+          "name": "Triton Inference Server Get Model Version Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Metadata",
+            "description": {
+              "content": "Retrieve metadata about a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "019996dc-e2a5-44da-8f5c-1efbc2048de9",
+              "name": "Model version metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"platform\": \"tensorrt_plan\",\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"BYTES\",\n      \"shape\": [\n        9319,\n        6201\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT16\",\n      \"shape\": [\n        8400,\n        4894\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT32\",\n      \"shape\": [\n        8171,\n        6313\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT8\",\n      \"shape\": [\n        5450,\n        5900\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7713b91-5939-4d61-a209-102c8f02efdc",
+              "name": "Error retrieving model version metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a6e9574-84d0-4956-8c6b-c4a5593af613",
+          "name": "Triton Inference Server Get Model Configuration",
+          "request": {
+            "name": "Triton Inference Server Get Model Configuration",
+            "description": {
+              "content": "Retrieve the configuration of a specific model as defined in the model repository. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12a415b3-b4f9-4ce1-8bef-047c174bd0c0",
+              "name": "Model configuration returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"backend\": \"string\",\n  \"version_policy\": {\n    \"latest\": {\n      \"num_versions\": 5653\n    },\n    \"all\": {},\n    \"specific\": {\n      \"versions\": [\n        7549,\n        7043\n      ]\n    }\n  },\n  \"max_batch_size\": 8260,\n  \"input\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT64\",\n      \"dims\": [\n        9231,\n        3771\n      ],\n      \"reshape\": {\n        \"shape\": [\n          931,\n          1098\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": true\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_FP64\",\n      \"dims\": [\n        4110,\n        6417\n      ],\n      \"reshape\": {\n        \"shape\": [\n          6694,\n          9316\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": true\n    }\n  ],\n  \"output\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT8\",\n      \"dims\": [\n        8701,\n        5143\n      ],\n      \"reshape\": {\n        \"shape\": [\n          7009,\n          3468\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": false\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_INT8\",\n      \"dims\": [\n        7458,\n        3853\n      ],\n      \"reshape\": {\n        \"shape\": [\n          8824,\n          2038\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": false\n    }\n  ],\n  \"instance_group\": [\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_CPU\",\n      \"count\": 447,\n      \"gpus\": [\n        209,\n        6693\n      ],\n      \"rate_group\": 1420,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 9907\n          },\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 8909\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_GPU\",\n      \"count\": 7490,\n      \"gpus\": [\n        1185,\n        6464\n      ],\n      \"rate_group\": 9477,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 75\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 9968\n          }\n        ]\n      }\n    }\n  ],\n  \"dynamic_batching\": {\n    \"preferred_batch_size\": [\n      2102,\n      1924\n    ],\n    \"max_queue_delay_microseconds\": 3435,\n    \"preserve_ordering\": false,\n    \"priority_levels\": 1820,\n    \"default_priority_level\": 1101,\n    \"default_queue_policy\": {\n      \"timeout_action\": \"DELAY\",\n      \"default_timeout_microseconds\": 825,\n      \"allow_timeout_override\": false,\n      \"max_queue_size\": 6308\n    },\n    \"priority_queue_policy\": {\n      \"key_0\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 7442,\n        \"allow_timeout_override\": false,\n        \"max_queue_size\": 7310\n      },\n      \"key_1\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 250,\n        \"allow_timeout_override\": false,\n        \"max_queue_size\": 8545\n      }\n    }\n  },\n  \"sequence_batching\": {\n    \"max_sequence_idle_microseconds\": 9042,\n    \"control_input\": [\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_END\",\n            \"int32_false_true\": [\n              8127,\n              9926\n            ],\n            \"fp32_false_true\": [\n              747.7712623681687,\n              3877.4295668342775\n            ],\n            \"bool_false_true\": [\n              false,\n              true\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              8927,\n              1921\n            ],\n            \"fp32_false_true\": [\n              7353.691723654988,\n              7340.5654261970185\n            ],\n            \"bool_false_true\": [\n              false,\n              false\n            ]\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              7209,\n              6240\n            ],\n            \"fp32_false_true\": [\n              222.39612315060776,\n              9999.266473042531\n            ],\n            \"bool_false_true\": [\n              true,\n              true\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_READY\",\n            \"int32_false_true\": [\n              4164,\n              1362\n            ],\n            \"fp32_false_true\": [\n              57.06580744824219,\n              7387.913807655206\n            ],\n            \"bool_false_true\": [\n              true,\n              true\n            ]\n          }\n        ]\n      }\n    ],\n    \"state\": [\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          569,\n          7774\n        ]\n      },\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          7086,\n          3202\n        ]\n      }\n    ]\n  },\n  \"ensemble_scheduling\": {\n    \"step\": [\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 1440,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 379,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ]\n  },\n  \"parameters\": {\n    \"key_0\": {\n      \"string_value\": \"string\"\n    },\n    \"key_1\": {\n      \"string_value\": \"string\"\n    }\n  },\n  \"model_warmup\": [\n    {\n      \"name\": \"string\",\n      \"batch_size\": 9231,\n      \"inputs\": {\n        \"key_0\": {}\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"batch_size\": 338,\n      \"inputs\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44257287-5dd4-4fde-8d82-3d6f18fdb48f",
+              "name": "Error retrieving model configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7401be9-e08a-48b2-ae78-eee67a146d04",
+          "name": "Triton Inference Server Get Model Version Configuration",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Configuration",
+            "description": {
+              "content": "Retrieve the configuration of a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db7916d3-b185-4411-8ef4-ef0e31bac394",
+              "name": "Model version configuration returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"backend\": \"string\",\n  \"version_policy\": {\n    \"latest\": {\n      \"num_versions\": 5653\n    },\n    \"all\": {},\n    \"specific\": {\n      \"versions\": [\n        7549,\n        7043\n      ]\n    }\n  },\n  \"max_batch_size\": 8260,\n  \"input\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT64\",\n      \"dims\": [\n        9231,\n        3771\n      ],\n      \"reshape\": {\n        \"shape\": [\n          931,\n          1098\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": true\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_FP64\",\n      \"dims\": [\n        4110,\n        6417\n      ],\n      \"reshape\": {\n        \"shape\": [\n          6694,\n          9316\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": true\n    }\n  ],\n  \"output\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT8\",\n      \"dims\": [\n        8701,\n        5143\n      ],\n      \"reshape\": {\n        \"shape\": [\n          7009,\n          3468\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": false\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_INT8\",\n      \"dims\": [\n        7458,\n        3853\n      ],\n      \"reshape\": {\n        \"shape\": [\n          8824,\n          2038\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": false\n    }\n  ],\n  \"instance_group\": [\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_CPU\",\n      \"count\": 447,\n      \"gpus\": [\n        209,\n        6693\n      ],\n      \"rate_group\": 1420,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 9907\n          },\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 8909\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_GPU\",\n      \"count\": 7490,\n      \"gpus\": [\n        1185,\n        6464\n      ],\n      \"rate_group\": 9477,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 75\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 9968\n          }\n        ]\n      }\n    }\n  ],\n  \"dynamic_batching\": {\n    \"preferred_batch_size\": [\n      2102,\n      1924\n    ],\n    \"max_queue_delay_microseconds\": 3435,\n    \"preserve_ordering\": false,\n    \"priority_levels\": 1820,\n    \"default_priority_level\": 1101,\n    \"default_queue_policy\": {\n      \"timeout_action\": \"DELAY\",\n      \"default_timeout_microseconds\": 825,\n      \"allow_timeout_override\": false,\n      \"max_queue_size\": 6308\n    },\n    \"priority_queue_policy\": {\n      \"key_0\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 7442,\n        \"allow_timeout_override\": false,\n        \"max_queue_size\": 7310\n      },\n      \"key_1\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 250,\n        \"allow_timeout_override\": false,\n        \"max_queue_size\": 8545\n      }\n    }\n  },\n  \"sequence_batching\": {\n    \"max_sequence_idle_microseconds\": 9042,\n    \"control_input\": [\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_END\",\n            \"int32_false_true\": [\n              8127,\n              9926\n            ],\n            \"fp32_false_true\": [\n              747.7712623681687,\n              3877.4295668342775\n            ],\n            \"bool_false_true\": [\n              false,\n              true\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              8927,\n              1921\n            ],\n            \"fp32_false_true\": [\n              7353.691723654988,\n              7340.5654261970185\n            ],\n            \"bool_false_true\": [\n              false,\n              false\n            ]\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              7209,\n              6240\n            ],\n            \"fp32_false_true\": [\n              222.39612315060776,\n              9999.266473042531\n            ],\n            \"bool_false_true\": [\n              true,\n              true\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_READY\",\n            \"int32_false_true\": [\n              4164,\n              1362\n            ],\n            \"fp32_false_true\": [\n              57.06580744824219,\n              7387.913807655206\n            ],\n            \"bool_false_true\": [\n              true,\n              true\n            ]\n          }\n        ]\n      }\n    ],\n    \"state\": [\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          569,\n          7774\n        ]\n      },\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          7086,\n          3202\n        ]\n      }\n    ]\n  },\n  \"ensemble_scheduling\": {\n    \"step\": [\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 1440,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 379,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ]\n  },\n  \"parameters\": {\n    \"key_0\": {\n      \"string_value\": \"string\"\n    },\n    \"key_1\": {\n      \"string_value\": \"string\"\n    }\n  },\n  \"model_warmup\": [\n    {\n      \"name\": \"string\",\n      \"batch_size\": 9231,\n      \"inputs\": {\n        \"key_0\": {}\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"batch_size\": 338,\n      \"inputs\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81a24a9a-31be-44e9-8205-46e5dca00d73",
+              "name": "Error retrieving model version configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e875309a-844a-42fa-a8a9-da16c4be4a4c",
+      "name": "Model Repository",
+      "description": {
+        "content": "Model repository management operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e929b1bf-10d9-4548-90cd-7f03a4ff0880",
+          "name": "Triton Inference Server List Models in the Repository",
+          "request": {
+            "name": "Triton Inference Server List Models in the Repository",
+            "description": {
+              "content": "Retrieve the index of all models available in the model repository. Can optionally filter to show only models that are ready. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "repository",
+                "index"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ready\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e977076b-bdb8-47b0-8c4b-7dffdd3782db",
+              "name": "Repository index returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "index"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ready\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"state\": \"READY\",\n    \"reason\": \"string\"\n  },\n  {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"state\": \"READY\",\n    \"reason\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05b0eaa1-0e23-4327-a678-5171a7302964",
+              "name": "Error retrieving repository index",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "index"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ready\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02d8cebd-b0f8-4528-9506-5c152848bb75",
+          "name": "Triton Inference Server Load or Reload a Model",
+          "request": {
+            "name": "Triton Inference Server Load or Reload a Model",
+            "description": {
+              "content": "Request that a model be loaded into Triton, or reloaded if it is already loaded. Optionally provide model configuration overrides as parameters. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "repository",
+                "models",
+                ":model_name",
+                "load"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "78eaf036-2be3-466d-80ba-20113248e488",
+              "name": "Model loaded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "models",
+                    ":model_name",
+                    "load"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c843b49a-ac90-47ea-b81f-ab7fa1e101cc",
+              "name": "Error loading model",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "models",
+                    ":model_name",
+                    "load"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f7e511d-01a1-4fcc-af1d-242b1aee3e44",
+          "name": "Triton Inference Server Unload a Model",
+          "request": {
+            "name": "Triton Inference Server Unload a Model",
+            "description": {
+              "content": "Request that a model be unloaded from Triton. Once unloaded the model will no longer be available for inference. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "repository",
+                "models",
+                ":model_name",
+                "unload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ca0b28a1-1cc3-4415-a228-84054d51a8d9",
+              "name": "Model unloaded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "models",
+                    ":model_name",
+                    "unload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f0d19e6a-7c11-4967-84ad-368bdc8e42de",
+              "name": "Error unloading model",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "repository",
+                    "models",
+                    ":model_name",
+                    "unload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "34cb14e2-a2fe-4e5e-b861-ce6daa182579",
+      "name": "Server Metadata",
+      "description": {
+        "content": "Server-level metadata and information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01f3511d-2ce4-4673-a0b6-e8b3b30fda77",
+          "name": "Triton Inference Server Get Server Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Server Metadata",
+            "description": {
+              "content": "Retrieve metadata about the Triton server including name, version, and supported extensions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bead3336-3338-4b6a-811c-4373fe6a896f",
+              "name": "Server metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"triton\",\n  \"version\": \"2.42.0\",\n  \"extensions\": [\n    \"classification\",\n    \"sequence\",\n    \"model_repository\",\n    \"model_configuration\",\n    \"schedule_policy\",\n    \"server_metadata\",\n    \"statistics\",\n    \"trace\",\n    \"logging\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d613f7c-7212-489d-b326-9869d33dced4",
+              "name": "Error retrieving server metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "56015385-788f-4e67-8dd1-907be151641b",
+      "name": "Statistics",
+      "description": {
+        "content": "Server and model inference statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "18181df9-9d9f-4df7-b177-3c0b0bcde08d",
+          "name": "Triton Inference Server Get Model Inference Statistics",
+          "request": {
+            "name": "Triton Inference Server Get Model Inference Statistics",
+            "description": {
+              "content": "Retrieve inference statistics for a specific model including request count, execution count, and cumulative timing information. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e8ad2e1-484b-4c98-9eb6-16517b80bf9c",
+              "name": "Model statistics returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 6958,\n      \"inference_count\": 4856,\n      \"execution_count\": 3505,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 3242,\n          \"ns\": 3978\n        },\n        \"fail\": {\n          \"count\": 9930,\n          \"ns\": 1659\n        },\n        \"queue\": {\n          \"count\": 6532,\n          \"ns\": 7090\n        },\n        \"compute_input\": {\n          \"count\": 6835,\n          \"ns\": 8231\n        },\n        \"compute_infer\": {\n          \"count\": 7914,\n          \"ns\": 267\n        },\n        \"compute_output\": {\n          \"count\": 5735,\n          \"ns\": 5649\n        },\n        \"cache_hit\": {\n          \"count\": 3054,\n          \"ns\": 343\n        },\n        \"cache_miss\": {\n          \"count\": 2492,\n          \"ns\": 7124\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 6446,\n          \"compute_input\": {\n            \"count\": 6058,\n            \"ns\": 5767\n          },\n          \"compute_infer\": {\n            \"count\": 6445,\n            \"ns\": 3709\n          },\n          \"compute_output\": {\n            \"count\": 4079,\n            \"ns\": 749\n          }\n        },\n        {\n          \"batch_size\": 7146,\n          \"compute_input\": {\n            \"count\": 2673,\n            \"ns\": 2540\n          },\n          \"compute_infer\": {\n            \"count\": 6727,\n            \"ns\": 344\n          },\n          \"compute_output\": {\n            \"count\": 8094,\n            \"ns\": 5693\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6947,\n          \"byte_size\": 4895\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 1194,\n          \"byte_size\": 8731\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 371,\n      \"inference_count\": 7042,\n      \"execution_count\": 613,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 727,\n          \"ns\": 6897\n        },\n        \"fail\": {\n          \"count\": 5453,\n          \"ns\": 8\n        },\n        \"queue\": {\n          \"count\": 4672,\n          \"ns\": 8978\n        },\n        \"compute_input\": {\n          \"count\": 9170,\n          \"ns\": 7461\n        },\n        \"compute_infer\": {\n          \"count\": 3773,\n          \"ns\": 8429\n        },\n        \"compute_output\": {\n          \"count\": 2322,\n          \"ns\": 7550\n        },\n        \"cache_hit\": {\n          \"count\": 1915,\n          \"ns\": 8554\n        },\n        \"cache_miss\": {\n          \"count\": 1148,\n          \"ns\": 8348\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 8929,\n          \"compute_input\": {\n            \"count\": 2697,\n            \"ns\": 9389\n          },\n          \"compute_infer\": {\n            \"count\": 5804,\n            \"ns\": 9292\n          },\n          \"compute_output\": {\n            \"count\": 182,\n            \"ns\": 4161\n          }\n        },\n        {\n          \"batch_size\": 5901,\n          \"compute_input\": {\n            \"count\": 9984,\n            \"ns\": 3206\n          },\n          \"compute_infer\": {\n            \"count\": 1371,\n            \"ns\": 5241\n          },\n          \"compute_output\": {\n            \"count\": 7376,\n            \"ns\": 2953\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 9590,\n          \"byte_size\": 660\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 4856,\n          \"byte_size\": 5104\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcf278fc-738d-42e9-b167-f054f79e7353",
+              "name": "Error retrieving model statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5025737a-1c71-44f7-9394-4c8d236d70ce",
+          "name": "Triton Inference Server Get Model Version Inference Statistics",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Inference Statistics",
+            "description": {
+              "content": "Retrieve inference statistics for a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4962be6-cbc7-418a-a0d8-b0dc6a8b4b78",
+              "name": "Model version statistics returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 6958,\n      \"inference_count\": 4856,\n      \"execution_count\": 3505,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 3242,\n          \"ns\": 3978\n        },\n        \"fail\": {\n          \"count\": 9930,\n          \"ns\": 1659\n        },\n        \"queue\": {\n          \"count\": 6532,\n          \"ns\": 7090\n        },\n        \"compute_input\": {\n          \"count\": 6835,\n          \"ns\": 8231\n        },\n        \"compute_infer\": {\n          \"count\": 7914,\n          \"ns\": 267\n        },\n        \"compute_output\": {\n          \"count\": 5735,\n          \"ns\": 5649\n        },\n        \"cache_hit\": {\n          \"count\": 3054,\n          \"ns\": 343\n        },\n        \"cache_miss\": {\n          \"count\": 2492,\n          \"ns\": 7124\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 6446,\n          \"compute_input\": {\n            \"count\": 6058,\n            \"ns\": 5767\n          },\n          \"compute_infer\": {\n            \"count\": 6445,\n            \"ns\": 3709\n          },\n          \"compute_output\": {\n            \"count\": 4079,\n            \"ns\": 749\n          }\n        },\n        {\n          \"batch_size\": 7146,\n          \"compute_input\": {\n            \"count\": 2673,\n            \"ns\": 2540\n          },\n          \"compute_infer\": {\n            \"count\": 6727,\n            \"ns\": 344\n          },\n          \"compute_output\": {\n            \"count\": 8094,\n            \"ns\": 5693\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6947,\n          \"byte_size\": 4895\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 1194,\n          \"byte_size\": 8731\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 371,\n      \"inference_count\": 7042,\n      \"execution_count\": 613,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 727,\n          \"ns\": 6897\n        },\n        \"fail\": {\n          \"count\": 5453,\n          \"ns\": 8\n        },\n        \"queue\": {\n          \"count\": 4672,\n          \"ns\": 8978\n        },\n        \"compute_input\": {\n          \"count\": 9170,\n          \"ns\": 7461\n        },\n        \"compute_infer\": {\n          \"count\": 3773,\n          \"ns\": 8429\n        },\n        \"compute_output\": {\n          \"count\": 2322,\n          \"ns\": 7550\n        },\n        \"cache_hit\": {\n          \"count\": 1915,\n          \"ns\": 8554\n        },\n        \"cache_miss\": {\n          \"count\": 1148,\n          \"ns\": 8348\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 8929,\n          \"compute_input\": {\n            \"count\": 2697,\n            \"ns\": 9389\n          },\n          \"compute_infer\": {\n            \"count\": 5804,\n            \"ns\": 9292\n          },\n          \"compute_output\": {\n            \"count\": 182,\n            \"ns\": 4161\n          }\n        },\n        {\n          \"batch_size\": 5901,\n          \"compute_input\": {\n            \"count\": 9984,\n            \"ns\": 3206\n          },\n          \"compute_infer\": {\n            \"count\": 1371,\n            \"ns\": 5241\n          },\n          \"compute_output\": {\n            \"count\": 7376,\n            \"ns\": 2953\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 9590,\n          \"byte_size\": 660\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 4856,\n          \"byte_size\": 5104\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26cecbb7-50d3-47fe-96b7-065c09e78fc1",
+              "name": "Error retrieving model version statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9df56378-1806-4f15-ad36-88d61468a5b4",
+          "name": "Triton Inference Server Get Statistics for All Models",
+          "request": {
+            "name": "Triton Inference Server Get Statistics for All Models",
+            "description": {
+              "content": "Retrieve inference statistics for all loaded models.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64d0bcaf-69c2-46ac-ad6a-a1449767e283",
+              "name": "Statistics for all models returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 6958,\n      \"inference_count\": 4856,\n      \"execution_count\": 3505,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 3242,\n          \"ns\": 3978\n        },\n        \"fail\": {\n          \"count\": 9930,\n          \"ns\": 1659\n        },\n        \"queue\": {\n          \"count\": 6532,\n          \"ns\": 7090\n        },\n        \"compute_input\": {\n          \"count\": 6835,\n          \"ns\": 8231\n        },\n        \"compute_infer\": {\n          \"count\": 7914,\n          \"ns\": 267\n        },\n        \"compute_output\": {\n          \"count\": 5735,\n          \"ns\": 5649\n        },\n        \"cache_hit\": {\n          \"count\": 3054,\n          \"ns\": 343\n        },\n        \"cache_miss\": {\n          \"count\": 2492,\n          \"ns\": 7124\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 6446,\n          \"compute_input\": {\n            \"count\": 6058,\n            \"ns\": 5767\n          },\n          \"compute_infer\": {\n            \"count\": 6445,\n            \"ns\": 3709\n          },\n          \"compute_output\": {\n            \"count\": 4079,\n            \"ns\": 749\n          }\n        },\n        {\n          \"batch_size\": 7146,\n          \"compute_input\": {\n            \"count\": 2673,\n            \"ns\": 2540\n          },\n          \"compute_infer\": {\n            \"count\": 6727,\n            \"ns\": 344\n          },\n          \"compute_output\": {\n            \"count\": 8094,\n            \"ns\": 5693\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6947,\n          \"byte_size\": 4895\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 1194,\n          \"byte_size\": 8731\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 371,\n      \"inference_count\": 7042,\n      \"execution_count\": 613,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 727,\n          \"ns\": 6897\n        },\n        \"fail\": {\n          \"count\": 5453,\n          \"ns\": 8\n        },\n        \"queue\": {\n          \"count\": 4672,\n          \"ns\": 8978\n        },\n        \"compute_input\": {\n          \"count\": 9170,\n          \"ns\": 7461\n        },\n        \"compute_infer\": {\n          \"count\": 3773,\n          \"ns\": 8429\n        },\n        \"compute_output\": {\n          \"count\": 2322,\n          \"ns\": 7550\n        },\n        \"cache_hit\": {\n          \"count\": 1915,\n          \"ns\": 8554\n        },\n        \"cache_miss\": {\n          \"count\": 1148,\n          \"ns\": 8348\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 8929,\n          \"compute_input\": {\n            \"count\": 2697,\n            \"ns\": 9389\n          },\n          \"compute_infer\": {\n            \"count\": 5804,\n            \"ns\": 9292\n          },\n          \"compute_output\": {\n            \"count\": 182,\n            \"ns\": 4161\n          }\n        },\n        {\n          \"batch_size\": 5901,\n          \"compute_input\": {\n            \"count\": 9984,\n            \"ns\": 3206\n          },\n          \"compute_infer\": {\n            \"count\": 1371,\n            \"ns\": 5241\n          },\n          \"compute_output\": {\n            \"count\": 7376,\n            \"ns\": 2953\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 9590,\n          \"byte_size\": 660\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 4856,\n          \"byte_size\": 5104\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "030564cd-27ed-4da4-89b9-d996120b9bf7",
+              "name": "Error retrieving statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "cfa17742-339e-4da4-99e1-b902012768eb",
+      "name": "System Shared Memory",
+      "description": {
+        "content": "System shared memory region management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "692f1eee-cd78-4adb-9d93-89623370f03b",
+          "name": "Triton Inference Server Get System Shared Memory Status",
+          "request": {
+            "name": "Triton Inference Server Get System Shared Memory Status",
+            "description": {
+              "content": "Retrieve the status of all registered system shared memory regions. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9dee4967-1bb0-44f8-bb81-f4522e67ced1",
+              "name": "System shared memory status returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"offset\": 5380,\n    \"byte_size\": 121\n  },\n  {\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"offset\": 2570,\n    \"byte_size\": 9967\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb5747d0-9bae-493e-bd1c-1923d4690942",
+              "name": "Error retrieving status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acf9542f-18ff-47bd-8908-60d1f66307e8",
+          "name": "Triton Inference Server Register a System Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Register a System Shared Memory Region",
+            "description": {
+              "content": "Register a system shared memory region for use with inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "region",
+                ":region_name",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a331c60-229f-4395-944e-87d86279ffaa",
+              "name": "Region registered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2fd30424-443d-4590-9109-186daaa818ed",
+              "name": "Error registering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56144980-f185-4892-b5de-74b78708ac9b",
+          "name": "Triton Inference Server Unregister a System Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Unregister a System Shared Memory Region",
+            "description": {
+              "content": "Unregister a previously registered system shared memory region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "region",
+                ":region_name",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a30a9c0-0ee9-41f2-90db-12d092dbd9bb",
+              "name": "Region unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d28ba60c-3301-4d6b-b066-abfca5e4dbf6",
+              "name": "Error unregistering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3708895-1c5e-4bed-a789-6f016d941011",
+          "name": "Triton Inference Server Unregister All System Shared Memory Regions",
+          "request": {
+            "name": "Triton Inference Server Unregister All System Shared Memory Regions",
+            "description": {
+              "content": "Unregister all registered system shared memory regions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a5c62c0-fabe-44fe-9379-d0c97542fd32",
+              "name": "All regions unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e3be0f2-301b-40e3-b251-d738a098d799",
+              "name": "Error unregistering regions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "665c5a96-c55b-49ce-b8b0-18929c063c9c",
+      "name": "Trace",
+      "description": {
+        "content": "Request tracing configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bf73cf19-e49d-4dc2-b504-f00a20d69128",
+          "name": "Triton Inference Server Get Trace Settings",
+          "request": {
+            "name": "Triton Inference Server Get Trace Settings",
+            "description": {
+              "content": "Retrieve the current global trace settings. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "trace",
+                "setting"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4986ca70-88f8-4a97-9553-4deac9fd7640",
+              "name": "Trace settings returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_level\": [\n    \"OFF\",\n    \"TENSORS\"\n  ],\n  \"trace_rate\": \"string\",\n  \"trace_count\": \"string\",\n  \"log_frequency\": \"string\",\n  \"trace_file\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30e3c78a-5a5d-4e0b-a3ff-9a96860b1343",
+              "name": "Error retrieving trace settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d72d2061-c44f-43f3-b51d-506b1ff2d829",
+          "name": "Triton Inference Server Update Trace Settings",
+          "request": {
+            "name": "Triton Inference Server Update Trace Settings",
+            "description": {
+              "content": "Update the global trace settings for request tracing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "trace",
+                "setting"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1114852-cdc7-4cb1-9f86-59379141d4d5",
+              "name": "Trace settings updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_level\": [\n    \"OFF\",\n    \"TENSORS\"\n  ],\n  \"trace_rate\": \"string\",\n  \"trace_count\": \"string\",\n  \"log_frequency\": \"string\",\n  \"trace_file\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e1d58f-4573-4820-871d-1b03ae925c5e",
+              "name": "Error updating trace settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a162061-4fbc-4255-8672-8af8bd0d6121",
+          "name": "Triton Inference Server Get Model-Specific Trace Settings",
+          "request": {
+            "name": "Triton Inference Server Get Model-Specific Trace Settings",
+            "description": {
+              "content": "Retrieve the trace settings for a specific model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "trace",
+                "setting"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10316572-3318-4391-bbca-184d926cd764",
+              "name": "Model trace settings returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_level\": [\n    \"OFF\",\n    \"TENSORS\"\n  ],\n  \"trace_rate\": \"string\",\n  \"trace_count\": \"string\",\n  \"log_frequency\": \"string\",\n  \"trace_file\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c2971a0-5f80-4728-b527-7b03be875f0c",
+              "name": "Error retrieving model trace settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0224d66b-8daa-4484-8190-60e88a79b0e9",
+          "name": "Triton Inference Server Update Model-Specific Trace Settings",
+          "request": {
+            "name": "Triton Inference Server Update Model-Specific Trace Settings",
+            "description": {
+              "content": "Update the trace settings for a specific model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "trace",
+                "setting"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "90abed97-6eb7-44e1-b320-81d0b7011013",
+              "name": "Model trace settings updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trace_level\": [\n    \"OFF\",\n    \"TENSORS\"\n  ],\n  \"trace_rate\": \"string\",\n  \"trace_count\": \"string\",\n  \"log_frequency\": \"string\",\n  \"trace_file\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a511e993-afd3-4483-abd6-6baeb65d370e",
+              "name": "Error updating model trace settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "trace",
+                    "setting"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trace_level\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"trace_rate\": \"<string>\",\n  \"trace_count\": \"<string>\",\n  \"log_frequency\": \"<string>\",\n  \"trace_file\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b66267b7-e5e9-4199-8114-707a577b7e18",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

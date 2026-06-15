@@ -1,0 +1,131 @@
+{
+  "item": [
+    {
+      "id": "07a7179c-3032-4e85-871d-da7e59588520",
+      "name": "Metrics",
+      "description": {
+        "content": "Prometheus-compatible metrics endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "273f7ade-73d3-4c87-846a-5e77db2f0055",
+          "name": "Triton Inference Server Get Prometheus metrics",
+          "request": {
+            "name": "Triton Inference Server Get Prometheus metrics",
+            "description": {
+              "content": "Retrieve all available metrics in Prometheus text exposition format. Includes server-level metrics (request counts, latencies, GPU utilization, memory usage) and per-model metrics (inference counts, queue times, compute times). Metrics are labeled with model name, version, GPU UUID, and other dimensions.\n\nKey metric families include:\n- `nv_inference_request_success` - Successful inference request count\n- `nv_inference_request_failure` - Failed inference request count\n- `nv_inference_count` - Total inference count\n- `nv_inference_exec_count` - Total inference execution count\n- `nv_inference_request_duration_us` - Cumulative inference request duration\n- `nv_inference_queue_duration_us` - Cumulative inference queuing duration\n- `nv_inference_compute_input_duration_us` - Cumulative input processing duration\n- `nv_inference_compute_infer_duration_us` - Cumulative inference compute duration\n- `nv_inference_compute_output_duration_us` - Cumulative output processing duration\n- `nv_inference_pending_request_count` - Pending inference request count\n- `nv_gpu_utilization` - GPU utilization rate (0.0 - 1.0)\n- `nv_gpu_memory_total_bytes` - Total GPU memory in bytes\n- `nv_gpu_memory_used_bytes` - Used GPU memory in bytes\n- `nv_gpu_power_usage` - GPU power usage in watts\n- `nv_gpu_power_limit` - GPU power limit in watts\n- `nv_energy_consumption` - GPU energy consumption in joules\n- `nv_cpu_utilization` - CPU utilization rate\n- `nv_cpu_memory_total_bytes` - Total CPU memory in bytes\n- `nv_cpu_memory_used_bytes` - Used CPU memory in bytes\n- `nv_cache_num_hits_per_model` - Response cache hits per model\n- `nv_cache_num_misses_per_model` - Response cache misses per model\n- `nv_cache_hit_duration_per_model` - Cache hit lookup duration per model\n- `nv_cache_miss_duration_per_model` - Cache miss insert duration per model",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d62c2ee5-0892-4932-bfeb-bd341683e283",
+              "name": "Prometheus metrics returned in text exposition format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "# HELP nv_inference_request_success Number of successful inference requests\n# TYPE nv_inference_request_success counter\nnv_inference_request_success{model=\"resnet50\",version=\"1\"} 1523\n# HELP nv_inference_request_failure Number of failed inference requests\n# TYPE nv_inference_request_failure counter\nnv_inference_request_failure{model=\"resnet50\",version=\"1\"} 2\n# HELP nv_inference_count Number of inferences performed\n# TYPE nv_inference_count counter\nnv_inference_count{model=\"resnet50\",version=\"1\"} 1523\n# HELP nv_inference_exec_count Number of inference batch executions\n# TYPE nv_inference_exec_count counter\nnv_inference_exec_count{model=\"resnet50\",version=\"1\"} 512\n# HELP nv_inference_request_duration_us Cumulative inference request duration in microseconds\n# TYPE nv_inference_request_duration_us counter\nnv_inference_request_duration_us{model=\"resnet50\",version=\"1\"} 45230000\n# HELP nv_inference_queue_duration_us Cumulative inference queuing duration in microseconds\n# TYPE nv_inference_queue_duration_us counter\nnv_inference_queue_duration_us{model=\"resnet50\",version=\"1\"} 1250000\n# HELP nv_gpu_utilization GPU utilization rate (0.0 - 1.0)\n# TYPE nv_gpu_utilization gauge\nnv_gpu_utilization{gpu_uuid=\"GPU-abc123\"} 0.85\n# HELP nv_gpu_memory_total_bytes Total GPU memory in bytes\n# TYPE nv_gpu_memory_total_bytes gauge\nnv_gpu_memory_total_bytes{gpu_uuid=\"GPU-abc123\"} 17179869184\n# HELP nv_gpu_memory_used_bytes Used GPU memory in bytes\n# TYPE nv_gpu_memory_used_bytes gauge\nnv_gpu_memory_used_bytes{gpu_uuid=\"GPU-abc123\"} 8589934592\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60f00e0a-e018-48ab-a0a3-c459e8874285",
+              "name": "Metrics collection error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8002",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "901f1973-62e9-43b2-b803-41d58332dc2f",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Prometheus-compatible metrics API for monitoring NVIDIA Triton Inference Server performance. Exposes server-level and per-model metrics including inference request counts, latencies, queue times, GPU utilization, and memory usage in Prometheus text exposition format.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}
