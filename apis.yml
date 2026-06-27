@@ -36,7 +36,7 @@ apis:
         url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
       - type: OpenAPI
         url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/rest_api.yaml
-      - type: Postman Collection
+      - type: PostmanCollection
         url: https://www.postman.com/nvidia-triton
       - type: OpenAPI
         url: openapi/triton-http-rest-openapi.yml
@@ -122,9 +122,9 @@ common:
     url: json-schema/triton-inference-request-schema.json
   - type: JSONSchema
     url: json-schema/triton-inference-response-schema.json
-  - type: JSON Structure
+  - type: JSONStructure
     url: json-structure/triton-model-structure.json
-  - type: Spectral Rules
+  - type: SpectralRules
     url: rules/triton-rules.yml
   - type: Vocabulary
     url: vocabulary/triton-vocabulary.yml
