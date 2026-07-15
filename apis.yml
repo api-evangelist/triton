@@ -86,6 +86,8 @@ apis:
       - FN: NVIDIA Triton Team
         email: triton@nvidia.com
 common:
+  - type: AgenticAccess
+    url: agentic-access/triton-agentic-access.yml
   - type: GitHubRepository
     url: https://github.com/triton-inference-server/server
   - type: Documentation
