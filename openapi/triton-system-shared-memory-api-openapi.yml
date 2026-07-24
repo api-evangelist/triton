@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory System Shared Memory API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: System Shared Memory
+  description: System shared memory region management
+paths:
+  /v2/systemsharedmemory/status:
+    get:
+      operationId: systemSharedMemoryStatus
+      summary: Triton Inference Server Get System Shared Memory Status
+      description: Retrieve the status of all registered system shared memory regions. This is a Triton extension to the KServe protocol.
+      tags:
+      - System Shared Memory
+      responses:
+        '200':
+          description: System shared memory status returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SharedMemoryRegion'
+        '400':
+          description: Error retrieving status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/region/{region_name}/register:
+    post:
+      operationId: systemSharedMemoryRegister
+      summary: Triton Inference Server Register a System Shared Memory Region
+      description: Register a system shared memory region for use with inference requests.
+      tags:
+      - System Shared Memory
+      parameters:
+      - $ref: '#/components/parameters/regionName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - key
+              - offset
+              - byte_size
+              properties:
+                key:
+                  type: string
+                  description: Shared memory key
+                offset:
+                  type: integer
+                  description: Offset within the shared memory region in bytes
+                byte_size:
+                  type: integer
+                  description: Size of the shared memory region in bytes
+      responses:
+        '200':
+          description: Region registered successfully
+        '400':
+          description: Error registering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/region/{region_name}/unregister:
+    post:
+      operationId: systemSharedMemoryUnregister
+      summary: Triton Inference Server Unregister a System Shared Memory Region
+      description: Unregister a previously registered system shared memory region.
+      tags:
+      - System Shared Memory
+      parameters:
+      - $ref: '#/components/parameters/regionName'
+      responses:
+        '200':
+          description: Region unregistered successfully
+        '400':
+          description: Error unregistering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/systemsharedmemory/unregister:
+    post:
+      operationId: systemSharedMemoryUnregisterAll
+      summary: Triton Inference Server Unregister All System Shared Memory Regions
+      description: Unregister all registered system shared memory regions.
+      tags:
+      - System Shared Memory
+      responses:
+        '200':
+          description: All regions unregistered successfully
+        '400':
+          description: Error unregistering regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    regionName:
+      name: region_name
+      in: path
+      required: true
+      description: Name of the shared memory region
+      schema:
+        type: string
+  schemas:
+    SharedMemoryRegion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the shared memory region
+        key:
+          type: string
+          description: Shared memory key
+        offset:
+          type: integer
+          description: Offset in the shared memory region
+        byte_size:
+          type: integer
+          description: Size of the region in bytes
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Model Repository API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Model Repository
+  description: Model repository management operations
+paths:
+  /v2/repository/index:
+    post:
+      operationId: repositoryIndex
+      summary: Triton Inference Server List Models in the Repository
+      description: Retrieve the index of all models available in the model repository. Can optionally filter to show only models that are ready. This is a Triton extension to the KServe protocol.
+      tags:
+      - Model Repository
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ready:
+                  type: boolean
+                  description: If true, only return models that are ready for inference
+      responses:
+        '200':
+          description: Repository index returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RepositoryIndexEntry'
+        '400':
+          description: Error retrieving repository index
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/repository/models/{model_name}/load:
+    post:
+      operationId: modelLoad
+      summary: Triton Inference Server Load or Reload a Model
+      description: Request that a model be loaded into Triton, or reloaded if it is already loaded. Optionally provide model configuration overrides as parameters. This is a Triton extension to the KServe protocol.
+      tags:
+      - Model Repository
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  description: Optional parameters for model loading, including config overrides and file content overrides.
+                  additionalProperties:
+                    oneOf:
+                    - type: string
+                    - type: boolean
+                    - type: integer
+      responses:
+        '200':
+          description: Model loaded successfully
+        '400':
+          description: Error loading model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/repository/models/{model_name}/unload:
+    post:
+      operationId: modelUnload
+      summary: Triton Inference Server Unload a Model
+      description: Request that a model be unloaded from Triton. Once unloaded the model will no longer be available for inference. This is a Triton extension to the KServe protocol.
+      tags:
+      - Model Repository
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  description: Optional parameters for model unloading
+                  additionalProperties:
+                    oneOf:
+                    - type: string
+                    - type: boolean
+                    - type: integer
+      responses:
+        '200':
+          description: Model unloaded successfully
+        '400':
+          description: Error unloading model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+  schemas:
+    RepositoryIndexEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Model name
+        version:
+          type: string
+          description: Model version
+        state:
+          type: string
+          description: Current state of the model
+          enum:
+          - READY
+          - UNAVAILABLE
+          - LOADING
+          - UNLOADING
+        reason:
+          type: string
+          description: Reason for the current state if not READY
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

@@ -1,0 +1,189 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Trace API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Trace
+  description: Request tracing configuration
+paths:
+  /v2/trace/setting:
+    get:
+      operationId: getTraceSetting
+      summary: Triton Inference Server Get Trace Settings
+      description: Retrieve the current global trace settings. This is a Triton extension to the KServe protocol.
+      tags:
+      - Trace
+      responses:
+        '200':
+          description: Trace settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error retrieving trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateTraceSetting
+      summary: Triton Inference Server Update Trace Settings
+      description: Update the global trace settings for request tracing.
+      tags:
+      - Trace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TraceSettingRequest'
+      responses:
+        '200':
+          description: Trace settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error updating trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/trace/setting:
+    get:
+      operationId: getModelTraceSetting
+      summary: Triton Inference Server Get Model-Specific Trace Settings
+      description: Retrieve the trace settings for a specific model.
+      tags:
+      - Trace
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model trace settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error retrieving model trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateModelTraceSetting
+      summary: Triton Inference Server Update Model-Specific Trace Settings
+      description: Update the trace settings for a specific model.
+      tags:
+      - Trace
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TraceSettingRequest'
+      responses:
+        '200':
+          description: Model trace settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceSettingResponse'
+        '400':
+          description: Error updating model trace settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    TraceSettingRequest:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Trace levels to set
+          items:
+            type: string
+            enum:
+            - 'OFF'
+            - TIMESTAMPS
+            - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect (-1 for unlimited)
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    TraceSettingResponse:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Current trace levels
+          items:
+            type: string
+            enum:
+            - 'OFF'
+            - TIMESTAMPS
+            - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

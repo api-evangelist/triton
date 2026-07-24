@@ -1,0 +1,484 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Model Metadata API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Model Metadata
+  description: Model-level metadata, configuration, and statistics
+paths:
+  /v2/models/{model_name}:
+    get:
+      operationId: modelMetadata
+      summary: Triton Inference Server Get Model Metadata
+      description: Retrieve metadata about a specific model including its name, versions, platform, and input/output tensor information.
+      tags:
+      - Model Metadata
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '400':
+          description: Error retrieving model metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}:
+    get:
+      operationId: modelVersionMetadata
+      summary: Triton Inference Server Get Model Version Metadata
+      description: Retrieve metadata about a specific version of a model.
+      tags:
+      - Model Metadata
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelMetadataResponse'
+        '400':
+          description: Error retrieving model version metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/config:
+    get:
+      operationId: modelConfig
+      summary: Triton Inference Server Get Model Configuration
+      description: Retrieve the configuration of a specific model as defined in the model repository. This is a Triton extension to the KServe protocol.
+      tags:
+      - Model Metadata
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model configuration returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelConfigResponse'
+        '400':
+          description: Error retrieving model configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/config:
+    get:
+      operationId: modelVersionConfig
+      summary: Triton Inference Server Get Model Version Configuration
+      description: Retrieve the configuration of a specific version of a model.
+      tags:
+      - Model Metadata
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version configuration returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelConfigResponse'
+        '400':
+          description: Error retrieving model version configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ModelConfigResponse:
+      type: object
+      description: Full model configuration as defined in the model repository config.pbtxt file, returned as a JSON representation.
+      properties:
+        name:
+          type: string
+          description: Name of the model
+        platform:
+          type: string
+          description: Framework platform
+        backend:
+          type: string
+          description: Backend used by the model
+        version_policy:
+          type: object
+          description: Version selection policy
+          properties:
+            latest:
+              type: object
+              properties:
+                num_versions:
+                  type: integer
+            all:
+              type: object
+            specific:
+              type: object
+              properties:
+                versions:
+                  type: array
+                  items:
+                    type: integer
+        max_batch_size:
+          type: integer
+          description: Maximum batch size supported (0 means batching disabled)
+        input:
+          type: array
+          description: Input tensor configurations
+          items:
+            $ref: '#/components/schemas/ModelTensorConfig'
+        output:
+          type: array
+          description: Output tensor configurations
+          items:
+            $ref: '#/components/schemas/ModelTensorConfig'
+        instance_group:
+          type: array
+          description: Instance group configurations
+          items:
+            $ref: '#/components/schemas/InstanceGroup'
+        dynamic_batching:
+          $ref: '#/components/schemas/DynamicBatching'
+        sequence_batching:
+          $ref: '#/components/schemas/SequenceBatching'
+        ensemble_scheduling:
+          $ref: '#/components/schemas/EnsembleScheduling'
+        parameters:
+          type: object
+          description: Custom model parameters
+          additionalProperties:
+            type: object
+            properties:
+              string_value:
+                type: string
+        model_warmup:
+          type: array
+          description: Model warmup configurations
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              batch_size:
+                type: integer
+              inputs:
+                type: object
+                additionalProperties:
+                  type: object
+    EnsembleScheduling:
+      type: object
+      description: Ensemble model scheduling configuration
+      properties:
+        step:
+          type: array
+          items:
+            type: object
+            properties:
+              model_name:
+                type: string
+                description: Name of the model in the ensemble step
+              model_version:
+                type: integer
+                description: Version of the model to use
+              input_map:
+                type: object
+                description: Mapping of ensemble tensor names to step model input names
+                additionalProperties:
+                  type: string
+              output_map:
+                type: object
+                description: Mapping of step model output names to ensemble tensor names
+                additionalProperties:
+                  type: string
+    ModelTensorConfig:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Tensor name
+        data_type:
+          type: string
+          description: Data type of the tensor
+          enum:
+          - TYPE_BOOL
+          - TYPE_UINT8
+          - TYPE_UINT16
+          - TYPE_UINT32
+          - TYPE_UINT64
+          - TYPE_INT8
+          - TYPE_INT16
+          - TYPE_INT32
+          - TYPE_INT64
+          - TYPE_FP16
+          - TYPE_FP32
+          - TYPE_FP64
+          - TYPE_STRING
+          - TYPE_BF16
+        dims:
+          type: array
+          description: Tensor dimensions
+          items:
+            type: integer
+        reshape:
+          type: object
+          description: Reshape configuration
+          properties:
+            shape:
+              type: array
+              items:
+                type: integer
+        is_shape_tensor:
+          type: boolean
+          description: Whether this tensor is a shape tensor
+        allow_ragged_batch:
+          type: boolean
+          description: Whether ragged batching is allowed
+    ModelMetadataResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the model
+        versions:
+          type: array
+          description: Available versions of the model
+          items:
+            type: string
+        platform:
+          type: string
+          description: Framework platform of the model
+          examples:
+          - tensorrt_plan
+          - tensorflow_graphdef
+          - tensorflow_savedmodel
+          - onnxruntime_onnx
+          - pytorch_libtorch
+          - python
+        inputs:
+          type: array
+          description: Input tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+        outputs:
+          type: array
+          description: Output tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+    TensorMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the tensor
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+          - BOOL
+          - UINT8
+          - UINT16
+          - UINT32
+          - UINT64
+          - INT8
+          - INT16
+          - INT32
+          - INT64
+          - FP16
+          - FP32
+          - FP64
+          - BYTES
+          - BF16
+        shape:
+          type: array
+          description: Shape of the tensor with -1 indicating variable-length dimensions
+          items:
+            type: integer
+    DynamicBatching:
+      type: object
+      description: Dynamic batching configuration
+      properties:
+        preferred_batch_size:
+          type: array
+          description: Preferred batch sizes
+          items:
+            type: integer
+        max_queue_delay_microseconds:
+          type: integer
+          description: Maximum delay in microseconds for forming a batch
+        preserve_ordering:
+          type: boolean
+          description: Whether to preserve ordering of responses
+        priority_levels:
+          type: integer
+          description: Number of priority levels
+        default_priority_level:
+          type: integer
+          description: Default priority level
+        default_queue_policy:
+          $ref: '#/components/schemas/QueuePolicy'
+        priority_queue_policy:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/QueuePolicy'
+    SequenceBatching:
+      type: object
+      description: Sequence batching configuration
+      properties:
+        max_sequence_idle_microseconds:
+          type: integer
+          description: Maximum idle time for a sequence before it is timed out
+        control_input:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              control:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    kind:
+                      type: string
+                      enum:
+                      - CONTROL_SEQUENCE_START
+                      - CONTROL_SEQUENCE_READY
+                      - CONTROL_SEQUENCE_END
+                      - CONTROL_SEQUENCE_CORRID
+                    int32_false_true:
+                      type: array
+                      items:
+                        type: integer
+                    fp32_false_true:
+                      type: array
+                      items:
+                        type: number
+                    bool_false_true:
+                      type: array
+                      items:
+                        type: boolean
+        state:
+          type: array
+          description: Implicit state configurations
+          items:
+            type: object
+            properties:
+              input_name:
+                type: string
+              output_name:
+                type: string
+              data_type:
+                type: string
+              dims:
+                type: array
+                items:
+                  type: integer
+    InstanceGroup:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Instance group name
+        kind:
+          type: string
+          description: Device kind for the instance group
+          enum:
+          - KIND_AUTO
+          - KIND_GPU
+          - KIND_CPU
+          - KIND_MODEL
+        count:
+          type: integer
+          description: Number of instances in the group
+        gpus:
+          type: array
+          description: GPU device IDs assigned to this group
+          items:
+            type: integer
+        rate_group:
+          type: integer
+          description: Rate limiter group
+        rate_limit:
+          type: object
+          description: Rate limiting configuration
+          properties:
+            resources:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  global:
+                    type: boolean
+                  count:
+                    type: integer
+    QueuePolicy:
+      type: object
+      properties:
+        timeout_action:
+          type: string
+          enum:
+          - REJECT
+          - DELAY
+        default_timeout_microseconds:
+          type: integer
+        allow_timeout_override:
+          type: boolean
+        max_queue_size:
+          type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+  parameters:
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

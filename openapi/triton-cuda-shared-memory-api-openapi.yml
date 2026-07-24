@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: CUDA Shared Memory
+  description: CUDA shared memory region management
+paths:
+  /v2/cudasharedmemory/status:
+    get:
+      operationId: cudaSharedMemoryStatus
+      summary: Triton Inference Server Get CUDA Shared Memory Status
+      description: Retrieve the status of all registered CUDA shared memory regions. This is a Triton extension to the KServe protocol.
+      tags:
+      - CUDA Shared Memory
+      responses:
+        '200':
+          description: CUDA shared memory status returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CudaSharedMemoryRegion'
+        '400':
+          description: Error retrieving status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/region/{region_name}/register:
+    post:
+      operationId: cudaSharedMemoryRegister
+      summary: Triton Inference Server Register a CUDA Shared Memory Region
+      description: Register a CUDA shared memory region for use with inference requests.
+      tags:
+      - CUDA Shared Memory
+      parameters:
+      - $ref: '#/components/parameters/regionName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - raw_handle
+              - device_id
+              - byte_size
+              properties:
+                raw_handle:
+                  type: object
+                  description: CUDA IPC memory handle serialized as a base64-encoded object
+                  properties:
+                    b64:
+                      type: string
+                      format: byte
+                      description: Base64-encoded CUDA IPC memory handle
+                device_id:
+                  type: integer
+                  description: GPU device ID where the memory is allocated
+                byte_size:
+                  type: integer
+                  description: Size of the CUDA shared memory region in bytes
+      responses:
+        '200':
+          description: Region registered successfully
+        '400':
+          description: Error registering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/region/{region_name}/unregister:
+    post:
+      operationId: cudaSharedMemoryUnregister
+      summary: Triton Inference Server Unregister a CUDA Shared Memory Region
+      description: Unregister a previously registered CUDA shared memory region.
+      tags:
+      - CUDA Shared Memory
+      parameters:
+      - $ref: '#/components/parameters/regionName'
+      responses:
+        '200':
+          description: Region unregistered successfully
+        '400':
+          description: Error unregistering region
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/cudasharedmemory/unregister:
+    post:
+      operationId: cudaSharedMemoryUnregisterAll
+      summary: Triton Inference Server Unregister All CUDA Shared Memory Regions
+      description: Unregister all registered CUDA shared memory regions.
+      tags:
+      - CUDA Shared Memory
+      responses:
+        '200':
+          description: All regions unregistered successfully
+        '400':
+          description: Error unregistering regions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    regionName:
+      name: region_name
+      in: path
+      required: true
+      description: Name of the shared memory region
+      schema:
+        type: string
+  schemas:
+    CudaSharedMemoryRegion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the CUDA shared memory region
+        device_id:
+          type: integer
+          description: GPU device ID
+        byte_size:
+          type: integer
+          description: Size of the region in bytes
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

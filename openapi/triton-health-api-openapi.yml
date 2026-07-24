@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Health API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Health
+  description: Server and model health and readiness checks
+paths:
+  /v2/health/live:
+    get:
+      operationId: serverLive
+      summary: Triton Inference Server Server Liveness Check
+      description: Check if the Triton server is alive and able to receive requests. This is the KServe V2 standard liveness probe endpoint.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Server is live
+        '400':
+          description: Server is not live
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/health/ready:
+    get:
+      operationId: serverReady
+      summary: Triton Inference Server Server Readiness Check
+      description: Check if the Triton server is ready to accept inference requests. The server is ready when all models that are loaded at startup are ready.
+      tags:
+      - Health
+      responses:
+        '200':
+          description: Server is ready
+        '400':
+          description: Server is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/ready:
+    get:
+      operationId: modelVersionReady
+      summary: Triton Inference Server Model Version Readiness Check
+      description: Check if a specific version of a model is ready to accept inference requests.
+      tags:
+      - Health
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version is ready
+        '400':
+          description: Model version is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/ready:
+    get:
+      operationId: modelReady
+      summary: Triton Inference Server Model Readiness Check
+      description: Check if a model is ready to accept inference requests. Checks the default/latest version of the model.
+      tags:
+      - Health
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model is ready
+        '400':
+          description: Model is not ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

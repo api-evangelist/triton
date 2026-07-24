@@ -1,11 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server Metrics API
-  description: >-
-    Prometheus-compatible metrics API for monitoring NVIDIA Triton Inference
-    Server performance. Exposes server-level and per-model metrics including
-    inference request counts, latencies, queue times, GPU utilization, and
-    memory usage in Prometheus text exposition format.
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Metrics API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
     name: NVIDIA Triton Team
@@ -14,35 +10,27 @@ info:
   license:
     name: BSD 3-Clause
     url: https://github.com/triton-inference-server/server/blob/main/LICENSE
-externalDocs:
-  description: Triton Metrics Documentation
-  url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
 servers:
-  - url: http://localhost:8002
-    description: Triton Metrics endpoint (default)
-  - url: http://{host}:{port}
-    description: Custom Triton Metrics endpoint
-    variables:
-      host:
-        default: localhost
-        description: Triton server hostname or IP
-      port:
-        default: '8002'
-        description: Triton metrics port
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
 tags:
-  - name: Metrics
-    description: Prometheus-compatible metrics endpoints
+- name: Metrics
+  description: Prometheus-compatible metrics endpoints
 paths:
   /metrics:
     get:
       operationId: getMetrics
       summary: Triton Inference Server Get Prometheus metrics
-      description: >-
-        Retrieve all available metrics in Prometheus text exposition format.
-        Includes server-level metrics (request counts, latencies, GPU
-        utilization, memory usage) and per-model metrics (inference counts,
-        queue times, compute times). Metrics are labeled with model name,
-        version, GPU UUID, and other dimensions.
+      description: 'Retrieve all available metrics in Prometheus text exposition format. Includes server-level metrics (request counts, latencies, GPU utilization, memory usage) and per-model metrics (inference counts, queue times, compute times). Metrics are labeled with model name, version, GPU UUID, and other dimensions.
 
 
         Key metric families include:
@@ -91,9 +79,9 @@ paths:
 
         - `nv_cache_hit_duration_per_model` - Cache hit lookup duration per model
 
-        - `nv_cache_miss_duration_per_model` - Cache miss insert duration per model
+        - `nv_cache_miss_duration_per_model` - Cache miss insert duration per model'
       tags:
-        - Metrics
+      - Metrics
       responses:
         '200':
           description: Prometheus metrics returned in text exposition format
@@ -101,39 +89,67 @@ paths:
             text/plain:
               schema:
                 type: string
-                description: >-
-                  Prometheus text exposition format metrics. Each metric line
-                  follows the format: metric_name{label="value",...} value timestamp
+                description: 'Prometheus text exposition format metrics. Each metric line follows the format: metric_name{label="value",...} value timestamp'
               examples:
                 inference_metrics:
                   summary: Example metrics output with inference and GPU metrics
-                  value: |
-                    # HELP nv_inference_request_success Number of successful inference requests
+                  value: '# HELP nv_inference_request_success Number of successful inference requests
+
                     # TYPE nv_inference_request_success counter
+
                     nv_inference_request_success{model="resnet50",version="1"} 1523
+
                     # HELP nv_inference_request_failure Number of failed inference requests
+
                     # TYPE nv_inference_request_failure counter
+
                     nv_inference_request_failure{model="resnet50",version="1"} 2
+
                     # HELP nv_inference_count Number of inferences performed
+
                     # TYPE nv_inference_count counter
+
                     nv_inference_count{model="resnet50",version="1"} 1523
+
                     # HELP nv_inference_exec_count Number of inference batch executions
+
                     # TYPE nv_inference_exec_count counter
+
                     nv_inference_exec_count{model="resnet50",version="1"} 512
+
                     # HELP nv_inference_request_duration_us Cumulative inference request duration in microseconds
+
                     # TYPE nv_inference_request_duration_us counter
+
                     nv_inference_request_duration_us{model="resnet50",version="1"} 45230000
+
                     # HELP nv_inference_queue_duration_us Cumulative inference queuing duration in microseconds
+
                     # TYPE nv_inference_queue_duration_us counter
+
                     nv_inference_queue_duration_us{model="resnet50",version="1"} 1250000
+
                     # HELP nv_gpu_utilization GPU utilization rate (0.0 - 1.0)
+
                     # TYPE nv_gpu_utilization gauge
+
                     nv_gpu_utilization{gpu_uuid="GPU-abc123"} 0.85
+
                     # HELP nv_gpu_memory_total_bytes Total GPU memory in bytes
+
                     # TYPE nv_gpu_memory_total_bytes gauge
+
                     nv_gpu_memory_total_bytes{gpu_uuid="GPU-abc123"} 17179869184
+
                     # HELP nv_gpu_memory_used_bytes Used GPU memory in bytes
+
                     # TYPE nv_gpu_memory_used_bytes gauge
+
                     nv_gpu_memory_used_bytes{gpu_uuid="GPU-abc123"} 8589934592
+
+                    '
         '400':
           description: Metrics collection error
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

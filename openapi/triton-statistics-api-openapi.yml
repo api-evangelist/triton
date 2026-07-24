@@ -1,0 +1,201 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Statistics API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Statistics
+  description: Server and model inference statistics
+paths:
+  /v2/models/{model_name}/stats:
+    get:
+      operationId: modelStatistics
+      summary: Triton Inference Server Get Model Inference Statistics
+      description: Retrieve inference statistics for a specific model including request count, execution count, and cumulative timing information. This is a Triton extension to the KServe protocol.
+      tags:
+      - Statistics
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      responses:
+        '200':
+          description: Model statistics returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving model statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/stats:
+    get:
+      operationId: modelVersionStatistics
+      summary: Triton Inference Server Get Model Version Inference Statistics
+      description: Retrieve inference statistics for a specific version of a model.
+      tags:
+      - Statistics
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      - $ref: '#/components/parameters/modelVersion'
+      responses:
+        '200':
+          description: Model version statistics returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving model version statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/stats:
+    get:
+      operationId: allModelStatistics
+      summary: Triton Inference Server Get Statistics for All Models
+      description: Retrieve inference statistics for all loaded models.
+      tags:
+      - Statistics
+      responses:
+        '200':
+          description: Statistics for all models returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '400':
+          description: Error retrieving statistics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    StatisticsDuration:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of occurrences
+        ns:
+          type: integer
+          description: Cumulative duration in nanoseconds
+    ModelStatistics:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Model name
+        version:
+          type: string
+          description: Model version
+        last_inference:
+          type: integer
+          description: Timestamp of the last inference (milliseconds since epoch)
+        inference_count:
+          type: integer
+          description: Total number of inferences performed
+        execution_count:
+          type: integer
+          description: Total number of executions (batch-level)
+        inference_stats:
+          $ref: '#/components/schemas/InferenceStatistics'
+        batch_stats:
+          type: array
+          description: Statistics broken down by batch size
+          items:
+            type: object
+            properties:
+              batch_size:
+                type: integer
+              compute_input:
+                $ref: '#/components/schemas/StatisticsDuration'
+              compute_infer:
+                $ref: '#/components/schemas/StatisticsDuration'
+              compute_output:
+                $ref: '#/components/schemas/StatisticsDuration'
+        memory_usage:
+          type: array
+          description: Memory usage details
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              id:
+                type: integer
+              byte_size:
+                type: integer
+    StatisticsResponse:
+      type: object
+      properties:
+        model_stats:
+          type: array
+          description: Statistics for each model
+          items:
+            $ref: '#/components/schemas/ModelStatistics'
+    InferenceStatistics:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/StatisticsDuration'
+        fail:
+          $ref: '#/components/schemas/StatisticsDuration'
+        queue:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_input:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_infer:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_output:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_hit:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_miss:
+          $ref: '#/components/schemas/StatisticsDuration'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+  parameters:
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

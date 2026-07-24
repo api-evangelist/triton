@@ -1,0 +1,132 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Logging API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Logging
+  description: Server logging configuration
+paths:
+  /v2/logging:
+    get:
+      operationId: getLogSettings
+      summary: Triton Inference Server Get Logging Settings
+      description: Retrieve the current logging settings. This is a Triton extension to the KServe protocol.
+      tags:
+      - Logging
+      responses:
+        '200':
+          description: Logging settings returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSettingsResponse'
+        '400':
+          description: Error retrieving logging settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      operationId: updateLogSettings
+      summary: Triton Inference Server Update Logging Settings
+      description: Update the server logging settings.
+      tags:
+      - Logging
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogSettingsRequest'
+      responses:
+        '200':
+          description: Logging settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogSettingsResponse'
+        '400':
+          description: Error updating logging settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    LogSettingsResponse:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Current log file path
+        log_info:
+          type: boolean
+          description: Whether info-level logging is enabled
+        log_warning:
+          type: boolean
+          description: Whether warning-level logging is enabled
+        log_error:
+          type: boolean
+          description: Whether error-level logging is enabled
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level (0 = off)
+        log_format:
+          type: string
+          description: Log format
+          enum:
+          - default
+          - ISO8601
+    LogSettingsRequest:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Log file path to set
+        log_info:
+          type: boolean
+          description: Enable or disable info-level logging
+        log_warning:
+          type: boolean
+          description: Enable or disable warning-level logging
+        log_error:
+          type: boolean
+          description: Enable or disable error-level logging
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level to set
+        log_format:
+          type: string
+          description: Log format to use
+          enum:
+          - default
+          - ISO8601
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

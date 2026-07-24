@@ -1,0 +1,322 @@
+openapi: 3.1.0
+info:
+  title: Triton Server NVIDIA Triton Server HTTP/REST CUDA Shared Memory Inference API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Inference
+  description: Model inference requests
+paths:
+  /v2/models/{model_name}/infer:
+    post:
+      operationId: modelInfer
+      summary: Triton Inference Server Run Inference on a Model
+      description: Submit an inference request to a model. The request specifies input tensors and requested output tensors. Supports optional parameters for sequence handling, priority, timeout, and binary data.
+      tags:
+      - Inference
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: Inference completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '400':
+          description: Inference request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /v2/models/{model_name}/versions/{model_version}/infer:
+    post:
+      operationId: modelVersionInfer
+      summary: Triton Inference Server Run Inference on a Specific Model Version
+      description: Submit an inference request to a specific version of a model.
+      tags:
+      - Inference
+      parameters:
+      - $ref: '#/components/parameters/modelName'
+      - $ref: '#/components/parameters/modelVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: Inference completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '400':
+          description: Inference request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    InferenceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the response matching the request ID
+        model_name:
+          type: string
+          description: Name of the model that processed the request
+        model_version:
+          type: string
+          description: Version of the model that processed the request
+        parameters:
+          type: object
+          description: Response-level parameters
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        outputs:
+          type: array
+          description: Output tensors from inference
+          items:
+            $ref: '#/components/schemas/OutputTensor'
+    InferenceTensor:
+      type: object
+      required:
+      - name
+      - shape
+      - datatype
+      - data
+      properties:
+        name:
+          type: string
+          description: Name of the input tensor
+        shape:
+          type: array
+          description: Shape of the input tensor
+          items:
+            type: integer
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+          - BOOL
+          - UINT8
+          - UINT16
+          - UINT32
+          - UINT64
+          - INT8
+          - INT16
+          - INT32
+          - INT64
+          - FP16
+          - FP32
+          - FP64
+          - BYTES
+          - BF16
+        parameters:
+          type: object
+          description: Optional parameters for the tensor
+          properties:
+            binary_data_size:
+              type: integer
+              description: Size of binary tensor data appended to the request body
+            shared_memory_region:
+              type: string
+              description: Name of the shared memory region containing tensor data
+            shared_memory_offset:
+              type: integer
+              description: Offset within the shared memory region
+            shared_memory_byte_size:
+              type: integer
+              description: Size of the tensor data in shared memory
+            classification:
+              type: integer
+              description: Number of top classifications to return
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        data:
+          type: array
+          description: Tensor data as a flattened array
+          items: {}
+    RequestedOutputTensor:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the requested output tensor
+        parameters:
+          type: object
+          description: Optional parameters for the output tensor
+          properties:
+            binary_data:
+              type: boolean
+              description: If true, return output as binary data
+            shared_memory_region:
+              type: string
+              description: Name of the shared memory region for output
+            shared_memory_offset:
+              type: integer
+              description: Offset within the shared memory region
+            shared_memory_byte_size:
+              type: integer
+              description: Size of the output in shared memory
+            classification:
+              type: integer
+              description: Number of top classifications to return
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+    InferenceRequest:
+      type: object
+      required:
+      - inputs
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the request. If not provided, the server will generate one.
+        parameters:
+          type: object
+          description: Optional inference parameters including sequence_id, sequence_start, sequence_end, priority, and timeout.
+          properties:
+            sequence_id:
+              oneOf:
+              - type: integer
+              - type: string
+              description: Sequence identifier for stateful models
+            sequence_start:
+              type: boolean
+              description: Indicates the start of a sequence
+            sequence_end:
+              type: boolean
+              description: Indicates the end of a sequence
+            priority:
+              type: integer
+              description: Priority of the request (higher values mean higher priority)
+            timeout:
+              type: integer
+              description: Timeout in microseconds for the request
+            binary_data_output:
+              type: boolean
+              description: If true, request binary data in response outputs
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        inputs:
+          type: array
+          description: Input tensors for inference
+          items:
+            $ref: '#/components/schemas/InferenceTensor'
+        outputs:
+          type: array
+          description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
+          items:
+            $ref: '#/components/schemas/RequestedOutputTensor'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    OutputTensor:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the output tensor
+        shape:
+          type: array
+          description: Shape of the output tensor
+          items:
+            type: integer
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+          - BOOL
+          - UINT8
+          - UINT16
+          - UINT32
+          - UINT64
+          - INT8
+          - INT16
+          - INT32
+          - INT64
+          - FP16
+          - FP32
+          - FP64
+          - BYTES
+          - BF16
+        parameters:
+          type: object
+          description: Output tensor parameters
+          properties:
+            binary_data_size:
+              type: integer
+              description: Size of binary data appended to response body
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        data:
+          type: array
+          description: Tensor data as a flattened array
+          items: {}
+  parameters:
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

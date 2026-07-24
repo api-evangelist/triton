@@ -1,0 +1,87 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Server Metadata API
+  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+servers:
+- url: http://localhost:8000
+  description: Triton HTTP endpoint (default)
+- url: http://{host}:{port}
+  description: Custom Triton HTTP endpoint
+  variables:
+    host:
+      default: localhost
+      description: Triton server hostname or IP
+    port:
+      default: '8000'
+      description: Triton HTTP port
+tags:
+- name: Server Metadata
+  description: Server-level metadata and information
+paths:
+  /v2:
+    get:
+      operationId: serverMetadata
+      summary: Triton Inference Server Get Server Metadata
+      description: Retrieve metadata about the Triton server including name, version, and supported extensions.
+      tags:
+      - Server Metadata
+      responses:
+        '200':
+          description: Server metadata returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerMetadataResponse'
+        '400':
+          description: Error retrieving server metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    ServerMetadataResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the inference server
+          examples:
+          - triton
+        version:
+          type: string
+          description: Version of the inference server
+          examples:
+          - 2.42.0
+        extensions:
+          type: array
+          description: List of extensions supported by the server
+          items:
+            type: string
+          examples:
+          - - classification
+            - sequence
+            - model_repository
+            - model_configuration
+            - schedule_policy
+            - server_metadata
+            - statistics
+            - trace
+            - logging
+externalDocs:
+  description: Triton Inference Server Protocol Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
