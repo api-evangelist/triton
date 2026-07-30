@@ -4,6 +4,18 @@ description: >-
   supports an HTTP/REST and gRPC protocol that allows remote clients to request inferencing for any model being managed
   by the server. Open source and part of the broader NVIDIA AI ecosystem, Triton implements the KServe V2 inference
   protocol supporting TensorRT, TensorFlow, PyTorch, ONNX Runtime, Python, and more backends.
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
 tags:
   - AI
@@ -18,73 +30,247 @@ modified: '2026-05-19'
 url: https://github.com/triton-inference-server/server
 specificationVersion: '0.18'
 apis:
-  - name: Triton HTTP/REST API
-    description: >-
-      RESTful API implementing the KServe V2 inference protocol for model inference, health checks, metadata queries,
-      model repository management, statistics, tracing, and logging.
-    image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
-    humanURL: https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
-    baseURL: http://localhost:8000
-    tags:
-      - HTTP
-      - Inference
-      - Model Management
-      - REST
-      - KServe
-    properties:
-      - type: Documentation
-        url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
-      - type: OpenAPI
-        url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/rest_api.yaml
-      - type: PostmanCollection
-        url: https://www.postman.com/nvidia-triton
-      - type: OpenAPI
-        url: openapi/triton-http-rest-openapi.yml
-    contact:
-      - FN: NVIDIA Triton Team
-        email: triton@nvidia.com
-  - name: Triton GRPC API
-    description: High-performance gRPC API for model inference with support for streaming and binary tensor data.
-    image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
-    humanURL: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
-    baseURL: grpc://localhost:8001
-    tags:
-      - GRPC
-      - High Performance
-      - Inference
-      - Streaming
-    properties:
-      - type: Documentation
-        url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
-      - type: Protocol Buffers
-        url: https://github.com/triton-inference-server/common/blob/main/protobuf/grpc_service.proto
-      - type: Examples
-        url: https://github.com/triton-inference-server/client/tree/main/src/python/examples
-    contact:
-      - FN: NVIDIA Triton Team
-        email: triton@nvidia.com
-  - name: Triton Metrics API
-    description: >-
-      Prometheus-compatible metrics API for monitoring server and model performance including inference request counts,
-      latencies, GPU utilization, and memory usage.
-    image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
-    humanURL: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
-    baseURL: http://localhost:8002/metrics
-    tags:
-      - Metrics
-      - Monitoring
-      - Observability
-      - Prometheus
-    properties:
-      - type: Documentation
-        url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
-      - type: Metrics Format
-        url: https://prometheus.io/docs/instrumenting/exposition_formats/
-      - type: OpenAPI
-        url: openapi/triton-metrics-openapi.yml
-    contact:
-      - FN: NVIDIA Triton Team
-        email: triton@nvidia.com
+- name: Triton GRPC API
+  description: >-
+    High-performance gRPC API for model inference with support for streaming and binary tensor data.
+  image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
+  humanURL: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
+  baseURL: grpc://localhost:8001
+  tags:
+  - GRPC
+  - High Performance
+  - Inference
+  - Streaming
+  properties:
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
+  - type: Protocol Buffers
+    url: https://github.com/triton-inference-server/common/blob/main/protobuf/grpc_service.proto
+  - type: Examples
+    url: https://github.com/triton-inference-server/client/tree/main/src/python/examples
+  contact:
+  - FN: NVIDIA Triton Team
+    email: triton@nvidia.com
+- aid: triton:triton-cuda-shared-memory-api
+  name: Triton Inference Server CUDA Shared Memory API
+  description: CUDA shared memory region management
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - CUDA Shared Memory
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-cuda-shared-memory-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-health-api
+  name: Triton Inference Server Health API
+  description: Server and model health and readiness checks
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-health-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-inference-api
+  name: Triton Inference Server Inference API
+  description: Model inference requests
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Inference
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-inference-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-logging-api
+  name: Triton Inference Server Logging API
+  description: Server logging configuration
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Logging
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-logging-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-metrics-api
+  name: Triton Inference Server Metrics API
+  description: Prometheus-compatible metrics endpoints
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-metrics-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-model-metadata-api
+  name: Triton Inference Server Model Metadata API
+  description: Model-level metadata, configuration, and statistics
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Model Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-model-metadata-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-model-repository-api
+  name: Triton Inference Server Model Repository API
+  description: Model repository management operations
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Model Repository
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-model-repository-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-server-metadata-api
+  name: Triton Inference Server Server Metadata API
+  description: Server-level metadata and information
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Server Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-server-metadata-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-statistics-api
+  name: Triton Inference Server Statistics API
+  description: Server and model inference statistics
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-statistics-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-system-shared-memory-api
+  name: Triton Inference Server System Shared Memory API
+  description: System shared memory region management
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - System Shared Memory
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-system-shared-memory-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
+- aid: triton:triton-trace-api
+  name: Triton Inference Server Trace API
+  description: Request tracing configuration
+  humanURL: >-
+    https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  baseURL: http://localhost:8000
+  tags:
+  - Trace
+  properties:
+  - type: OpenAPI
+    url: openapi/triton-trace-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/triton-inference-server/server/blob/main/docs/protocol/extension_binary_data.md
+  - type: PostmanCollection
+    url: https://www.postman.com/nvidia-triton
+  - type: Documentation
+    url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+  - type: Metrics Format
+    url: https://prometheus.io/docs/instrumenting/exposition_formats/
 common:
   - type: AgenticAccess
     url: agentic-access/triton-agentic-access.yml
