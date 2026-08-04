@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: Triton Inference Server NVIDIA Triton Inference Server Metrics API
+  description: >-
+    Prometheus-compatible metrics API for monitoring NVIDIA Triton Inference
+    Server performance. Exposes server-level and per-model metrics including
+    inference request counts, latencies, queue times, GPU utilization, and
+    memory usage in Prometheus text exposition format.
+  version: '2.0'
+  contact:
+    name: NVIDIA Triton Team
+    url: https://github.com/triton-inference-server/server
+    email: triton@nvidia.com
+  license:
+    name: BSD 3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
+externalDocs:
+  description: Triton Metrics Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md
+servers:
+  - url: http://localhost:8002
+    description: Triton Metrics endpoint (default)
+  - url: http://{host}:{port}
+    description: Custom Triton Metrics endpoint
+    variables:
+      host:
+        default: localhost
+        description: Triton server hostname or IP
+      port:
+        default: '8002'
+        description: Triton metrics port
+tags:
+  - name: Metrics
+    description: Prometheus-compatible metrics endpoints
+paths:
+  /metrics:
+    get:
+      operationId: getMetrics
+      summary: Triton Inference Server Get Prometheus metrics
+      description: >-
+        Retrieve all available metrics in Prometheus text exposition format.
+        Includes server-level metrics (request counts, latencies, GPU
+        utilization, memory usage) and per-model metrics (inference counts,
+        queue times, compute times). Metrics are labeled with model name,
+        version, GPU UUID, and other dimensions.
+
+
+        Key metric families include:
+
+        - `nv_inference_request_success` - Successful inference request count
+
+        - `nv_inference_request_failure` - Failed inference request count
+
+        - `nv_inference_count` - Total inference count
+
+        - `nv_inference_exec_count` - Total inference execution count
+
+        - `nv_inference_request_duration_us` - Cumulative inference request duration
+
+        - `nv_inference_queue_duration_us` - Cumulative inference queuing duration
+
+        - `nv_inference_compute_input_duration_us` - Cumulative input processing duration
+
+        - `nv_inference_compute_infer_duration_us` - Cumulative inference compute duration
+
+        - `nv_inference_compute_output_duration_us` - Cumulative output processing duration
+
+        - `nv_inference_pending_request_count` - Pending inference request count
+
+        - `nv_gpu_utilization` - GPU utilization rate (0.0 - 1.0)
+
+        - `nv_gpu_memory_total_bytes` - Total GPU memory in bytes
+
+        - `nv_gpu_memory_used_bytes` - Used GPU memory in bytes
+
+        - `nv_gpu_power_usage` - GPU power usage in watts
+
+        - `nv_gpu_power_limit` - GPU power limit in watts
+
+        - `nv_energy_consumption` - GPU energy consumption in joules
+
+        - `nv_cpu_utilization` - CPU utilization rate
+
+        - `nv_cpu_memory_total_bytes` - Total CPU memory in bytes
+
+        - `nv_cpu_memory_used_bytes` - Used CPU memory in bytes
+
+        - `nv_cache_num_hits_per_model` - Response cache hits per model
+
+        - `nv_cache_num_misses_per_model` - Response cache misses per model
+
+        - `nv_cache_hit_duration_per_model` - Cache hit lookup duration per model
+
+        - `nv_cache_miss_duration_per_model` - Cache miss insert duration per model
+      tags:
+        - Metrics
+      responses:
+        '200':
+          description: Prometheus metrics returned in text exposition format
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: >-
+                  Prometheus text exposition format metrics. Each metric line
+                  follows the format: metric_name{label="value",...} value timestamp
+              examples:
+                inference_metrics:
+                  summary: Example metrics output with inference and GPU metrics
+                  value: |
+                    # HELP nv_inference_request_success Number of successful inference requests
+                    # TYPE nv_inference_request_success counter
+                    nv_inference_request_success{model="resnet50",version="1"} 1523
+                    # HELP nv_inference_request_failure Number of failed inference requests
+                    # TYPE nv_inference_request_failure counter
+                    nv_inference_request_failure{model="resnet50",version="1"} 2
+                    # HELP nv_inference_count Number of inferences performed
+                    # TYPE nv_inference_count counter
+                    nv_inference_count{model="resnet50",version="1"} 1523
+                    # HELP nv_inference_exec_count Number of inference batch executions
+                    # TYPE nv_inference_exec_count counter
+                    nv_inference_exec_count{model="resnet50",version="1"} 512
+                    # HELP nv_inference_request_duration_us Cumulative inference request duration in microseconds
+                    # TYPE nv_inference_request_duration_us counter
+                    nv_inference_request_duration_us{model="resnet50",version="1"} 45230000
+                    # HELP nv_inference_queue_duration_us Cumulative inference queuing duration in microseconds
+                    # TYPE nv_inference_queue_duration_us counter
+                    nv_inference_queue_duration_us{model="resnet50",version="1"} 1250000
+                    # HELP nv_gpu_utilization GPU utilization rate (0.0 - 1.0)
+                    # TYPE nv_gpu_utilization gauge
+                    nv_gpu_utilization{gpu_uuid="GPU-abc123"} 0.85
+                    # HELP nv_gpu_memory_total_bytes Total GPU memory in bytes
+                    # TYPE nv_gpu_memory_total_bytes gauge
+                    nv_gpu_memory_total_bytes{gpu_uuid="GPU-abc123"} 17179869184
+                    # HELP nv_gpu_memory_used_bytes Used GPU memory in bytes
+                    # TYPE nv_gpu_memory_used_bytes gauge
+                    nv_gpu_memory_used_bytes{gpu_uuid="GPU-abc123"} 8589934592
+        '400':
+          description: Metrics collection error

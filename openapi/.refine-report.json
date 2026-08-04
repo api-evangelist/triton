@@ -1,0 +1,34 @@
+{
+  "provider": "triton",
+  "sources": [
+    "triton-cuda-shared-memory-api-openapi.yml",
+    "triton-health-api-openapi.yml",
+    "triton-inference-api-openapi.yml",
+    "triton-logging-api-openapi.yml",
+    "triton-metrics-api-openapi.yml",
+    "triton-model-metadata-api-openapi.yml",
+    "triton-model-repository-api-openapi.yml",
+    "triton-server-metadata-api-openapi.yml",
+    "triton-statistics-api-openapi.yml",
+    "triton-system-shared-memory-api-openapi.yml",
+    "triton-trace-api-openapi.yml"
+  ],
+  "outputs": [
+    "triton-cuda-shared-memory-api-openapi.yml",
+    "triton-health-api-openapi.yml",
+    "triton-inference-api-openapi.yml",
+    "triton-logging-api-openapi.yml",
+    "triton-metrics-api-openapi.yml",
+    "triton-model-metadata-api-openapi.yml",
+    "triton-model-repository-api-openapi.yml",
+    "triton-server-metadata-api-openapi.yml",
+    "triton-statistics-api-openapi.yml",
+    "triton-system-shared-memory-api-openapi.yml",
+    "triton-trace-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
