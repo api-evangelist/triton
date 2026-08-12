@@ -272,6 +272,9 @@ apis:
   - type: Metrics Format
     url: https://prometheus.io/docs/instrumenting/exposition_formats/
 common:
+  - type: License
+    name: BSD-3-Clause
+    url: https://github.com/triton-inference-server/server/blob/main/LICENSE
   - type: AgenticAccess
     url: agentic-access/triton-agentic-access.yml
   - type: GitHubRepository
@@ -299,9 +302,9 @@ common:
   - type: Triton CLI
     url: https://github.com/triton-inference-server/triton_cli
   - type: OpenAPI
-    url: openapi/triton-http-rest-openapi.yml
+    url: openapi/_original/triton-http-rest-openapi.yml
   - type: OpenAPI
-    url: openapi/triton-metrics-openapi.yml
+    url: openapi/_original/triton-metrics-openapi.yml
   - type: JSONLD
     url: json-ld/triton-context.jsonld
   - type: JSONSchema
@@ -316,8 +319,6 @@ common:
     url: rules/triton-rules.yml
   - type: Vocabulary
     url: vocabulary/triton-vocabulary.yml
-  - type: x-profiled
-    url: 2026-05
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
