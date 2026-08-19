@@ -1,0 +1,393 @@
+{
+  "item": [
+    {
+      "id": "fa0e19e3-3261-43ef-84b2-2c0f7f1fef32",
+      "name": "Inference",
+      "description": {
+        "content": "Model inference requests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "38dcbd04-6e11-4bca-b352-eb9dde3a6bb3",
+          "name": "Triton Inference Server Run Inference on a Model",
+          "request": {
+            "name": "Triton Inference Server Run Inference on a Model",
+            "description": {
+              "content": "Submit an inference request to a model. The request specifies input tensors and requested output tensors. Supports optional parameters for sequence handling, priority, timeout, and binary data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\",\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\",\n    \"key_4\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ee64141e-92e7-4455-9171-b453837424dd",
+              "name": "Inference completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3489,\n        2306\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 4759,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 7540,\n        \"shared_memory_byte_size\": 262,\n        \"classification\": 7471\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        4491,\n        8983\n      ],\n      \"datatype\": \"FP32\",\n      \"parameters\": {\n        \"binary_data_size\": 5659,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 6161,\n        \"shared_memory_byte_size\": 5052,\n        \"classification\": 7271\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3784,\n        \"shared_memory_byte_size\": 6060,\n        \"classification\": 2504\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3024,\n        \"shared_memory_byte_size\": 405,\n        \"classification\": 894,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model_name\": \"string\",\n  \"model_version\": \"string\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        9567,\n        9549\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 9983,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        8880,\n        4085\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 8771,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3c26fd0-f806-4d08-a32f-39c9f3087f3d",
+              "name": "Inference request error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3489,\n        2306\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 4759,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 7540,\n        \"shared_memory_byte_size\": 262,\n        \"classification\": 7471\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        4491,\n        8983\n      ],\n      \"datatype\": \"FP32\",\n      \"parameters\": {\n        \"binary_data_size\": 5659,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 6161,\n        \"shared_memory_byte_size\": 5052,\n        \"classification\": 7271\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3784,\n        \"shared_memory_byte_size\": 6060,\n        \"classification\": 2504\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3024,\n        \"shared_memory_byte_size\": 405,\n        \"classification\": 894,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6f051bd-d547-469d-b97c-6080bcdafba9",
+          "name": "Triton Inference Server Run Inference on a Specific Model Version",
+          "request": {
+            "name": "Triton Inference Server Run Inference on a Specific Model Version",
+            "description": {
+              "content": "Submit an inference request to a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "infer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\",\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"shape\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"datatype\": \"<string>\",\n      \"parameters\": {\n        \"binary_data_size\": \"<integer>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\",\n    \"key_3\": \"<string>\",\n    \"key_4\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"parameters\": {\n        \"binary_data\": \"<boolean>\",\n        \"shared_memory_region\": \"<string>\",\n        \"shared_memory_offset\": \"<integer>\",\n        \"shared_memory_byte_size\": \"<integer>\",\n        \"classification\": \"<integer>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b2ff8256-e79b-4cb9-b742-8a842504bbfd",
+              "name": "Inference completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3489,\n        2306\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 4759,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 7540,\n        \"shared_memory_byte_size\": 262,\n        \"classification\": 7471\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        4491,\n        8983\n      ],\n      \"datatype\": \"FP32\",\n      \"parameters\": {\n        \"binary_data_size\": 5659,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 6161,\n        \"shared_memory_byte_size\": 5052,\n        \"classification\": 7271\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3784,\n        \"shared_memory_byte_size\": 6060,\n        \"classification\": 2504\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3024,\n        \"shared_memory_byte_size\": 405,\n        \"classification\": 894,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"model_name\": \"string\",\n  \"model_version\": \"string\",\n  \"parameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        9567,\n        9549\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 9983,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        8880,\n        4085\n      ],\n      \"datatype\": \"UINT8\",\n      \"parameters\": {\n        \"binary_data_size\": 8771,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0bcea8e-bc7d-40e7-b6d6-2a237acb3161",
+              "name": "Inference request error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "infer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        3489,\n        2306\n      ],\n      \"datatype\": \"UINT16\",\n      \"parameters\": {\n        \"binary_data_size\": 4759,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 7540,\n        \"shared_memory_byte_size\": 262,\n        \"classification\": 7471\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"shape\": [\n        4491,\n        8983\n      ],\n      \"datatype\": \"FP32\",\n      \"parameters\": {\n        \"binary_data_size\": 5659,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 6161,\n        \"shared_memory_byte_size\": 5052,\n        \"classification\": 7271\n      }\n    }\n  ],\n  \"id\": \"<string>\",\n  \"parameters\": {\n    \"sequence_id\": \"<integer>\",\n    \"sequence_start\": \"<boolean>\",\n    \"sequence_end\": \"<boolean>\",\n    \"priority\": \"<integer>\",\n    \"timeout\": \"<integer>\",\n    \"binary_data_output\": \"<boolean>\",\n    \"key_0\": \"<string>\"\n  },\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": true,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3784,\n        \"shared_memory_byte_size\": 6060,\n        \"classification\": 2504\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"parameters\": {\n        \"binary_data\": false,\n        \"shared_memory_region\": \"string\",\n        \"shared_memory_offset\": 3024,\n        \"shared_memory_byte_size\": 405,\n        \"classification\": 894,\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "44652eb5-cb58-422a-a901-9666bac06213",
+    "name": "Triton Server NVIDIA Triton Server HTTP/REST CUDA Shared Memory Inference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

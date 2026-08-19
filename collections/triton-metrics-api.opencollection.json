@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Metrics API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Prometheus metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/metrics"
+          },
+          "docs": "Retrieve all available metrics in Prometheus text exposition format. Includes server-level metrics (request counts, latencies, GPU utilization, memory usage) and per-model metrics (inference counts, queue times, compute times). Metrics are labeled with model name, version, GPU UUID, and other dimensions.\n\nKey metric families include:\n- `nv_inference_request_success` - Successful inference request count\n- `nv_inference_request_failure` - Failed inference request count\n- `nv_inference_count` - Tot"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

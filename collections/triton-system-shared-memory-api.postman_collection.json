@@ -1,0 +1,547 @@
+{
+  "item": [
+    {
+      "id": "d546d6f5-3f04-45ea-8d59-3b2d14a2fe60",
+      "name": "System Shared Memory",
+      "description": {
+        "content": "System shared memory region management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ccb66572-3f90-43c3-a056-dbb0d4bafa83",
+          "name": "Triton Inference Server Get System Shared Memory Status",
+          "request": {
+            "name": "Triton Inference Server Get System Shared Memory Status",
+            "description": {
+              "content": "Retrieve the status of all registered system shared memory regions. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "852f8430-5d27-47c2-a5a1-a97da2f8d63e",
+              "name": "System shared memory status returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"offset\": 4794,\n    \"byte_size\": 6045\n  },\n  {\n    \"name\": \"string\",\n    \"key\": \"string\",\n    \"offset\": 6987,\n    \"byte_size\": 2582\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31314922-02a8-4c7d-8641-839e287a29b7",
+              "name": "Error retrieving status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e16e868f-f135-4243-93a4-628f65c45852",
+          "name": "Triton Inference Server Register a System Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Register a System Shared Memory Region",
+            "description": {
+              "content": "Register a system shared memory region for use with inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "region",
+                ":region_name",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da444c06-9b1e-4d49-a02c-33245e66069f",
+              "name": "Region registered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "af83f81f-4797-4b2b-b2ff-42c1050b4e62",
+              "name": "Error registering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key\": \"<string>\",\n  \"offset\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16bfd0ef-cf4f-48f4-bcb2-fb28730d9612",
+          "name": "Triton Inference Server Unregister a System Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Unregister a System Shared Memory Region",
+            "description": {
+              "content": "Unregister a previously registered system shared memory region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "region",
+                ":region_name",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9cb53c26-7072-4f63-9dae-2094562ff4f9",
+              "name": "Region unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "57a83bf4-5aa3-4e9c-9e1a-697f09d1899b",
+              "name": "Error unregistering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c255c908-e195-45f1-aabb-680071d1583f",
+          "name": "Triton Inference Server Unregister All System Shared Memory Regions",
+          "request": {
+            "name": "Triton Inference Server Unregister All System Shared Memory Regions",
+            "description": {
+              "content": "Unregister all registered system shared memory regions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "systemsharedmemory",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2adca7be-916c-421c-a720-9ea66814440a",
+              "name": "All regions unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f7d3198f-8d12-4868-b320-ad657a5b061a",
+              "name": "Error unregistering regions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "systemsharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7c51809d-047d-4b3d-9399-e16230650736",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory System Shared Memory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

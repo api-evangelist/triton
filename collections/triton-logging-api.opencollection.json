@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Logging API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Logging",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Logging Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/logging"
+          },
+          "docs": "Retrieve the current logging settings. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Update Logging Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/logging",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the server logging settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

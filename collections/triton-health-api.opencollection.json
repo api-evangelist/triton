@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Health API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Server Liveness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/health/live"
+          },
+          "docs": "Check if the Triton server is alive and able to receive requests. This is the KServe V2 standard liveness probe endpoint."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Server Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/health/ready"
+          },
+          "docs": "Check if the Triton server is ready to accept inference requests. The server is ready when all models that are loaded at startup are ready."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Model Version Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Check if a specific version of a model is ready to accept inference requests."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Model Readiness Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/ready",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Check if a model is ready to accept inference requests. Checks the default/latest version of the model."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

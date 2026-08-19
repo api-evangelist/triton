@@ -1,0 +1,137 @@
+{
+  "item": [
+    {
+      "id": "b2358d95-ab77-4d0b-9c5b-b496c9188219",
+      "name": "Server Metadata",
+      "description": {
+        "content": "Server-level metadata and information",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c101d712-06d1-4638-a4d3-bdb170847c78",
+          "name": "Triton Inference Server Get Server Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Server Metadata",
+            "description": {
+              "content": "Retrieve metadata about the Triton server including name, version, and supported extensions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cae393a5-0417-4cea-84de-a6d916751a76",
+              "name": "Server metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"triton\",\n  \"version\": \"2.42.0\",\n  \"extensions\": [\n    \"classification\",\n    \"sequence\",\n    \"model_repository\",\n    \"model_configuration\",\n    \"schedule_policy\",\n    \"server_metadata\",\n    \"statistics\",\n    \"trace\",\n    \"logging\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a5ad45b-f7c4-4b40-81fc-8a0b053907dc",
+              "name": "Error retrieving server metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5bf5d6da-9243-4e88-b7ec-cec7df00eed6",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Server Metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

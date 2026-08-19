@@ -1,0 +1,277 @@
+{
+  "item": [
+    {
+      "id": "a4412bbf-26c7-4515-82fc-5828f11be32f",
+      "name": "Logging",
+      "description": {
+        "content": "Server logging configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c2422bc9-c9e2-4237-b0f2-fffaa0892fdc",
+          "name": "Triton Inference Server Get Logging Settings",
+          "request": {
+            "name": "Triton Inference Server Get Logging Settings",
+            "description": {
+              "content": "Retrieve the current logging settings. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "logging"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93fe97b1-03a2-4b96-81d0-d82f61bf53ba",
+              "name": "Logging settings returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_file\": \"string\",\n  \"log_info\": false,\n  \"log_warning\": false,\n  \"log_error\": false,\n  \"log_verbose_level\": 3651,\n  \"log_format\": \"default\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b147b74e-17e1-473d-b833-61e7b953d254",
+              "name": "Error retrieving logging settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ab0a492-2f27-4c10-8564-aa51d8d589e2",
+          "name": "Triton Inference Server Update Logging Settings",
+          "request": {
+            "name": "Triton Inference Server Update Logging Settings",
+            "description": {
+              "content": "Update the server logging settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "logging"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd4fec53-1706-45b9-934e-e10ae8c5a45d",
+              "name": "Logging settings updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"log_file\": \"string\",\n  \"log_info\": false,\n  \"log_warning\": false,\n  \"log_error\": false,\n  \"log_verbose_level\": 3651,\n  \"log_format\": \"default\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "513987b3-73c9-4646-bbb5-543172680648",
+              "name": "Error updating logging settings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "logging"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"log_file\": \"<string>\",\n  \"log_info\": \"<boolean>\",\n  \"log_warning\": \"<boolean>\",\n  \"log_error\": \"<boolean>\",\n  \"log_verbose_level\": \"<integer>\",\n  \"log_format\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ecb2654b-94c8-460d-9115-a25aed5cf4a4",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Logging API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

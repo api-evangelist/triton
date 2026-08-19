@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CUDA Shared Memory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get CUDA Shared Memory Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/cudasharedmemory/status"
+          },
+          "docs": "Retrieve the status of all registered CUDA shared memory regions. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/region/:region_name/register",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a CUDA shared memory region for use with inference requests."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/region/:region_name/unregister",
+            "params": [
+              {
+                "name": "region_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the shared memory region"
+              }
+            ]
+          },
+          "docs": "Unregister a previously registered CUDA shared memory region."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/cudasharedmemory/unregister"
+          },
+          "docs": "Unregister all registered CUDA shared memory regions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

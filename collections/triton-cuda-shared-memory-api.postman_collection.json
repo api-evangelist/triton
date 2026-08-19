@@ -1,0 +1,547 @@
+{
+  "item": [
+    {
+      "id": "ef8e620a-b22d-466c-924c-fd987d862bdd",
+      "name": "CUDA Shared Memory",
+      "description": {
+        "content": "CUDA shared memory region management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f86bd92e-fe46-4349-8291-1236f076717c",
+          "name": "Triton Inference Server Get CUDA Shared Memory Status",
+          "request": {
+            "name": "Triton Inference Server Get CUDA Shared Memory Status",
+            "description": {
+              "content": "Retrieve the status of all registered CUDA shared memory regions. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "063372bf-f8ec-4b15-acc6-9eac5c294ee2",
+              "name": "CUDA shared memory status returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"device_id\": 4749,\n    \"byte_size\": 6272\n  },\n  {\n    \"name\": \"string\",\n    \"device_id\": 3796,\n    \"byte_size\": 2974\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd579fff-e5c7-4527-b37b-580a708f3343",
+              "name": "Error retrieving status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d18eb99-2ab0-4c5b-a94e-a517ac54abf2",
+          "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Register a CUDA Shared Memory Region",
+            "description": {
+              "content": "Register a CUDA shared memory region for use with inference requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "region",
+                ":region_name",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0af5e04e-1bca-4a74-af34-727fbac8a645",
+              "name": "Region registered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b61e4977-e0fd-40e7-819a-d70a10611ebb",
+              "name": "Error registering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"raw_handle\": {\n    \"b64\": \"<byte>\"\n  },\n  \"device_id\": \"<integer>\",\n  \"byte_size\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2477b8f-3bd2-4689-9276-7236948e4b9d",
+          "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+          "request": {
+            "name": "Triton Inference Server Unregister a CUDA Shared Memory Region",
+            "description": {
+              "content": "Unregister a previously registered CUDA shared memory region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "region",
+                ":region_name",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region_name",
+                  "description": "(Required) Name of the shared memory region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e30e365-0fa7-4d07-a78d-9bdd0f804c65",
+              "name": "Region unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cf514226-f31b-405f-a030-0cc82ea777a0",
+              "name": "Error unregistering region",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "region",
+                    ":region_name",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region_name",
+                      "description": "(Required) Name of the shared memory region"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "045dbf1e-a3ff-4b1d-80d5-6125ff767291",
+          "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+          "request": {
+            "name": "Triton Inference Server Unregister All CUDA Shared Memory Regions",
+            "description": {
+              "content": "Unregister all registered CUDA shared memory regions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "cudasharedmemory",
+                "unregister"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e398b737-07e4-4fcc-bc95-374d40e0ebc2",
+              "name": "All regions unregistered successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5843c35b-1e1d-42a2-a9dc-057c6315c24a",
+              "name": "Error unregistering regions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "cudasharedmemory",
+                    "unregister"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "37c8910f-15bd-43cb-bbdf-a4be8ae9b5fb",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

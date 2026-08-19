@@ -1,0 +1,632 @@
+{
+  "item": [
+    {
+      "id": "e4346162-447a-4918-84de-acfea60968b7",
+      "name": "Model Metadata",
+      "description": {
+        "content": "Model-level metadata, configuration, and statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b486e358-7ca5-4de3-9f48-d7be2f9bd6bd",
+          "name": "Triton Inference Server Get Model Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Model Metadata",
+            "description": {
+              "content": "Retrieve metadata about a specific model including its name, versions, platform, and input/output tensor information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db91804c-2ee6-484b-931c-c5ebc620b4f2",
+              "name": "Model metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"platform\": \"tensorrt_plan\",\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT32\",\n      \"shape\": [\n        5831,\n        2662\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"FP64\",\n      \"shape\": [\n        6556,\n        7032\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"FP64\",\n      \"shape\": [\n        1678,\n        5634\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT64\",\n      \"shape\": [\n        3199,\n        6252\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7db8fd0-81f1-4ff5-8cab-e02ac0ae7181",
+              "name": "Error retrieving model metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9a4b7ec-8b99-4cca-bba7-4c269daed74a",
+          "name": "Triton Inference Server Get Model Version Metadata",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Metadata",
+            "description": {
+              "content": "Retrieve metadata about a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f62933cb-9ded-4d67-b322-e92d79d41a14",
+              "name": "Model version metadata returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ],\n  \"platform\": \"tensorrt_plan\",\n  \"inputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT32\",\n      \"shape\": [\n        5831,\n        2662\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"FP64\",\n      \"shape\": [\n        6556,\n        7032\n      ]\n    }\n  ],\n  \"outputs\": [\n    {\n      \"name\": \"string\",\n      \"datatype\": \"FP64\",\n      \"shape\": [\n        1678,\n        5634\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"datatype\": \"UINT64\",\n      \"shape\": [\n        3199,\n        6252\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e34f790d-316a-437a-8af8-1e1034ef7d86",
+              "name": "Error retrieving model version metadata",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7679bdee-3eb8-4cfe-908e-c23bdb04c9b6",
+          "name": "Triton Inference Server Get Model Configuration",
+          "request": {
+            "name": "Triton Inference Server Get Model Configuration",
+            "description": {
+              "content": "Retrieve the configuration of a specific model as defined in the model repository. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd737941-4d7e-4546-81cf-9f4eb3c433ee",
+              "name": "Model configuration returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"backend\": \"string\",\n  \"version_policy\": {\n    \"latest\": {\n      \"num_versions\": 1774\n    },\n    \"all\": {},\n    \"specific\": {\n      \"versions\": [\n        7650,\n        2829\n      ]\n    }\n  },\n  \"max_batch_size\": 2575,\n  \"input\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_FP16\",\n      \"dims\": [\n        9723,\n        9455\n      ],\n      \"reshape\": {\n        \"shape\": [\n          9082,\n          5506\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": false\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT16\",\n      \"dims\": [\n        4768,\n        7313\n      ],\n      \"reshape\": {\n        \"shape\": [\n          8494,\n          7970\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": false\n    }\n  ],\n  \"output\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_INT32\",\n      \"dims\": [\n        8162,\n        6309\n      ],\n      \"reshape\": {\n        \"shape\": [\n          2232,\n          6189\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": true\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_STRING\",\n      \"dims\": [\n        3140,\n        5157\n      ],\n      \"reshape\": {\n        \"shape\": [\n          4316,\n          9453\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": true\n    }\n  ],\n  \"instance_group\": [\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_AUTO\",\n      \"count\": 6603,\n      \"gpus\": [\n        3278,\n        8249\n      ],\n      \"rate_group\": 4636,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 419\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 8604\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_GPU\",\n      \"count\": 1865,\n      \"gpus\": [\n        8028,\n        2785\n      ],\n      \"rate_group\": 6547,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 3254\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 8684\n          }\n        ]\n      }\n    }\n  ],\n  \"dynamic_batching\": {\n    \"preferred_batch_size\": [\n      3242,\n      969\n    ],\n    \"max_queue_delay_microseconds\": 6874,\n    \"preserve_ordering\": false,\n    \"priority_levels\": 7737,\n    \"default_priority_level\": 554,\n    \"default_queue_policy\": {\n      \"timeout_action\": \"DELAY\",\n      \"default_timeout_microseconds\": 4457,\n      \"allow_timeout_override\": true,\n      \"max_queue_size\": 665\n    },\n    \"priority_queue_policy\": {\n      \"key_0\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 9041,\n        \"allow_timeout_override\": true,\n        \"max_queue_size\": 1378\n      }\n    }\n  },\n  \"sequence_batching\": {\n    \"max_sequence_idle_microseconds\": 6474,\n    \"control_input\": [\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_END\",\n            \"int32_false_true\": [\n              1888,\n              486\n            ],\n            \"fp32_false_true\": [\n              9275.392486097295,\n              8795.08605086171\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              456,\n              9837\n            ],\n            \"fp32_false_true\": [\n              8907.647377393201,\n              5579.796135039465\n            ],\n            \"bool_false_true\": [\n              false,\n              true\n            ]\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              9269,\n              375\n            ],\n            \"fp32_false_true\": [\n              9787.798000233433,\n              2036.1995443753221\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_READY\",\n            \"int32_false_true\": [\n              8647,\n              7101\n            ],\n            \"fp32_false_true\": [\n              6087.454697940867,\n              7861.378028114004\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          }\n        ]\n      }\n    ],\n    \"state\": [\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          62,\n          6272\n        ]\n      },\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          1547,\n          5982\n        ]\n      }\n    ]\n  },\n  \"ensemble_scheduling\": {\n    \"step\": [\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 6614,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 90,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ]\n  },\n  \"parameters\": {\n    \"key_0\": {\n      \"string_value\": \"string\"\n    }\n  },\n  \"model_warmup\": [\n    {\n      \"name\": \"string\",\n      \"batch_size\": 1835,\n      \"inputs\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"batch_size\": 62,\n      \"inputs\": {\n        \"key_0\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84610db6-0230-47dd-b8cf-3a994d591d7f",
+              "name": "Error retrieving model configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b84f72be-515c-4f95-b447-e3b432f49faf",
+          "name": "Triton Inference Server Get Model Version Configuration",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Configuration",
+            "description": {
+              "content": "Retrieve the configuration of a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38ab759b-445e-4f76-b025-b75aa2e5b36d",
+              "name": "Model version configuration returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"platform\": \"string\",\n  \"backend\": \"string\",\n  \"version_policy\": {\n    \"latest\": {\n      \"num_versions\": 1774\n    },\n    \"all\": {},\n    \"specific\": {\n      \"versions\": [\n        7650,\n        2829\n      ]\n    }\n  },\n  \"max_batch_size\": 2575,\n  \"input\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_FP16\",\n      \"dims\": [\n        9723,\n        9455\n      ],\n      \"reshape\": {\n        \"shape\": [\n          9082,\n          5506\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": false\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_UINT16\",\n      \"dims\": [\n        4768,\n        7313\n      ],\n      \"reshape\": {\n        \"shape\": [\n          8494,\n          7970\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": false\n    }\n  ],\n  \"output\": [\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_INT32\",\n      \"dims\": [\n        8162,\n        6309\n      ],\n      \"reshape\": {\n        \"shape\": [\n          2232,\n          6189\n        ]\n      },\n      \"is_shape_tensor\": false,\n      \"allow_ragged_batch\": true\n    },\n    {\n      \"name\": \"string\",\n      \"data_type\": \"TYPE_STRING\",\n      \"dims\": [\n        3140,\n        5157\n      ],\n      \"reshape\": {\n        \"shape\": [\n          4316,\n          9453\n        ]\n      },\n      \"is_shape_tensor\": true,\n      \"allow_ragged_batch\": true\n    }\n  ],\n  \"instance_group\": [\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_AUTO\",\n      \"count\": 6603,\n      \"gpus\": [\n        3278,\n        8249\n      ],\n      \"rate_group\": 4636,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 419\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 8604\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"kind\": \"KIND_GPU\",\n      \"count\": 1865,\n      \"gpus\": [\n        8028,\n        2785\n      ],\n      \"rate_group\": 6547,\n      \"rate_limit\": {\n        \"resources\": [\n          {\n            \"name\": \"string\",\n            \"global\": true,\n            \"count\": 3254\n          },\n          {\n            \"name\": \"string\",\n            \"global\": false,\n            \"count\": 8684\n          }\n        ]\n      }\n    }\n  ],\n  \"dynamic_batching\": {\n    \"preferred_batch_size\": [\n      3242,\n      969\n    ],\n    \"max_queue_delay_microseconds\": 6874,\n    \"preserve_ordering\": false,\n    \"priority_levels\": 7737,\n    \"default_priority_level\": 554,\n    \"default_queue_policy\": {\n      \"timeout_action\": \"DELAY\",\n      \"default_timeout_microseconds\": 4457,\n      \"allow_timeout_override\": true,\n      \"max_queue_size\": 665\n    },\n    \"priority_queue_policy\": {\n      \"key_0\": {\n        \"timeout_action\": \"REJECT\",\n        \"default_timeout_microseconds\": 9041,\n        \"allow_timeout_override\": true,\n        \"max_queue_size\": 1378\n      }\n    }\n  },\n  \"sequence_batching\": {\n    \"max_sequence_idle_microseconds\": 6474,\n    \"control_input\": [\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_END\",\n            \"int32_false_true\": [\n              1888,\n              486\n            ],\n            \"fp32_false_true\": [\n              9275.392486097295,\n              8795.08605086171\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              456,\n              9837\n            ],\n            \"fp32_false_true\": [\n              8907.647377393201,\n              5579.796135039465\n            ],\n            \"bool_false_true\": [\n              false,\n              true\n            ]\n          }\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"control\": [\n          {\n            \"kind\": \"CONTROL_SEQUENCE_CORRID\",\n            \"int32_false_true\": [\n              9269,\n              375\n            ],\n            \"fp32_false_true\": [\n              9787.798000233433,\n              2036.1995443753221\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          },\n          {\n            \"kind\": \"CONTROL_SEQUENCE_READY\",\n            \"int32_false_true\": [\n              8647,\n              7101\n            ],\n            \"fp32_false_true\": [\n              6087.454697940867,\n              7861.378028114004\n            ],\n            \"bool_false_true\": [\n              true,\n              false\n            ]\n          }\n        ]\n      }\n    ],\n    \"state\": [\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          62,\n          6272\n        ]\n      },\n      {\n        \"input_name\": \"string\",\n        \"output_name\": \"string\",\n        \"data_type\": \"string\",\n        \"dims\": [\n          1547,\n          5982\n        ]\n      }\n    ]\n  },\n  \"ensemble_scheduling\": {\n    \"step\": [\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 6614,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      {\n        \"model_name\": \"string\",\n        \"model_version\": 90,\n        \"input_map\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"output_map\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ]\n  },\n  \"parameters\": {\n    \"key_0\": {\n      \"string_value\": \"string\"\n    }\n  },\n  \"model_warmup\": [\n    {\n      \"name\": \"string\",\n      \"batch_size\": 1835,\n      \"inputs\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"batch_size\": 62,\n      \"inputs\": {\n        \"key_0\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1142c64-384d-4d62-864a-c2b4dcf97123",
+              "name": "Error retrieving model version configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "452d4d91-913c-443f-ae4f-6abccaf9e984",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Model Metadata API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

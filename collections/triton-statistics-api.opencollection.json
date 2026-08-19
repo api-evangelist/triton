@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Statistics API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Inference Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/stats",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve inference statistics for a specific model including request count, execution count, and cumulative timing information. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Model Version Inference Statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/:model_name/versions/:model_version/stats",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              },
+              {
+                "name": "model_version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the model"
+              }
+            ]
+          },
+          "docs": "Retrieve inference statistics for a specific version of a model."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Get Statistics for All Models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8000/v2/models/stats"
+          },
+          "docs": "Retrieve inference statistics for all loaded models."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

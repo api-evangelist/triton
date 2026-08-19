@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "fea37b18-ac1b-4e22-8369-8c9ec2ffe0e4",
+      "name": "Statistics",
+      "description": {
+        "content": "Server and model inference statistics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ac035113-cad8-46d3-a171-e93be139b335",
+          "name": "Triton Inference Server Get Model Inference Statistics",
+          "request": {
+            "name": "Triton Inference Server Get Model Inference Statistics",
+            "description": {
+              "content": "Retrieve inference statistics for a specific model including request count, execution count, and cumulative timing information. This is a Triton extension to the KServe protocol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c524d615-1177-46fa-8ec0-1fa1e421ef45",
+              "name": "Model statistics returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 2950,\n      \"inference_count\": 1959,\n      \"execution_count\": 6583,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 8076,\n          \"ns\": 5247\n        },\n        \"fail\": {\n          \"count\": 3376,\n          \"ns\": 3484\n        },\n        \"queue\": {\n          \"count\": 6412,\n          \"ns\": 3471\n        },\n        \"compute_input\": {\n          \"count\": 2617,\n          \"ns\": 4239\n        },\n        \"compute_infer\": {\n          \"count\": 7003,\n          \"ns\": 1399\n        },\n        \"compute_output\": {\n          \"count\": 924,\n          \"ns\": 6524\n        },\n        \"cache_hit\": {\n          \"count\": 5131,\n          \"ns\": 5174\n        },\n        \"cache_miss\": {\n          \"count\": 7467,\n          \"ns\": 7998\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 9748,\n          \"compute_input\": {\n            \"count\": 9072,\n            \"ns\": 1400\n          },\n          \"compute_infer\": {\n            \"count\": 8426,\n            \"ns\": 5304\n          },\n          \"compute_output\": {\n            \"count\": 246,\n            \"ns\": 7729\n          }\n        },\n        {\n          \"batch_size\": 1162,\n          \"compute_input\": {\n            \"count\": 1221,\n            \"ns\": 609\n          },\n          \"compute_infer\": {\n            \"count\": 1692,\n            \"ns\": 8964\n          },\n          \"compute_output\": {\n            \"count\": 7655,\n            \"ns\": 5975\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 514,\n          \"byte_size\": 7477\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 3177,\n          \"byte_size\": 5690\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 417,\n      \"inference_count\": 6644,\n      \"execution_count\": 1752,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 6410,\n          \"ns\": 4035\n        },\n        \"fail\": {\n          \"count\": 7222,\n          \"ns\": 4971\n        },\n        \"queue\": {\n          \"count\": 1760,\n          \"ns\": 4360\n        },\n        \"compute_input\": {\n          \"count\": 4636,\n          \"ns\": 6322\n        },\n        \"compute_infer\": {\n          \"count\": 8206,\n          \"ns\": 9463\n        },\n        \"compute_output\": {\n          \"count\": 9514,\n          \"ns\": 4618\n        },\n        \"cache_hit\": {\n          \"count\": 9598,\n          \"ns\": 1913\n        },\n        \"cache_miss\": {\n          \"count\": 9454,\n          \"ns\": 9111\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 2445,\n          \"compute_input\": {\n            \"count\": 6732,\n            \"ns\": 5326\n          },\n          \"compute_infer\": {\n            \"count\": 9510,\n            \"ns\": 4830\n          },\n          \"compute_output\": {\n            \"count\": 7590,\n            \"ns\": 1875\n          }\n        },\n        {\n          \"batch_size\": 6248,\n          \"compute_input\": {\n            \"count\": 7157,\n            \"ns\": 9841\n          },\n          \"compute_infer\": {\n            \"count\": 6812,\n            \"ns\": 2784\n          },\n          \"compute_output\": {\n            \"count\": 2340,\n            \"ns\": 8641\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6491,\n          \"byte_size\": 2195\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 9630,\n          \"byte_size\": 4372\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e660cd30-1736-47b1-9c8d-da5d1416976f",
+              "name": "Error retrieving model statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92bf8750-7dd2-4986-8d8a-d654ee1fda85",
+          "name": "Triton Inference Server Get Model Version Inference Statistics",
+          "request": {
+            "name": "Triton Inference Server Get Model Version Inference Statistics",
+            "description": {
+              "content": "Retrieve inference statistics for a specific version of a model.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                ":model_name",
+                "versions",
+                ":model_version",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_name",
+                  "description": "(Required) Name of the model"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "model_version",
+                  "description": "(Required) Version of the model"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82d692be-5830-40ac-bb81-c94d23b4ab17",
+              "name": "Model version statistics returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 2950,\n      \"inference_count\": 1959,\n      \"execution_count\": 6583,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 8076,\n          \"ns\": 5247\n        },\n        \"fail\": {\n          \"count\": 3376,\n          \"ns\": 3484\n        },\n        \"queue\": {\n          \"count\": 6412,\n          \"ns\": 3471\n        },\n        \"compute_input\": {\n          \"count\": 2617,\n          \"ns\": 4239\n        },\n        \"compute_infer\": {\n          \"count\": 7003,\n          \"ns\": 1399\n        },\n        \"compute_output\": {\n          \"count\": 924,\n          \"ns\": 6524\n        },\n        \"cache_hit\": {\n          \"count\": 5131,\n          \"ns\": 5174\n        },\n        \"cache_miss\": {\n          \"count\": 7467,\n          \"ns\": 7998\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 9748,\n          \"compute_input\": {\n            \"count\": 9072,\n            \"ns\": 1400\n          },\n          \"compute_infer\": {\n            \"count\": 8426,\n            \"ns\": 5304\n          },\n          \"compute_output\": {\n            \"count\": 246,\n            \"ns\": 7729\n          }\n        },\n        {\n          \"batch_size\": 1162,\n          \"compute_input\": {\n            \"count\": 1221,\n            \"ns\": 609\n          },\n          \"compute_infer\": {\n            \"count\": 1692,\n            \"ns\": 8964\n          },\n          \"compute_output\": {\n            \"count\": 7655,\n            \"ns\": 5975\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 514,\n          \"byte_size\": 7477\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 3177,\n          \"byte_size\": 5690\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 417,\n      \"inference_count\": 6644,\n      \"execution_count\": 1752,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 6410,\n          \"ns\": 4035\n        },\n        \"fail\": {\n          \"count\": 7222,\n          \"ns\": 4971\n        },\n        \"queue\": {\n          \"count\": 1760,\n          \"ns\": 4360\n        },\n        \"compute_input\": {\n          \"count\": 4636,\n          \"ns\": 6322\n        },\n        \"compute_infer\": {\n          \"count\": 8206,\n          \"ns\": 9463\n        },\n        \"compute_output\": {\n          \"count\": 9514,\n          \"ns\": 4618\n        },\n        \"cache_hit\": {\n          \"count\": 9598,\n          \"ns\": 1913\n        },\n        \"cache_miss\": {\n          \"count\": 9454,\n          \"ns\": 9111\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 2445,\n          \"compute_input\": {\n            \"count\": 6732,\n            \"ns\": 5326\n          },\n          \"compute_infer\": {\n            \"count\": 9510,\n            \"ns\": 4830\n          },\n          \"compute_output\": {\n            \"count\": 7590,\n            \"ns\": 1875\n          }\n        },\n        {\n          \"batch_size\": 6248,\n          \"compute_input\": {\n            \"count\": 7157,\n            \"ns\": 9841\n          },\n          \"compute_infer\": {\n            \"count\": 6812,\n            \"ns\": 2784\n          },\n          \"compute_output\": {\n            \"count\": 2340,\n            \"ns\": 8641\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6491,\n          \"byte_size\": 2195\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 9630,\n          \"byte_size\": 4372\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f26dc0c1-a331-48db-ac26-cafbc2abcb1b",
+              "name": "Error retrieving model version statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    ":model_name",
+                    "versions",
+                    ":model_version",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_name",
+                      "description": "(Required) Name of the model"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "model_version",
+                      "description": "(Required) Version of the model"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9c3a384-40d1-4564-b1ad-dcb2b043368c",
+          "name": "Triton Inference Server Get Statistics for All Models",
+          "request": {
+            "name": "Triton Inference Server Get Statistics for All Models",
+            "description": {
+              "content": "Retrieve inference statistics for all loaded models.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "models",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8e611792-d1f3-4f24-8c65-adc754918473",
+              "name": "Statistics for all models returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"model_stats\": [\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 2950,\n      \"inference_count\": 1959,\n      \"execution_count\": 6583,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 8076,\n          \"ns\": 5247\n        },\n        \"fail\": {\n          \"count\": 3376,\n          \"ns\": 3484\n        },\n        \"queue\": {\n          \"count\": 6412,\n          \"ns\": 3471\n        },\n        \"compute_input\": {\n          \"count\": 2617,\n          \"ns\": 4239\n        },\n        \"compute_infer\": {\n          \"count\": 7003,\n          \"ns\": 1399\n        },\n        \"compute_output\": {\n          \"count\": 924,\n          \"ns\": 6524\n        },\n        \"cache_hit\": {\n          \"count\": 5131,\n          \"ns\": 5174\n        },\n        \"cache_miss\": {\n          \"count\": 7467,\n          \"ns\": 7998\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 9748,\n          \"compute_input\": {\n            \"count\": 9072,\n            \"ns\": 1400\n          },\n          \"compute_infer\": {\n            \"count\": 8426,\n            \"ns\": 5304\n          },\n          \"compute_output\": {\n            \"count\": 246,\n            \"ns\": 7729\n          }\n        },\n        {\n          \"batch_size\": 1162,\n          \"compute_input\": {\n            \"count\": 1221,\n            \"ns\": 609\n          },\n          \"compute_infer\": {\n            \"count\": 1692,\n            \"ns\": 8964\n          },\n          \"compute_output\": {\n            \"count\": 7655,\n            \"ns\": 5975\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 514,\n          \"byte_size\": 7477\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 3177,\n          \"byte_size\": 5690\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"last_inference\": 417,\n      \"inference_count\": 6644,\n      \"execution_count\": 1752,\n      \"inference_stats\": {\n        \"success\": {\n          \"count\": 6410,\n          \"ns\": 4035\n        },\n        \"fail\": {\n          \"count\": 7222,\n          \"ns\": 4971\n        },\n        \"queue\": {\n          \"count\": 1760,\n          \"ns\": 4360\n        },\n        \"compute_input\": {\n          \"count\": 4636,\n          \"ns\": 6322\n        },\n        \"compute_infer\": {\n          \"count\": 8206,\n          \"ns\": 9463\n        },\n        \"compute_output\": {\n          \"count\": 9514,\n          \"ns\": 4618\n        },\n        \"cache_hit\": {\n          \"count\": 9598,\n          \"ns\": 1913\n        },\n        \"cache_miss\": {\n          \"count\": 9454,\n          \"ns\": 9111\n        }\n      },\n      \"batch_stats\": [\n        {\n          \"batch_size\": 2445,\n          \"compute_input\": {\n            \"count\": 6732,\n            \"ns\": 5326\n          },\n          \"compute_infer\": {\n            \"count\": 9510,\n            \"ns\": 4830\n          },\n          \"compute_output\": {\n            \"count\": 7590,\n            \"ns\": 1875\n          }\n        },\n        {\n          \"batch_size\": 6248,\n          \"compute_input\": {\n            \"count\": 7157,\n            \"ns\": 9841\n          },\n          \"compute_infer\": {\n            \"count\": 6812,\n            \"ns\": 2784\n          },\n          \"compute_output\": {\n            \"count\": 2340,\n            \"ns\": 8641\n          }\n        }\n      ],\n      \"memory_usage\": [\n        {\n          \"type\": \"string\",\n          \"id\": 6491,\n          \"byte_size\": 2195\n        },\n        {\n          \"type\": \"string\",\n          \"id\": 9630,\n          \"byte_size\": 4372\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76bf112b-dddb-425b-8a62-bf2758a330dc",
+              "name": "Error retrieving statistics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "models",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8000",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "78e70810-f0eb-42b2-b9e5-18f38ff88539",
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.\n\nContact Support:\n Name: NVIDIA Triton Team\n Email: triton@nvidia.com",
+      "type": "text/plain"
+    }
+  }
+}

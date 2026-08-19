@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Model Repository API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Model Repository",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Triton Inference Server List Models in the Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/index",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the index of all models available in the model repository. Can optionally filter to show only models that are ready. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Load or Reload a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/models/:model_name/load",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request that a model be loaded into Triton, or reloaded if it is already loaded. Optionally provide model configuration overrides as parameters. This is a Triton extension to the KServe protocol."
+        },
+        {
+          "info": {
+            "name": "Triton Inference Server Unload a Model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8000/v2/repository/models/:model_name/unload",
+            "params": [
+              {
+                "name": "model_name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the model"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request that a model be unloaded from Triton. Once unloaded the model will no longer be available for inference. This is a Triton extension to the KServe protocol."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
