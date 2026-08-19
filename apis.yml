@@ -28,7 +28,7 @@ tags:
 created: '2024-01-15'
 modified: '2026-05-19'
 url: https://github.com/triton-inference-server/server
-specificationVersion: '0.18'
+specificationVersion: '0.23'
 apis:
 - name: Triton GRPC API
   description: >-
