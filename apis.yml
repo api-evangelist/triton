@@ -18,6 +18,14 @@ accessModel:
   method: derived
 image: https://developer.nvidia.com/sites/default/files/akamai/triton-logo.png
 tags:
+  - Artificial Intelligence
+  - Deep Learning
+  - Inference
+  - Machine-Learning
+  - Model Serving
+  - NVIDIA
+  - Open-Source
+tags_raw:
   - AI
   - Deep Learning
   - Inference
@@ -37,6 +45,11 @@ apis:
   humanURL: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
   baseURL: grpc://localhost:8001
   tags:
+  - gRPC
+  - High Performance
+  - Inference
+  - Streaming
+  tags_raw:
   - GRPC
   - High Performance
   - Inference
