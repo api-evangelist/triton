@@ -4,6 +4,19 @@ description: >-
   supports an HTTP/REST and gRPC protocol that allows remote clients to request inferencing for any model being managed
   by the server. Open source and part of the broader NVIDIA AI ecosystem, Triton implements the KServe V2 inference
   protocol supporting TensorRT, TensorFlow, PyTorch, ONNX Runtime, Python, and more backends.
+deliveryModel:
+  model: self-hosted
+  license: BSD-3-Clause
+  open_source: true
+  commercial: false
+  callable_host: false
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
@@ -285,6 +298,15 @@ apis:
   - type: Metrics Format
     url: https://prometheus.io/docs/instrumenting/exposition_formats/
 common:
+  - type: CapabilityMap
+    url: capabilities/triton-capability-edges.yml
+    name: Triton Inference Server Business Capability Map
+  - type: IssueTracker
+    url: https://github.com/triton-inference-server/server/issues
+  - type: SecurityPolicy
+    url: https://github.com/triton-inference-server/server/blob/main/SECURITY.md
+  - type: ContributionGuide
+    url: https://github.com/triton-inference-server/server/blob/main/CONTRIBUTING.md
   - type: License
     name: BSD-3-Clause
     url: https://github.com/triton-inference-server/server/blob/main/LICENSE
