@@ -58,7 +58,7 @@ apis:
   humanURL: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
   baseURL: grpc://localhost:8001
   tags:
-  - gRPC
+  - GRPC
   - High Performance
   - Inference
   - Streaming
