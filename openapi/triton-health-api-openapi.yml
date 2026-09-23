@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Health API
+  title: Triton Inference Server NVIDIA Triton Inference Server…
   description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
@@ -97,18 +97,18 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   parameters:
-    modelName:
-      name: model_name
-      in: path
-      required: true
-      description: Name of the model
-      schema:
-        type: string
     modelVersion:
       name: model_version
       in: path
       required: true
       description: Version of the model
+      schema:
+        type: string
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
       schema:
         type: string
   schemas:

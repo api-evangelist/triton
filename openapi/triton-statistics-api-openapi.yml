@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Statistics API
+  title: Triton Inference Server NVIDIA Triton Inference Server…
   description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
@@ -93,15 +93,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    StatisticsDuration:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Number of occurrences
-        ns:
-          type: integer
-          description: Cumulative duration in nanoseconds
     ModelStatistics:
       type: object
       properties:
@@ -148,14 +139,6 @@ components:
                 type: integer
               byte_size:
                 type: integer
-    StatisticsResponse:
-      type: object
-      properties:
-        model_stats:
-          type: array
-          description: Statistics for each model
-          items:
-            $ref: '#/components/schemas/ModelStatistics'
     InferenceStatistics:
       type: object
       properties:
@@ -181,19 +164,36 @@ components:
         error:
           type: string
           description: Error message describing what went wrong
+    StatisticsDuration:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of occurrences
+        ns:
+          type: integer
+          description: Cumulative duration in nanoseconds
+    StatisticsResponse:
+      type: object
+      properties:
+        model_stats:
+          type: array
+          description: Statistics for each model
+          items:
+            $ref: '#/components/schemas/ModelStatistics'
   parameters:
-    modelVersion:
-      name: model_version
-      in: path
-      required: true
-      description: Version of the model
-      schema:
-        type: string
     modelName:
       name: model_name
       in: path
       required: true
       description: Name of the model
+      schema:
+        type: string
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
       schema:
         type: string
 externalDocs:

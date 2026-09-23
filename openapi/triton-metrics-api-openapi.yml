@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Metrics API
-  description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
+  title: Triton Inference Server NVIDIA Triton Inference Server…
+  description: Prometheus-compatible metrics API for monitoring NVIDIA Triton Inference Server performance. Exposes server-level and per-model metrics including inference request counts, latencies, queue times, GPU utilization, and memory usage in Prometheus text exposition format.
   version: '2.0'
   contact:
     name: NVIDIA Triton Team
@@ -11,17 +11,17 @@ info:
     name: BSD 3-Clause
     url: https://github.com/triton-inference-server/server/blob/main/LICENSE
 servers:
-- url: http://localhost:8000
-  description: Triton HTTP endpoint (default)
+- url: http://localhost:8002
+  description: Triton Metrics endpoint (default)
 - url: http://{host}:{port}
-  description: Custom Triton HTTP endpoint
+  description: Custom Triton Metrics endpoint
   variables:
     host:
       default: localhost
       description: Triton server hostname or IP
     port:
-      default: '8000'
-      description: Triton HTTP port
+      default: '8002'
+      description: Triton metrics port
 tags:
 - name: Metrics
   description: Prometheus-compatible metrics endpoints
@@ -151,5 +151,5 @@ paths:
         '400':
           description: Metrics collection error
 externalDocs:
-  description: Triton Inference Server Protocol Documentation
-  url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
+  description: Triton Metrics Documentation
+  url: https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Logging API
+  title: Triton Inference Server NVIDIA Triton Inference Server…
   description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
@@ -73,30 +73,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    LogSettingsResponse:
-      type: object
-      properties:
-        log_file:
-          type: string
-          description: Current log file path
-        log_info:
-          type: boolean
-          description: Whether info-level logging is enabled
-        log_warning:
-          type: boolean
-          description: Whether warning-level logging is enabled
-        log_error:
-          type: boolean
-          description: Whether error-level logging is enabled
-        log_verbose_level:
-          type: integer
-          description: Verbose logging level (0 = off)
-        log_format:
-          type: string
-          description: Log format
-          enum:
-          - default
-          - ISO8601
     LogSettingsRequest:
       type: object
       properties:
@@ -127,6 +103,30 @@ components:
         error:
           type: string
           description: Error message describing what went wrong
+    LogSettingsResponse:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Current log file path
+        log_info:
+          type: boolean
+          description: Whether info-level logging is enabled
+        log_warning:
+          type: boolean
+          description: Whether warning-level logging is enabled
+        log_error:
+          type: boolean
+          description: Whether error-level logging is enabled
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level (0 = off)
+        log_format:
+          type: string
+          description: Log format
+          enum:
+          - default
+          - ISO8601
 externalDocs:
   description: Triton Inference Server Protocol Documentation
   url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

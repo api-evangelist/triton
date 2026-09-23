@@ -1,34 +1,42 @@
 {
   "provider": "triton",
   "sources": [
-    "triton-cuda-shared-memory-api-openapi.yml",
-    "triton-health-api-openapi.yml",
-    "triton-inference-api-openapi.yml",
-    "triton-logging-api-openapi.yml",
-    "triton-metrics-api-openapi.yml",
-    "triton-model-metadata-api-openapi.yml",
-    "triton-model-repository-api-openapi.yml",
-    "triton-server-metadata-api-openapi.yml",
-    "triton-statistics-api-openapi.yml",
-    "triton-system-shared-memory-api-openapi.yml",
-    "triton-trace-api-openapi.yml"
+    "_original/triton-http-rest-openapi.yml",
+    "_original/triton-metrics-openapi.yml"
   ],
   "outputs": [
     "triton-cuda-shared-memory-api-openapi.yml",
     "triton-health-api-openapi.yml",
     "triton-inference-api-openapi.yml",
     "triton-logging-api-openapi.yml",
-    "triton-metrics-api-openapi.yml",
     "triton-model-metadata-api-openapi.yml",
     "triton-model-repository-api-openapi.yml",
     "triton-server-metadata-api-openapi.yml",
     "triton-statistics-api-openapi.yml",
     "triton-system-shared-memory-api-openapi.yml",
-    "triton-trace-api-openapi.yml"
+    "triton-trace-api-openapi.yml",
+    "triton-metrics-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "triton-http-rest-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "triton-metrics-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "triton-cuda-shared-memory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-inference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-logging-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-model-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-model-repository-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-server-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-statistics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-system-shared-memory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "triton-trace-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

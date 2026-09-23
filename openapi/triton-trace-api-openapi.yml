@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Inference Server NVIDIA Triton Inference Server HTTP/REST CUDA Shared Memory Trace API
+  title: Triton Inference Server NVIDIA Triton Inference Server…
   description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
@@ -122,36 +122,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    TraceSettingRequest:
-      type: object
-      properties:
-        trace_level:
-          type: array
-          description: Trace levels to set
-          items:
-            type: string
-            enum:
-            - 'OFF'
-            - TIMESTAMPS
-            - TENSORS
-        trace_rate:
-          type: string
-          description: Trace sampling rate
-        trace_count:
-          type: string
-          description: Maximum number of traces to collect (-1 for unlimited)
-        log_frequency:
-          type: string
-          description: Frequency of trace log output
-        trace_file:
-          type: string
-          description: File path for trace output
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     TraceSettingResponse:
       type: object
       properties:
@@ -170,6 +140,36 @@ components:
         trace_count:
           type: string
           description: Maximum number of traces to collect
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    TraceSettingRequest:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Trace levels to set
+          items:
+            type: string
+            enum:
+            - 'OFF'
+            - TIMESTAMPS
+            - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect (-1 for unlimited)
         log_frequency:
           type: string
           description: Frequency of trace log output

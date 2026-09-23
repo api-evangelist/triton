@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Triton Server NVIDIA Triton Server HTTP/REST CUDA Shared Memory Inference API
+  title: Triton Server NVIDIA Triton Server HTTP/REST Inference API
   description: RESTful API for the NVIDIA Triton Inference Server, implementing the KServe V2 inference protocol with Triton-specific extensions. Provides endpoints for model inference, health checks, server and model metadata, model repository management, statistics, tracing, logging, and system shared memory management.
   version: '2.0'
   contact:
@@ -85,31 +85,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    InferenceResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the response matching the request ID
-        model_name:
-          type: string
-          description: Name of the model that processed the request
-        model_version:
-          type: string
-          description: Version of the model that processed the request
-        parameters:
-          type: object
-          description: Response-level parameters
-          additionalProperties:
-            oneOf:
-            - type: string
-            - type: boolean
-            - type: integer
-        outputs:
-          type: array
-          description: Output tensors from inference
-          items:
-            $ref: '#/components/schemas/OutputTensor'
     InferenceTensor:
       type: object
       required:
@@ -204,6 +179,37 @@ components:
             - type: string
             - type: boolean
             - type: integer
+    InferenceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the response matching the request ID
+        model_name:
+          type: string
+          description: Name of the model that processed the request
+        model_version:
+          type: string
+          description: Version of the model that processed the request
+        parameters:
+          type: object
+          description: Response-level parameters
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        outputs:
+          type: array
+          description: Output tensors from inference
+          items:
+            $ref: '#/components/schemas/OutputTensor'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
     InferenceRequest:
       type: object
       required:
@@ -251,12 +257,6 @@ components:
           description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
           items:
             $ref: '#/components/schemas/RequestedOutputTensor'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     OutputTensor:
       type: object
       properties:
@@ -303,18 +303,18 @@ components:
           description: Tensor data as a flattened array
           items: {}
   parameters:
-    modelVersion:
-      name: model_version
-      in: path
-      required: true
-      description: Version of the model
-      schema:
-        type: string
     modelName:
       name: model_name
       in: path
       required: true
       description: Name of the model
+      schema:
+        type: string
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
       schema:
         type: string
 externalDocs:
