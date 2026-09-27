@@ -34,10 +34,10 @@ tags:
 - Artificial Intelligence
 - Deep Learning
 - Inference
-- Machine-Learning
+- Machine Learning
 - Model Serving
 - NVIDIA
-- Open-Source
+- Open Source
 tags_raw:
 - AI
 - Deep Learning
@@ -46,6 +46,8 @@ tags_raw:
 - Model Serving
 - NVIDIA
 - Open Source
+- Machine-Learning
+- Open-Source
 created: '2024-01-15'
 modified: '2026-09-16'
 url: https://github.com/triton-inference-server/server

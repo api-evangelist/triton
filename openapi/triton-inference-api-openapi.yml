@@ -85,6 +85,59 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    InferenceRequest:
+      type: object
+      required:
+      - inputs
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the request. If not provided, the server will generate one.
+        parameters:
+          type: object
+          description: Optional inference parameters including sequence_id, sequence_start, sequence_end, priority, and timeout.
+          properties:
+            sequence_id:
+              oneOf:
+              - type: integer
+              - type: string
+              description: Sequence identifier for stateful models
+            sequence_start:
+              type: boolean
+              description: Indicates the start of a sequence
+            sequence_end:
+              type: boolean
+              description: Indicates the end of a sequence
+            priority:
+              type: integer
+              description: Priority of the request (higher values mean higher priority)
+            timeout:
+              type: integer
+              description: Timeout in microseconds for the request
+            binary_data_output:
+              type: boolean
+              description: If true, request binary data in response outputs
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        inputs:
+          type: array
+          description: Input tensors for inference
+          items:
+            $ref: '#/components/schemas/InferenceTensor'
+        outputs:
+          type: array
+          description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
+          items:
+            $ref: '#/components/schemas/RequestedOutputTensor'
     InferenceTensor:
       type: object
       required:
@@ -147,116 +200,6 @@ components:
           type: array
           description: Tensor data as a flattened array
           items: {}
-    RequestedOutputTensor:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the requested output tensor
-        parameters:
-          type: object
-          description: Optional parameters for the output tensor
-          properties:
-            binary_data:
-              type: boolean
-              description: If true, return output as binary data
-            shared_memory_region:
-              type: string
-              description: Name of the shared memory region for output
-            shared_memory_offset:
-              type: integer
-              description: Offset within the shared memory region
-            shared_memory_byte_size:
-              type: integer
-              description: Size of the output in shared memory
-            classification:
-              type: integer
-              description: Number of top classifications to return
-          additionalProperties:
-            oneOf:
-            - type: string
-            - type: boolean
-            - type: integer
-    InferenceResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the response matching the request ID
-        model_name:
-          type: string
-          description: Name of the model that processed the request
-        model_version:
-          type: string
-          description: Version of the model that processed the request
-        parameters:
-          type: object
-          description: Response-level parameters
-          additionalProperties:
-            oneOf:
-            - type: string
-            - type: boolean
-            - type: integer
-        outputs:
-          type: array
-          description: Output tensors from inference
-          items:
-            $ref: '#/components/schemas/OutputTensor'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-    InferenceRequest:
-      type: object
-      required:
-      - inputs
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the request. If not provided, the server will generate one.
-        parameters:
-          type: object
-          description: Optional inference parameters including sequence_id, sequence_start, sequence_end, priority, and timeout.
-          properties:
-            sequence_id:
-              oneOf:
-              - type: integer
-              - type: string
-              description: Sequence identifier for stateful models
-            sequence_start:
-              type: boolean
-              description: Indicates the start of a sequence
-            sequence_end:
-              type: boolean
-              description: Indicates the end of a sequence
-            priority:
-              type: integer
-              description: Priority of the request (higher values mean higher priority)
-            timeout:
-              type: integer
-              description: Timeout in microseconds for the request
-            binary_data_output:
-              type: boolean
-              description: If true, request binary data in response outputs
-          additionalProperties:
-            oneOf:
-            - type: string
-            - type: boolean
-            - type: integer
-        inputs:
-          type: array
-          description: Input tensors for inference
-          items:
-            $ref: '#/components/schemas/InferenceTensor'
-        outputs:
-          type: array
-          description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
-          items:
-            $ref: '#/components/schemas/RequestedOutputTensor'
     OutputTensor:
       type: object
       properties:
@@ -302,6 +245,63 @@ components:
           type: array
           description: Tensor data as a flattened array
           items: {}
+    InferenceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the response matching the request ID
+        model_name:
+          type: string
+          description: Name of the model that processed the request
+        model_version:
+          type: string
+          description: Version of the model that processed the request
+        parameters:
+          type: object
+          description: Response-level parameters
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
+        outputs:
+          type: array
+          description: Output tensors from inference
+          items:
+            $ref: '#/components/schemas/OutputTensor'
+    RequestedOutputTensor:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the requested output tensor
+        parameters:
+          type: object
+          description: Optional parameters for the output tensor
+          properties:
+            binary_data:
+              type: boolean
+              description: If true, return output as binary data
+            shared_memory_region:
+              type: string
+              description: Name of the shared memory region for output
+            shared_memory_offset:
+              type: integer
+              description: Offset within the shared memory region
+            shared_memory_byte_size:
+              type: integer
+              description: Size of the output in shared memory
+            classification:
+              type: integer
+              description: Number of top classifications to return
+          additionalProperties:
+            oneOf:
+            - type: string
+            - type: boolean
+            - type: integer
   parameters:
     modelName:
       name: model_name

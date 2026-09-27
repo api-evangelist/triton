@@ -93,6 +93,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
     ModelStatistics:
       type: object
       properties:
@@ -139,6 +145,23 @@ components:
                 type: integer
               byte_size:
                 type: integer
+    StatisticsResponse:
+      type: object
+      properties:
+        model_stats:
+          type: array
+          description: Statistics for each model
+          items:
+            $ref: '#/components/schemas/ModelStatistics'
+    StatisticsDuration:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of occurrences
+        ns:
+          type: integer
+          description: Cumulative duration in nanoseconds
     InferenceStatistics:
       type: object
       properties:
@@ -158,29 +181,6 @@ components:
           $ref: '#/components/schemas/StatisticsDuration'
         cache_miss:
           $ref: '#/components/schemas/StatisticsDuration'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-    StatisticsDuration:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Number of occurrences
-        ns:
-          type: integer
-          description: Cumulative duration in nanoseconds
-    StatisticsResponse:
-      type: object
-      properties:
-        model_stats:
-          type: array
-          description: Statistics for each model
-          items:
-            $ref: '#/components/schemas/ModelStatistics'
   parameters:
     modelName:
       name: model_name

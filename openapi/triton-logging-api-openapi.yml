@@ -73,6 +73,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
     LogSettingsRequest:
       type: object
       properties:
@@ -97,12 +103,6 @@ components:
           enum:
           - default
           - ISO8601
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     LogSettingsResponse:
       type: object
       properties:

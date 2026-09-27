@@ -121,7 +121,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
     TraceSettingResponse:
       type: object
       properties:
@@ -146,12 +160,6 @@ components:
         trace_file:
           type: string
           description: File path for trace output
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     TraceSettingRequest:
       type: object
       properties:
@@ -176,14 +184,6 @@ components:
         trace_file:
           type: string
           description: File path for trace output
-  parameters:
-    modelName:
-      name: model_name
-      in: path
-      required: true
-      description: Name of the model
-      schema:
-        type: string
 externalDocs:
   description: Triton Inference Server Protocol Documentation
   url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
