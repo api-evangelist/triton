@@ -73,6 +73,30 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
+    LogSettingsResponse:
+      type: object
+      properties:
+        log_file:
+          type: string
+          description: Current log file path
+        log_info:
+          type: boolean
+          description: Whether info-level logging is enabled
+        log_warning:
+          type: boolean
+          description: Whether warning-level logging is enabled
+        log_error:
+          type: boolean
+          description: Whether error-level logging is enabled
+        log_verbose_level:
+          type: integer
+          description: Verbose logging level (0 = off)
+        log_format:
+          type: string
+          description: Log format
+          enum:
+          - default
+          - ISO8601
     ErrorResponse:
       type: object
       properties:
@@ -100,30 +124,6 @@ components:
         log_format:
           type: string
           description: Log format to use
-          enum:
-          - default
-          - ISO8601
-    LogSettingsResponse:
-      type: object
-      properties:
-        log_file:
-          type: string
-          description: Current log file path
-        log_info:
-          type: boolean
-          description: Whether info-level logging is enabled
-        log_warning:
-          type: boolean
-          description: Whether warning-level logging is enabled
-        log_error:
-          type: boolean
-          description: Whether error-level logging is enabled
-        log_verbose_level:
-          type: integer
-          description: Verbose logging level (0 = off)
-        log_format:
-          type: string
-          description: Log format
           enum:
           - default
           - ISO8601

@@ -118,51 +118,74 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    QueuePolicy:
-      type: object
-      properties:
-        timeout_action:
-          type: string
-          enum:
-          - REJECT
-          - DELAY
-        default_timeout_microseconds:
-          type: integer
-        allow_timeout_override:
-          type: boolean
-        max_queue_size:
-          type: integer
-    ModelMetadataResponse:
+    ModelTensorConfig:
       type: object
       properties:
         name:
           type: string
-          description: Name of the model
-        versions:
-          type: array
-          description: Available versions of the model
-          items:
-            type: string
-        platform:
+          description: Tensor name
+        data_type:
           type: string
-          description: Framework platform of the model
-          examples:
-          - tensorrt_plan
-          - tensorflow_graphdef
-          - tensorflow_savedmodel
-          - onnxruntime_onnx
-          - pytorch_libtorch
-          - python
-        inputs:
+          description: Data type of the tensor
+          enum:
+          - TYPE_BOOL
+          - TYPE_UINT8
+          - TYPE_UINT16
+          - TYPE_UINT32
+          - TYPE_UINT64
+          - TYPE_INT8
+          - TYPE_INT16
+          - TYPE_INT32
+          - TYPE_INT64
+          - TYPE_FP16
+          - TYPE_FP32
+          - TYPE_FP64
+          - TYPE_STRING
+          - TYPE_BF16
+        dims:
           type: array
-          description: Input tensor metadata
+          description: Tensor dimensions
           items:
-            $ref: '#/components/schemas/TensorMetadata'
-        outputs:
+            type: integer
+        reshape:
+          type: object
+          description: Reshape configuration
+          properties:
+            shape:
+              type: array
+              items:
+                type: integer
+        is_shape_tensor:
+          type: boolean
+          description: Whether this tensor is a shape tensor
+        allow_ragged_batch:
+          type: boolean
+          description: Whether ragged batching is allowed
+    EnsembleScheduling:
+      type: object
+      description: Ensemble model scheduling configuration
+      properties:
+        step:
           type: array
-          description: Output tensor metadata
           items:
-            $ref: '#/components/schemas/TensorMetadata'
+            type: object
+            properties:
+              model_name:
+                type: string
+                description: Name of the model in the ensemble step
+              model_version:
+                type: integer
+                description: Version of the model to use
+              input_map:
+                type: object
+                description: Mapping of ensemble tensor names to step model input names
+                additionalProperties:
+                  type: string
+              output_map:
+                type: object
+                description: Mapping of step model output names to ensemble tensor names
+                additionalProperties:
+                  type: string
     ErrorResponse:
       type: object
       properties:
@@ -246,6 +269,20 @@ components:
                 type: object
                 additionalProperties:
                   type: object
+    QueuePolicy:
+      type: object
+      properties:
+        timeout_action:
+          type: string
+          enum:
+          - REJECT
+          - DELAY
+        default_timeout_microseconds:
+          type: integer
+        allow_timeout_override:
+          type: boolean
+        max_queue_size:
+          type: integer
     SequenceBatching:
       type: object
       description: Sequence batching configuration
@@ -327,74 +364,6 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/QueuePolicy'
-    EnsembleScheduling:
-      type: object
-      description: Ensemble model scheduling configuration
-      properties:
-        step:
-          type: array
-          items:
-            type: object
-            properties:
-              model_name:
-                type: string
-                description: Name of the model in the ensemble step
-              model_version:
-                type: integer
-                description: Version of the model to use
-              input_map:
-                type: object
-                description: Mapping of ensemble tensor names to step model input names
-                additionalProperties:
-                  type: string
-              output_map:
-                type: object
-                description: Mapping of step model output names to ensemble tensor names
-                additionalProperties:
-                  type: string
-    ModelTensorConfig:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Tensor name
-        data_type:
-          type: string
-          description: Data type of the tensor
-          enum:
-          - TYPE_BOOL
-          - TYPE_UINT8
-          - TYPE_UINT16
-          - TYPE_UINT32
-          - TYPE_UINT64
-          - TYPE_INT8
-          - TYPE_INT16
-          - TYPE_INT32
-          - TYPE_INT64
-          - TYPE_FP16
-          - TYPE_FP32
-          - TYPE_FP64
-          - TYPE_STRING
-          - TYPE_BF16
-        dims:
-          type: array
-          description: Tensor dimensions
-          items:
-            type: integer
-        reshape:
-          type: object
-          description: Reshape configuration
-          properties:
-            shape:
-              type: array
-              items:
-                type: integer
-        is_shape_tensor:
-          type: boolean
-          description: Whether this tensor is a shape tensor
-        allow_ragged_batch:
-          type: boolean
-          description: Whether ragged batching is allowed
     TensorMetadata:
       type: object
       properties:
@@ -424,6 +393,37 @@ components:
           description: Shape of the tensor with -1 indicating variable-length dimensions
           items:
             type: integer
+    ModelMetadataResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the model
+        versions:
+          type: array
+          description: Available versions of the model
+          items:
+            type: string
+        platform:
+          type: string
+          description: Framework platform of the model
+          examples:
+          - tensorrt_plan
+          - tensorflow_graphdef
+          - tensorflow_savedmodel
+          - onnxruntime_onnx
+          - pytorch_libtorch
+          - python
+        inputs:
+          type: array
+          description: Input tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
+        outputs:
+          type: array
+          description: Output tensor metadata
+          items:
+            $ref: '#/components/schemas/TensorMetadata'
     InstanceGroup:
       type: object
       properties:

@@ -91,53 +91,51 @@ components:
         error:
           type: string
           description: Error message describing what went wrong
-    InferenceRequest:
+    OutputTensor:
       type: object
-      required:
-      - inputs
       properties:
-        id:
+        name:
           type: string
-          description: Unique identifier for the request. If not provided, the server will generate one.
+          description: Name of the output tensor
+        shape:
+          type: array
+          description: Shape of the output tensor
+          items:
+            type: integer
+        datatype:
+          type: string
+          description: Data type of the tensor
+          enum:
+          - BOOL
+          - UINT8
+          - UINT16
+          - UINT32
+          - UINT64
+          - INT8
+          - INT16
+          - INT32
+          - INT64
+          - FP16
+          - FP32
+          - FP64
+          - BYTES
+          - BF16
         parameters:
           type: object
-          description: Optional inference parameters including sequence_id, sequence_start, sequence_end, priority, and timeout.
+          description: Output tensor parameters
           properties:
-            sequence_id:
-              oneOf:
-              - type: integer
-              - type: string
-              description: Sequence identifier for stateful models
-            sequence_start:
-              type: boolean
-              description: Indicates the start of a sequence
-            sequence_end:
-              type: boolean
-              description: Indicates the end of a sequence
-            priority:
+            binary_data_size:
               type: integer
-              description: Priority of the request (higher values mean higher priority)
-            timeout:
-              type: integer
-              description: Timeout in microseconds for the request
-            binary_data_output:
-              type: boolean
-              description: If true, request binary data in response outputs
+              description: Size of binary data appended to response body
           additionalProperties:
             oneOf:
             - type: string
             - type: boolean
             - type: integer
-        inputs:
+        data:
           type: array
-          description: Input tensors for inference
-          items:
-            $ref: '#/components/schemas/InferenceTensor'
-        outputs:
-          type: array
-          description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
-          items:
-            $ref: '#/components/schemas/RequestedOutputTensor'
+          description: Tensor data as a flattened array
+          items: {}
     InferenceTensor:
       type: object
       required:
@@ -200,51 +198,53 @@ components:
           type: array
           description: Tensor data as a flattened array
           items: {}
-    OutputTensor:
+    InferenceRequest:
       type: object
+      required:
+      - inputs
       properties:
-        name:
+        id:
           type: string
-          description: Name of the output tensor
-        shape:
-          type: array
-          description: Shape of the output tensor
-          items:
-            type: integer
-        datatype:
-          type: string
-          description: Data type of the tensor
-          enum:
-          - BOOL
-          - UINT8
-          - UINT16
-          - UINT32
-          - UINT64
-          - INT8
-          - INT16
-          - INT32
-          - INT64
-          - FP16
-          - FP32
-          - FP64
-          - BYTES
-          - BF16
+          description: Unique identifier for the request. If not provided, the server will generate one.
         parameters:
           type: object
-          description: Output tensor parameters
+          description: Optional inference parameters including sequence_id, sequence_start, sequence_end, priority, and timeout.
           properties:
-            binary_data_size:
+            sequence_id:
+              oneOf:
+              - type: integer
+              - type: string
+              description: Sequence identifier for stateful models
+            sequence_start:
+              type: boolean
+              description: Indicates the start of a sequence
+            sequence_end:
+              type: boolean
+              description: Indicates the end of a sequence
+            priority:
               type: integer
-              description: Size of binary data appended to response body
+              description: Priority of the request (higher values mean higher priority)
+            timeout:
+              type: integer
+              description: Timeout in microseconds for the request
+            binary_data_output:
+              type: boolean
+              description: If true, request binary data in response outputs
           additionalProperties:
             oneOf:
             - type: string
             - type: boolean
             - type: integer
-        data:
+        inputs:
           type: array
-          description: Tensor data as a flattened array
-          items: {}
+          description: Input tensors for inference
+          items:
+            $ref: '#/components/schemas/InferenceTensor'
+        outputs:
+          type: array
+          description: Requested output tensors. If not specified, all outputs defined by the model will be returned.
+          items:
+            $ref: '#/components/schemas/RequestedOutputTensor'
     InferenceResponse:
       type: object
       properties:

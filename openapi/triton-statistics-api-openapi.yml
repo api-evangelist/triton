@@ -99,6 +99,25 @@ components:
         error:
           type: string
           description: Error message describing what went wrong
+    InferenceStatistics:
+      type: object
+      properties:
+        success:
+          $ref: '#/components/schemas/StatisticsDuration'
+        fail:
+          $ref: '#/components/schemas/StatisticsDuration'
+        queue:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_input:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_infer:
+          $ref: '#/components/schemas/StatisticsDuration'
+        compute_output:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_hit:
+          $ref: '#/components/schemas/StatisticsDuration'
+        cache_miss:
+          $ref: '#/components/schemas/StatisticsDuration'
     ModelStatistics:
       type: object
       properties:
@@ -162,25 +181,6 @@ components:
         ns:
           type: integer
           description: Cumulative duration in nanoseconds
-    InferenceStatistics:
-      type: object
-      properties:
-        success:
-          $ref: '#/components/schemas/StatisticsDuration'
-        fail:
-          $ref: '#/components/schemas/StatisticsDuration'
-        queue:
-          $ref: '#/components/schemas/StatisticsDuration'
-        compute_input:
-          $ref: '#/components/schemas/StatisticsDuration'
-        compute_infer:
-          $ref: '#/components/schemas/StatisticsDuration'
-        compute_output:
-          $ref: '#/components/schemas/StatisticsDuration'
-        cache_hit:
-          $ref: '#/components/schemas/StatisticsDuration'
-        cache_miss:
-          $ref: '#/components/schemas/StatisticsDuration'
   parameters:
     modelName:
       name: model_name

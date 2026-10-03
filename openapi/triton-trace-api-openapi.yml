@@ -121,15 +121,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    modelName:
-      name: model_name
-      in: path
-      required: true
-      description: Name of the model
-      schema:
-        type: string
   schemas:
+    TraceSettingRequest:
+      type: object
+      properties:
+        trace_level:
+          type: array
+          description: Trace levels to set
+          items:
+            type: string
+            enum:
+            - 'OFF'
+            - TIMESTAMPS
+            - TENSORS
+        trace_rate:
+          type: string
+          description: Trace sampling rate
+        trace_count:
+          type: string
+          description: Maximum number of traces to collect (-1 for unlimited)
+        log_frequency:
+          type: string
+          description: Frequency of trace log output
+        trace_file:
+          type: string
+          description: File path for trace output
     ErrorResponse:
       type: object
       properties:
@@ -160,30 +176,14 @@ components:
         trace_file:
           type: string
           description: File path for trace output
-    TraceSettingRequest:
-      type: object
-      properties:
-        trace_level:
-          type: array
-          description: Trace levels to set
-          items:
-            type: string
-            enum:
-            - 'OFF'
-            - TIMESTAMPS
-            - TENSORS
-        trace_rate:
-          type: string
-          description: Trace sampling rate
-        trace_count:
-          type: string
-          description: Maximum number of traces to collect (-1 for unlimited)
-        log_frequency:
-          type: string
-          description: Frequency of trace log output
-        trace_file:
-          type: string
-          description: File path for trace output
+  parameters:
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
 externalDocs:
   description: Triton Inference Server Protocol Documentation
   url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md
