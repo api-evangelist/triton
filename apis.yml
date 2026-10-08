@@ -278,6 +278,12 @@ apis:
   - type: Metrics Format
     url: https://prometheus.io/docs/instrumenting/exposition_formats/
 common:
+- type: Plans
+  url: plans/triton-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/triton-rate-limits.yml
+- type: FinOps
+  url: finops/triton-finops.yml
 - url: https://blogs.nvidia.com/blog/tag/industrial-manufacturing/
   type: Blog
 - url: https://blogs.nvidia.com/feed/
