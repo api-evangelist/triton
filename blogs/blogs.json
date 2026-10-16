@@ -1,0 +1,21 @@
+{
+  "repo": "triton",
+  "feeds": [
+    {
+      "source": "https://blogs.nvidia.com/blog/tag/industrial-manufacturing/",
+      "feed_url": "https://blogs.nvidia.com/feed/",
+      "title": "",
+      "saved": 5,
+      "method": "discovered"
+    },
+    {
+      "source": "https://blogs.nvidia.com/feed/",
+      "feed_url": "https://blogs.nvidia.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    }
+  ],
+  "post_count": 5,
+  "fetched": "2026-10-10T13:15:00Z"
+}
