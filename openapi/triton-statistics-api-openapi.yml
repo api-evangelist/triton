@@ -92,36 +92,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
-  parameters:
-    modelName:
-      name: model_name
-      in: path
-      required: true
-      description: Name of the model
-      schema:
-        type: string
-    modelVersion:
-      name: model_version
-      in: path
-      required: true
-      description: Version of the model
-      schema:
-        type: string
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
-    StatisticsResponse:
-      type: object
-      properties:
-        model_stats:
-          type: array
-          description: Statistics for each model
-          items:
-            $ref: '#/components/schemas/ModelStatistics'
     ModelStatistics:
       type: object
       properties:
@@ -168,15 +139,6 @@ components:
                 type: integer
               byte_size:
                 type: integer
-    StatisticsDuration:
-      type: object
-      properties:
-        count:
-          type: integer
-          description: Number of occurrences
-        ns:
-          type: integer
-          description: Cumulative duration in nanoseconds
     InferenceStatistics:
       type: object
       properties:
@@ -196,6 +158,44 @@ components:
           $ref: '#/components/schemas/StatisticsDuration'
         cache_miss:
           $ref: '#/components/schemas/StatisticsDuration'
+    StatisticsDuration:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of occurrences
+        ns:
+          type: integer
+          description: Cumulative duration in nanoseconds
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
+    StatisticsResponse:
+      type: object
+      properties:
+        model_stats:
+          type: array
+          description: Statistics for each model
+          items:
+            $ref: '#/components/schemas/ModelStatistics'
+  parameters:
+    modelVersion:
+      name: model_version
+      in: path
+      required: true
+      description: Version of the model
+      schema:
+        type: string
+    modelName:
+      name: model_name
+      in: path
+      required: true
+      description: Name of the model
+      schema:
+        type: string
 externalDocs:
   description: Triton Inference Server Protocol Documentation
   url: https://github.com/triton-inference-server/server/blob/main/docs/protocol/README.md

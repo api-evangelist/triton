@@ -126,12 +126,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     RepositoryIndexEntry:
       type: object
       properties:
@@ -152,6 +146,12 @@ components:
         reason:
           type: string
           description: Reason for the current state if not READY
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
   parameters:
     modelName:
       name: model_name

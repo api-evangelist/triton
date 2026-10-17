@@ -122,12 +122,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong
     SharedMemoryRegion:
       type: object
       properties:
@@ -143,6 +137,12 @@ components:
         byte_size:
           type: integer
           description: Size of the region in bytes
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong
   parameters:
     regionName:
       name: region_name
